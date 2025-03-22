@@ -7,4 +7,3 @@ Essa pasta é responsável por guardar todos os documentos produzidos para o KNN
 ## Links para os Arquivos
 
 - [Plano de Iteração](plano-de-iteracao.md)
-- [Plano de Release](plano-de-release.md)
