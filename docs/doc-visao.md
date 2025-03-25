@@ -1,6 +1,6 @@
 # Documento de Visão
 
-### Descrição do Projeto
+## Descrição do Projeto
 
 O sistema de informação desenvolvido tem como foco ser utilizado pela Barbearia KN, no formato de um aplicativo de agendamento de horários. O software busca acima de tudo trazer a simplicidade para que o usuário, de forma intuitiva, consiga agendar os horários e o tipo de serviço que deseja dentre os oferecidos pela empresa.
 
@@ -22,13 +22,13 @@ Ademais, o software pode ser uma ponte para uma nova forma de controle de pagame
 
 ### Equipe e Definição de Papéis
 
-| Equipe             | Papel                   | E-mail                             |
-| ------------------ | ----------------------- | ---------------------------------- |
-| Alec Can Yalcin    | Gerente, Desenvolvedor  | alecyalcin@gmail.com               |
-| Denner Bismarck    | Analista, Desenvolvedor | dennerbismarck@gmail.com           |
-| Júlio César        | Desenvolvedor, Analista | juliocosta10@gmail.com             |
-| Stênio Eric        | Testador, Analista      | stenioeric1@gmail.com              |
-| Guilherme Medeiros | Testador, Analista      | guilherme.medeiros.706@ufrn.edu.br |
+| Equipe             | Papel                   | E-mail                               |
+| ------------------ | ----------------------- | ------------------------------------ |
+| Alec Can Yalcin    | Gerente, Desenvolvedor  | <alecyalcin@gmail.com>               |
+| Denner Bismarck    | Analista, Desenvolvedor | <dennerbismarck@gmail.com>           |
+| Júlio César        | Desenvolvedor, Analista | <juliocosta10@gmail.com>             |
+| Stênio Eric        | Testador, Analista      | <stenioeric1@gmail.com>              |
+| Guilherme Medeiros | Testador, Analista      | <guilherme.medeiros.706@ufrn.edu.br> |
 
 ---
 
@@ -99,11 +99,11 @@ A tabela abaixo apresenta os riscos identificados para o início do projeto. Ess
 
 ### Normas e Diretrizes
 
-4. ISO 9241-210:2019. **Ergonomia da interação humano-sistema – Parte 210: Design centrado no ser humano para sistemas interativos**.
-5. IEEE 830-1998. **Recommended Practice for Software Requirements Specifications**.
+1. ISO 9241-210:2019. **Ergonomia da interação humano-sistema – Parte 210: Design centrado no ser humano para sistemas interativos**.
+2. IEEE 830-1998. **Recommended Practice for Software Requirements Specifications**.
 
 ### Artigos e Materiais Online
 
-6. NIELSEN, Jakob. **10 Usability Heuristics for User Interface Design**. Nielsen Norman Group, 1994.  
+1. NIELSEN, Jakob. **10 Usability Heuristics for User Interface Design**. Nielsen Norman Group, 1994.  
    Disponível em: [https://www.nngroup.com/articles/ten-usability-heuristics/](https://www.nngroup.com/articles/ten-usability-heuristics/)
-7. PREECE, Jenny; ROGERS, Yvonne; SHARP, Helen. **Design de Interação: Além da interação humano-computador**. Bookman, 2013.
+2. PREECE, Jenny; ROGERS, Yvonne; SHARP, Helen. **Design de Interação: Além da interação humano-computador**. Bookman, 2013.
