@@ -6,7 +6,7 @@ O plano de iteração e release, elaborado no semestre 2025.1, consiste em um do
 
 | Iteração | Data início | Data Final | Apresentação | Líder Técnico   | Detalhes                                        |
 | -------- | ----------- | ---------- | ------------ | --------------- | ----------------------------------------------- |
-| It1      | 21/03/2025  | ...        | --           | Alec Yalcin     | [Iteração 01](iteracao-detalhes/iteracao_01.md) |
+| It1      | 21/03/2025  | 04/04/2025 | --           | Alec Yalcin     | [Iteração 01](iteracao-detalhes/iteracao_01.md) |
 | It2      | ...         | ...        | ...          | Líder Técnico 2 | Link para a iteracao-detalhes/iteraoca_xx.md    |
 | It3      | ...         | ...        | ...          | Líder Técnico 3 | Link para a iteracao-detalhes/iteraoca_xx.md    |
 | It4      | ...         | ...        | ...          | Líder Técnico 4 | Link para a iteracao-detalhes/iteraoca_xx.md    |
