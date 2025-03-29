@@ -44,6 +44,58 @@ Ademais, o software pode ser uma ponte para uma nova forma de controle de pagame
 
 ---
 
+### Modelo Conceitual
+
+Abaixo apresentamos o modelo conceitual usando o **Mermaid**.
+
+```mermaid
+erDiagram
+    CLIENTE {
+        string cpf PK
+        string nome
+        string telefone
+    }
+    
+    BARBEIRO {
+        string id PK
+        string nome
+        string telefone
+        string horariosAtendimento
+    }
+    
+    SERVICO {
+        string id PK
+        string nome
+        string descricao
+        float precoMedio
+    }
+    
+    AGENDAMENTO {
+        string id PK
+        datetime horario
+    }
+    
+    PAGAMENTO {
+        string id PK
+        float valor
+        string status
+    }
+    
+    USUARIO {
+        string email PK
+        string nome
+        string senha
+    }
+    
+    CLIENTE ||--o{ AGENDAMENTO : "realiza"
+    BARBEIRO ||--o{ AGENDAMENTO : "atende"
+    SERVICO ||--o{ AGENDAMENTO : "está associado"
+    AGENDAMENTO ||--o{ PAGAMENTO : "gera"
+    USUARIO }o--o{ CLIENTE : "pode ser"
+    USUARIO }o--o{ BARBEIRO : "pode ser"
+
+```
+
 ## 3. Descrição Geral
 
 ### 3.1 Requisitos Funcionais
