@@ -1,0 +1,47 @@
+# Ambiente Virtual
+venv/
+.env
+*.env
+
+# Arquivos do Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Logs e Debug
+logs/
+*.log
+debug.log
+
+# Dependências instaladas
+pip-log.txt
+pip-wheel-metadata/
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.iml
+
+# Arquivos de banco de dados
+*.sqlite3
+*.db
+
+# Cache e arquivos temporários
+tmp/
+*.swp
+
+# Docker e Containers
+.dockerignore
+docker-compose.override.yml
+
+# Uvicorn
+*.pid
+
+# Testes e Cobertura de Código
+htmlcov/
+.coverage
+.tox/
+
+# Outras Configurações
+.DS_Store
+Thumbs.db
