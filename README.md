@@ -1,15 +1,13 @@
 # KNN-Barber-App
 Repositório com a aplicação web desenvolvida durante as disciplinas: Organização, Sistemas e Métodos; Engenharia de Software I e II 
 
+## Sobre FastAPI
 
-
-## Sobre DRF
-
-Django Rest Framework (DRF) é uma poderosa biblioteca para construir APIs RESTful usando Django. Ele fornece recursos como autenticação, permissões e serialização de dados. Neste projeto, utilizaremos apenas o DRF para construir a API, sem o uso do Django tradicional para renderização de templates.
+FastAPI é um framework moderno e rápido para construir APIs com Python. Ele oferece suporte assíncrono nativo, validação de dados com Pydantic e documentação automática interativa.
 
 ## Instalação
 
-Antes de instalar o DRF, é recomendado criar um ambiente virtual.
+Antes de instalar o FastAPI, é recomendado criar um ambiente virtual.
 
 ### Criando um ambiente virtual
 
@@ -21,10 +19,10 @@ venv\Scripts\activate    # Windows
 
 ### Instalando dependências
 
-Instale o Django Rest Framework e outras dependências necessárias:
+Instale o FastAPI e o Uvicorn para rodar o servidor:
 
 ```sh
-pip install djangorestframework
+pip install fastapi uvicorn
 ```
 
 Para garantir que todas as dependências estejam instaladas corretamente, utilize:
@@ -33,84 +31,62 @@ Para garantir que todas as dependências estejam instaladas corretamente, utiliz
 pip install -r requirements.txt
 ```
 
-## Inicializando um projeto DRF
+## Inicializando um projeto FastAPI
 
-Crie um novo projeto Django e um aplicativo:
+Crie um novo arquivo chamado `main.py` e adicione o seguinte código:
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, FastAPI!"}
+```
+
+Execute o servidor com:
 
 ```sh
-django-admin startproject backend
-cd backend
-django-admin startapp api
+uvicorn main:app --reload
 ```
 
-Adicione `rest_framework` ao `INSTALLED_APPS` em `settings.py`:
+A API estará acessível em `http://127.0.0.1:8000/`.
+
+## Criando uma Rota com FastAPI
+
+Adicione uma nova rota para retornar uma lista de objetos:
 
 ```python
-INSTALLED_APPS = [
-    'rest_framework',
-    'api',
-]
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    price: float
+
+@app.get("/items")
+def get_items():
+    return [
+        {"name": "Item 1", "price": 10.0},
+        {"name": "Item 2", "price": 20.0}
+    ]
 ```
 
-Crie um serializer (`api/serializers.py`):
+Acesse `http://127.0.0.1:8000/items` para visualizar os dados.
 
-```python
-from rest_framework import serializers
-from .models import MyModel
+## Documentação Automática
 
-class MyModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MyModel
-        fields = '__all__'
-```
+FastAPI gera automaticamente uma documentação interativa para sua API. Você pode acessá-la em:
 
-Crie uma view baseada em APIView (`api/views.py`):
-
-```python
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .models import MyModel
-from .serializers import MyModelSerializer
-
-class MyModelView(APIView):
-    def get(self, request):
-        objects = MyModel.objects.all()
-        serializer = MyModelSerializer(objects, many=True)
-        return Response(serializer.data)
-```
-
-Mapeie a view para uma URL (`api/urls.py`):
-
-```python
-from django.urls import path
-from .views import MyModelView
-
-urlpatterns = [
-    path('mymodel/', MyModelView.as_view(), name='mymodel-list')
-]
-```
-
-Adicione ao `urls.py` do projeto:
-
-```python
-from django.urls import path, include
-
-urlpatterns = [
-    path('api/', include('api.urls')),
-]
-```
-
-Rode as migrações e inicie o servidor:
-
-```sh
-python manage.py migrate
-python manage.py runserver
-```
-
-A API estará acessível em `http://127.0.0.1:8000/api/mymodel/`.
+- **Swagger UI:**  
+  `http://127.0.0.1:8000/docs`
+- **ReDoc:**  
+  `http://127.0.0.1:8000/redoc`
 
 ---
-
 
 ## Sobre React
 
@@ -152,4 +128,3 @@ A aplicação estará disponível em `http://localhost:5173/`.
   ```sh
   npm create vite@latest my-react-app --template react-ts
   ```
-
