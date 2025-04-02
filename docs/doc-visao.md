@@ -55,38 +55,38 @@ erDiagram
         string nome
         string telefone
     }
-    
+
     BARBEIRO {
         string id PK
         string nome
         string telefone
         string horariosAtendimento
     }
-    
+
     SERVICO {
         string id PK
         string nome
         string descricao
         float precoMedio
     }
-    
+
     AGENDAMENTO {
         string id PK
         datetime horario
     }
-    
+
     PAGAMENTO {
         string id PK
         float valor
         string status
     }
-    
+
     USUARIO {
         string email PK
         string nome
         string senha
     }
-    
+
     CLIENTE ||--o{ AGENDAMENTO : "realiza"
     BARBEIRO ||--o{ AGENDAMENTO : "atende"
     SERVICO ||--o{ AGENDAMENTO : "está associado"
@@ -100,43 +100,43 @@ erDiagram
 
 ### 3.1 Requisitos Funcionais
 
-| Cod. | Nome                            | Descrição                                                                                                                                          | Categoria  |
-| ---- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| RF01 | Manter Serviços                 | Funções de “CRUD” para serviços – Nome, Descrição, Média de preços.                                                                                | Essencial  |
-| RF02 | Manter Cliente                  | Funções de “CRUD” para clientes – Nome, CPF, Número.                                                                                               | Essencial  |
-| RF03 | Manter Barbeador                | Funções de “CRUD” para Barbeadores - Nome, Número, horários de atendimento                                                                         | Essencial  |
-| RF04 | Manter Agendamentos             | Funções de “CRUD” para Agendamentos – Horário, Cliente, Serviço. Possibilidade de reagendamento.                                                   | Essencial  |
-| RF05 | Confirmar Atendimento           | Sistema de aprovação e verificação dos atendimentos realizados ao dia, registrando se os pagamentos foram realizados ou não para cada atendimento. | Importante |
-| RF06 | Sistema de autenticação e login | Sistema de login para segurança.                                                                                                                   | Importante |
+| Cod.    | Nome                          | Descrição                                                                                                                               | Categoria |
+| ------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| Cod.    | Nome                          | Descrição                                                                                                                               |
+| ------- | ----------------------------- | ---------------------------------------------------------------------------                                                             |
+| RF01    | Criar Serviço                 | O sistema deve permitir o cadastro de um serviço com Nome, Descrição e Média de preços.                                                 |
+| RF02    | Listar Serviços               | O sistema deve permitir a visualização de todos os serviços cadastrados e a consulta de um serviço específico.                          |
+| RF03    | Atualizar Serviço             | O sistema deve permitir a edição de um serviço, permitindo a alteração de Nome, Descrição e Média de preços.                            |
+| RF04    | Remover Serviço               | O sistema deve permitir a exclusão de um serviço cadastrado.                                                                            |
+| RF05    | Criar Cliente                 | O sistema deve permitir o cadastro de um cliente com Nome, CPF e Número de contato.                                                     |
+| RF06    | Listar Clientes               | O sistema deve permitir a visualização de todos os clientes cadastrados e a busca por CPF ou Nome.                                      |
+| RF07    | Atualizar Cliente             | O sistema deve permitir a edição dos dados de um cliente (Nome, CPF e Número de contato).                                               |
+| RF08    | Remover Cliente               | O sistema deve permitir a exclusão de um cliente cadastrado.                                                                            |
+| RF09    | Criar Barbeador               | O sistema deve permitir o cadastro de um barbeador com Nome, Número de contato e Horários de atendimento.                               |
+| RF10    | Listar Barbeadores            | O sistema deve permitir a visualização de todos os barbeadores cadastrados e a busca por Nome ou Número.                                |
+| RF11    | Atualizar Barbeador           | O sistema deve permitir a edição dos dados de um barbeador (Nome, Número de contato, Horários de atendimento).                          |
+| RF12    | Remover Barbeador             | O sistema deve permitir a exclusão de um barbeador cadastrado.                                                                          |
+| RF13    | Criar Agendamento             | O sistema deve permitir o cadastro de um agendamento com Horário, Cliente e Serviço.                                                    |
+| RF14    | Listar Agendamentos           | O sistema deve permitir a visualização de todos os agendamentos cadastrados e a consulta filtrando por Cliente, Barbeador ou Data.      |
+| RF15    | Atualizar Agendamento         | O sistema deve permitir a alteração dos dados de um agendamento, permitindo o reagendamento do horário, cliente ou serviço.             |
+| RF16    | Remover Agendamento           | O sistema deve permitir o cancelamento de um agendamento.                                                                               |
+| RF17    | Registrar Atendimento         | O sistema deve permitir o registro de um atendimento realizado, vinculando Cliente, Barbeador e Serviço.                                |
+| RF18    | Listar Atendimentos           | O sistema deve permitir a visualização dos atendimentos realizados dentro de um período específico e a consulta do status de pagamento. |
+| RF19    | Atualizar Atendimento         | O sistema deve permitir a modificação do status de pagamento de um atendimento.                                                         |
+| RF20    | Remover Atendimento           | O sistema deve permitir a exclusão de um atendimento, caso necessário.                                                                  |
+| RF21    | Criar Conta de Usuário        | O sistema deve permitir a criação de uma conta de usuário informando Login e Senha.                                                     |
+| RF22    | Verificar Sessão              | O sistema deve permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada.                      |
+| RF23    | Atualizar Conta de Usuário    | O sistema deve permitir a alteração da senha ou a atualização de informações da conta.                                                  |
+| RF24    | Remover Conta de Usuário      | O sistema deve permitir a exclusão de uma conta de usuário.                                                                             |
 
 ### 3.2 Requisitos Não Funcionais
 
-| Cod.  | Nome                        | Descrição                                                                 |
-|-------|-----------------------------|---------------------------------------------------------------------------|
-| RF01  | Criar Serviço               | O sistema deve permitir o cadastro de um serviço com Nome, Descrição e Média de preços. |
-| RF02  | Listar Serviços             | O sistema deve permitir a visualização de todos os serviços cadastrados e a consulta de um serviço específico. |
-| RF03  | Atualizar Serviço           | O sistema deve permitir a edição de um serviço, permitindo a alteração de Nome, Descrição e Média de preços. |
-| RF04  | Remover Serviço             | O sistema deve permitir a exclusão de um serviço cadastrado. |
-| RF05  | Criar Cliente               | O sistema deve permitir o cadastro de um cliente com Nome, CPF e Número de contato. |
-| RF06  | Listar Clientes             | O sistema deve permitir a visualização de todos os clientes cadastrados e a busca por CPF ou Nome. |
-| RF07  | Atualizar Cliente           | O sistema deve permitir a edição dos dados de um cliente (Nome, CPF e Número de contato). |
-| RF08  | Remover Cliente             | O sistema deve permitir a exclusão de um cliente cadastrado. |
-| RF09  | Criar Barbeador             | O sistema deve permitir o cadastro de um barbeador com Nome, Número de contato e Horários de atendimento. |
-| RF10  | Listar Barbeadores          | O sistema deve permitir a visualização de todos os barbeadores cadastrados e a busca por Nome ou Número. |
-| RF11  | Atualizar Barbeador         | O sistema deve permitir a edição dos dados de um barbeador (Nome, Número de contato, Horários de atendimento). |
-| RF12  | Remover Barbeador           | O sistema deve permitir a exclusão de um barbeador cadastrado. |
-| RF13  | Criar Agendamento           | O sistema deve permitir o cadastro de um agendamento com Horário, Cliente e Serviço. |
-| RF14  | Listar Agendamentos         | O sistema deve permitir a visualização de todos os agendamentos cadastrados e a consulta filtrando por Cliente, Barbeador ou Data. |
-| RF15  | Atualizar Agendamento       | O sistema deve permitir a alteração dos dados de um agendamento, permitindo o reagendamento do horário, cliente ou serviço. |
-| RF16  | Remover Agendamento         | O sistema deve permitir o cancelamento de um agendamento. |
-| RF17  | Registrar Atendimento       | O sistema deve permitir o registro de um atendimento realizado, vinculando Cliente, Barbeador e Serviço. |
-| RF18  | Listar Atendimentos         | O sistema deve permitir a visualização dos atendimentos realizados dentro de um período específico e a consulta do status de pagamento. |
-| RF19  | Atualizar Atendimento       | O sistema deve permitir a modificação do status de pagamento de um atendimento. |
-| RF20  | Remover Atendimento         | O sistema deve permitir a exclusão de um atendimento, caso necessário. |
-| RF21  | Criar Conta de Usuário      | O sistema deve permitir a criação de uma conta de usuário informando Login e Senha. |
-| RF22  | Verificar Sessão            | O sistema deve permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada. |
-| RF23  | Atualizar Conta de Usuário  | O sistema deve permitir a alteração da senha ou a atualização de informações da conta. |
-| RF24  | Remover Conta de Usuário    | O sistema deve permitir a exclusão de uma conta de usuário. |
+| Cod.  | Nome                              | Descrição                                                                                                                                                              |
+| ----- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RNF01 | Especificidade de layout          | O software será web e seu layout deverá funcionar tanto em dispositivos móveis quanto em desktop.                                                                      |
+| RNF02 | Interface auto explicativa        | Sua interface deverá conter “widgets” com nomes e ícones auto explicativos o suficiente para rápido entendimento.                                                      |
+| RNF03 | Interface de uso rápido           | Sua interface, principalmente para o administrador, deverá ser muito bem dividida em cada função, sendo suficiente apertar um ou dois botões para acessar cada tarefa. |
+| RNF04 | Permissão de clientes não logados | Clientes não logados no sistema devem poder ter acesso somente aos horários disponíveis.                                                                               |
 
 ## 3.3 Perfis de Usuário
 
