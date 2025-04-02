@@ -6,8 +6,8 @@ O plano de iteração e release, elaborado no semestre 2025.1, consiste em um do
 
 | Iteração | Data início | Data Final | Apresentação | Líder Técnico   | Detalhes                                        |
 | -------- | ----------- | ---------- | ------------ | --------------- | ----------------------------------------------- |
-| It1      | 21/03/2025  | 04/04/2025 | --           | Alec Yalcin     | [Iteração 01](iteracao-detalhes/iteracao_01.md) |
-| It2      | ...         | ...        | ...          | Líder Técnico 2 | Link para a iteracao-detalhes/iteraoca_xx.md    |
+| It1      | 21/03/2025  | 27/04/2025 | --           | Alec Yalcin     | [Iteração 01](iteracao-detalhes/iteracao_01.md) |
+| It2      | 28/03/2025  | 01/04/2025 | ...          | Alec Yalcin     | [Iteração 02](iteracao-detalhes/iteracao_02.md) |
 | It3      | ...         | ...        | ...          | Líder Técnico 3 | Link para a iteracao-detalhes/iteraoca_xx.md    |
 | It4      | ...         | ...        | ...          | Líder Técnico 4 | Link para a iteracao-detalhes/iteraoca_xx.md    |
 | It5      | ...         | ...        | ...          | Líder Técnico 5 | Link para a iteracao-detalhes/iteraoca_xx.md    |
@@ -18,9 +18,9 @@ O plano de iteração e release, elaborado no semestre 2025.1, consiste em um do
 
 ## Plano de Release
 
-| Release | Data início | Data Final | Líder Técnico   | Detalhes                                                |
-| ------- | ----------- | ---------- | --------------- | ------------------------------------------------------- |
-| R01     | ...         | ...        | Líder Técnico 1 | Lista de funcionalidades da Release 01 (It1, It2, It3). |
-| R02     | ...         | ...        | Líder Técnico 2 | Lista de funcionalidades da Release 02 (It4, It5, It6). |
+| Release | Data início | Data Final | Líder Técnico   | Detalhes                                                                       |
+| ------- | ----------- | ---------- | --------------- | ------------------------------------------------------------------------------ |
+| R01     | 21/03/2025  | 04/02/2025 | Alec Yalcin     | Nenhuma funcionalidade foi implementada. Mas a base de programação foi criada. |
+| R02     | ...         | ...        | Líder Técnico 2 | Lista de funcionalidades da Release 02 (It4, It5, It6).                        |
 
 - Observação 3: Os releases são ajustados para fornecer um MVP. As release podem ter número de iterações diferentes, de acordo com as funcionalidades necessárias por release.
