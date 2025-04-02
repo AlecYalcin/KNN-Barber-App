@@ -1,8 +1,8 @@
 # Iteração 03 - Primeiras Implementações.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed sapien tellus. Integer turpis orci, tincidunt laoreet est vel, rhoncus vehicula urna. Phasellus et felis ut risus auctor vestibulum et sed nisl. Quisque orci mi, tristique id porttitor in, scelerisque vel velit. Sed gravida dapibus diam et maximus. Mauris semper pulvinar tellus, id semper ligula malesuada non. Fusce ut arcu eu lacus euismod aliquet. In auctor est vel enim vulputate, eu fringilla quam lacinia. Nulla ac porttitor orci, et commodo libero. In volutpat quis ante a ultrices. Phasellus gravida dapibus rhoncus.
+Criando o domínio do software com as funcionalidades básicas de agendamento e testes unitários. O domínio deve ser capaz de criar clientes, barbeiros, serviços e agendamentos (ainda não gera pagamento). No front-end, a criação dos wireframes da aplicação com todas as telas necessárias para se realizar os User Stories. Descrição mais detalhada da arquitetura do sistema.
 
 ## Informações Adicionais
 
-- Links de Documentos
-- Links de Imagens
+- [Arquitetura Baseada (DDD e TDD)](https://www.cosmicpython.com/book/preface.html)
+- [Ferramenta de Wireframe Recomendada](https://excalidraw.com/)
