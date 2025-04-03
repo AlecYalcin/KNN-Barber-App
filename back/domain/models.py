@@ -11,3 +11,12 @@ class barbeiro(pessoa):
         super().__init__(cpf, nome, email, telefone, senha)
         self._tel_trabalho = tel_trabalho
     
+class servico():
+    def __init__(self, id, nome, descricao, valor_base):
+        self._id = id
+        self._nome = nome
+        self._descricao = descricao
+        self._valor_base = valor_base
+        
+
+    
