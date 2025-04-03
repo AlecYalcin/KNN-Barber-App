@@ -125,6 +125,14 @@ erDiagram
 | RF19    | Verificar Sessão              | O sistema deve permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada.                 |
 | RF20    | Atualizar Conta de Usuário    | O sistema deve permitir a alteração da senha ou a atualização de informações da conta.                                             |
 | RF21    | Remover Conta de Usuário      | O sistema deve permitir a exclusão de uma conta de usuário.                                                                        |
+| RF22    | Criar Horário                 | O sistema deve permitir o cadastro de um Horário com Data, Hora e Disponibilidade.                                            |
+| RF23    | Listar Horários               | O sistema deve permitir a visualização de todos os Horários cadastrados e a consulta de um Horário específico.                     |
+| RF24    | Atualizar Horário             | O sistema deve permitir a edição de um Horário, permitindo a alteração de Data, Hora e Disponibilidade                       |
+| RF25    | Remover Horário               | O sistema deve permitir a exclusão de um Horário cadastrado.                                                                       |
+| RF22    | Criar Pagamento                 | O sistema deve permitir o cadastro de um Pagamento com Data, Valor, Método e Adicional                                    |
+| RF23    | Listar Pagamentos               | O sistema deve permitir a visualização de todos os Pagamentos cadastrados e a consulta de um Pagamento específico.                     |
+| RF24    | Atualizar Pagamento             | O sistema deve permitir a edição de um Pagamento, permitindo a alteração de Data, Valor, Método e Adicional                       |
+| RF25    | Remover Pagamento               | O sistema deve permitir a exclusão de um Pagamento cadastrado.                                                                       |
 
 ### 3.2 Requisitos Não Funcionais
 
