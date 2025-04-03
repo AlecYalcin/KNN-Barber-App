@@ -18,5 +18,11 @@ class servico():
         self._descricao = descricao
         self._valor_base = valor_base
         
+class horario():
+    def __init__(self, id, data, hora, disponibilidade):
+        self._id = id
+        self._data = data
+        self._hora = hora
+        self._disponibilidade = disponibilidade
 
     
