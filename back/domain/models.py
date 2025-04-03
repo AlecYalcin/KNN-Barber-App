@@ -8,6 +8,7 @@ class pessoa():
 
 class barbeiro(pessoa):
     def __init__(self, cpf, nome, email, telefone, senha, tel_trabalho):
+        #Barbeiro herda os atributos da classe pessoa
         super().__init__(cpf, nome, email, telefone, senha)
         self._tel_trabalho = tel_trabalho
     
@@ -29,3 +30,18 @@ class pagamento():
     def __init__(self, id, data, adicional, metodo, valor):
         self._id = id
         self._data = data  
+
+class horario_de_atendimento():
+    def __init__(self, id, status_servico, status_pagamento, confirmado, justificativa, cliente, barbeiro, servico, horario, pagamento):
+        self._id = id
+        self._status_servico = status_servico
+        self._status_pagamento = status_pagamento
+        self._confirmado = confirmado
+        self._justificativa = justificativa
+        
+        #Classes Externas
+        self._cliente = cliente
+        self._barbeiro = barbeiro
+        self._servico = servico
+        self._horario = horario
+        self._pagamento = pagamento
