@@ -25,4 +25,7 @@ class horario():
         self._hora = hora
         self._disponibilidade = disponibilidade
 
-    
+class pagamento():
+    def __init__(self, id, data, adicional, metodo, valor):
+        self._id = id
+        self._data = data  
