@@ -22,8 +22,14 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF02                      | Manter Clientes                 |
-| RF06                      | Sistema de autenticação e login |
+| RF05                      | Criar Cliente                   |
+| RF06                      | Listar Clientes                 |
+| RF07                      | Atualizar Cliente               |
+| RF08                      | Remover Cliente                 |
+| RF18                      | Criar Conta de Usuário          |
+| RF19                      | Verificar Sessão                |
+| RF20                      | Atualizar Conta de Usuário      |
+| RF21                      | Remover Conta de Usuário        |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -52,7 +58,10 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF04                      | Manter Agendamentos                 |
+| RF13                      | Criar Agendamento               | 
+| RF14                      | Listar Agendamentos             | 
+| RF15                      | Atualizar Agendamento           | 
+| RF16                      | Remover Agendamento             |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -79,8 +88,16 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF03                      | Manter Barbeador                 |
-| RF04                      | Manter Agendamentos                 |
+| RF10                      | Listar Barbeadores              |
+| RF13                      | Criar Agendamento               |
+| RF14                      | Listar Agendamentos             |
+| RF15                      | Atualizar Agendamento           |
+| RF16                      | Remover Agendamento             |
+| RF22                      | Criar Horário                   |
+| RF23                      | Listar Horários                 |
+| RF24                      | Atualizar Horário               |
+| RF25                      | Remover Horário                 |
+
 
 |                         |           |
 | ----------------------- | --------- |
@@ -107,9 +124,10 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF01                      | Manter Serviços                 |
-| RF02                      | Manter Clientes                 |
-| RF03                      | Manter Barbeador                |
+| RF01                      | Criar Serviço                   |
+| RF02                      | Listar Serviços                 |
+| RF03                      | Atualizar Serviço               |
+| RF04                      | Remover Serviço                 |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -138,9 +156,8 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF03                      | Manter Barbeador                |
-| RF04                      | Manter Agendamentos             |
-| RF05                      | Confirmar Atendimento           |
+| RF13                      | Criar Agendamento               |
+| RF17                      | Confirmar Atendimento           |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -168,7 +185,10 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF04                      | Manter Agendamentos             |
+| RF22                      | Criar Pagamento                 |
+| RF23                      | Listar Pagamentos               |
+| RF24                      | Atualizar Pagamento             |
+| RF25                      | Remover Pagamento               |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -195,8 +215,14 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF03                      | Manter Barbeador                |
-| RF06                      | Sistema de autenticação e login |
+| RF09                      | Criar Barbeador                 | 
+| RF10                      | Listar Barbeadores              | 
+| RF11                      | Atualizar Barbeador             | 
+| RF12                      | Remover Barbeador               |
+| RF18                      | Criar Conta de Usuário          | 
+| RF19                      | Verificar Sessão                | 
+| RF20                      | Atualizar Conta de Usuário      | 
+| RF21                      | Remover Conta de Usuário        |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -225,7 +251,7 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 | **Requisitos envolvidos** |                                 |
 | ------------------------- | :------------------------------ |
-| RF01                      | Manter Serviços                 |
+| RF23                      | Listar Pagamentos               |
 
 |                         |           |
 | ----------------------- | --------- |
