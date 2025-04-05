@@ -42,13 +42,20 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | O usuário informa, no formulário de registro, todos os dados corretos para ser cadastrado. Ao clicar em enviar, ele é redirecionado para a página principal.                          |
-| **TA01.02**              | O usuário informa, no formulário de registro, todos os dados incorretos para ser cadastrado. Ao clicar em enviar, os campos do formulário informam, em vermelho, os dados incorretos. |
-| **TA01.03**              | O usuário informa, no formulário de login, todos os dados corretos de uma conta. Ao clicar em enviar, ele é redirecionado para a página principal.                                    |
-| **TA01.04**              | O usuário informa, no formulário de login, todos os dados incorretos de uma conta. Ao clicar em enviar, os campos do formulário informam, em vermelho, os dados incorretos.           |
+#### Testes de Aceitação – US01 Manter Cliente
+
+| Código    | Cenário                                               | Descrição                                                                                                                                                 |
+|-----------|--------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA01.01   | Registro com dados válidos (RF05, RF18)                | O usuário informa nome, email, telefone e senha válidos no formulário de registro. Ao clicar em "Registrar", ele é redirecionado para a página principal. |
+| TA01.02   | Registro com dados inválidos (RF05, RF18)              | O usuário informa dados inválidos ou incompletos no formulário de registro. Ao clicar em "Registrar", os campos inválidos exibem mensagens de erro.       |
+| TA01.03   | Login com credenciais corretas (RF19)                  | O usuário com conta existente informa email e senha corretos no formulário de login. Ao clicar em "Entrar", é redirecionado para a página principal.      |
+| TA01.04   | Login com credenciais incorretas (RF19)                | O usuário informa email ou senha incorretos. Ao clicar em "Entrar", o sistema exibe mensagem de erro sem redirecionar.                                    |
+| TA01.05   | Verificação de sessão ativa (RF19)                     | Um usuário autenticado acessa uma página protegida. O sistema reconhece a sessão ativa e permite o acesso ao conteúdo restrito.                          |
+| TA01.06   | Listagem de clientes cadastrados (RF06)                | Um usuário autenticado acessa a lista de clientes. O sistema exibe nome, email e telefone dos clientes cadastrados.                                       |
+| TA01.07   | Atualização de dados do cliente (RF07)                 | Um cliente autenticado acessa seu perfil, altera nome ou telefone e salva. O sistema atualiza os dados e exibe a nova informação ao recarregar a página.  |
+| TA01.08   | Atualização de credenciais da conta de usuário (RF20)  | O cliente acessa as configurações de conta, altera email ou senha e confirma. O sistema salva as alterações e permite login com os novos dados.           |
+| TA01.09   | Remoção da conta de cliente (RF08, RF21)               | O cliente autenticado escolhe "Excluir minha conta", confirma a ação, e o sistema remove seus dados e redireciona para a tela de login.                   |
+| TA01.10   | Tentativa de login após remoção da conta (RF21)        | Um usuário tenta fazer login após excluir a conta. O sistema exibe erro e impede o acesso.                                                                |
 
 ### User Story US02 - Manter Agenda
 
@@ -74,11 +81,18 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | O usuário, na página de agendamentos, seleciona um horário disponível e um serviço oferecido. Ao clicar em confirmar, o usuário recebe uma mensagem na tela e um redirecionamento para a página principal. Mensagem: “Seu agendamento está sendo analisado pelo barbeiro.”                          |
-| **TA01.02**              | O usuário, na página de agendamentos, seleciona um horário recentemente preenchido. Ao clicar em confirmar, o usuário recebe uma mensagem na tela. Mensagem: “O horário se tornou indisponível enquanto esteve em uso, por favor selecione outro.” |
+#### Testes de Aceitação 
+
+| Código    | Cenário                                                       | Descrição                                                                                                                                                                                                 |
+|-----------|----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA02.01   | Criação de agendamento com horário e serviço válidos (RF13)   | O usuário acessa a página de agendamentos, seleciona um horário disponível e um serviço. Ao confirmar, recebe a mensagem “Seu agendamento está sendo analisado pelo barbeiro.” e é redirecionado.        |
+| TA02.02   | Tentativa de agendamento com horário recém-preenchido (RF13)  | O usuário seleciona um horário que foi preenchido durante a navegação. Ao clicar em confirmar, recebe a mensagem: “O horário se tornou indisponível enquanto esteve em uso, por favor selecione outro.”   |
+| TA02.03   | Visualização da agenda com horários e barbeiros (RF14)        | O usuário acessa a página de agendamentos. O sistema exibe uma agenda com horários disponíveis, barbeiros associados e uma legenda indicando quem atende cada horário.                                     |
+| TA02.04   | Edição de um agendamento existente (RF15)                     | O usuário acessa seus agendamentos pendentes ou futuros e altera o horário ou serviço. O sistema atualiza os dados e exibe uma confirmação.                                                              |
+| TA02.05   | Remoção de um agendamento pendente (RF16)                     | O usuário acessa seus agendamentos e escolhe cancelar um deles. O sistema remove o agendamento e exibe uma mensagem de sucesso.                                                                           |
+| TA02.06   | Tentativa de editar agendamento já confirmado (RF15)          | O usuário tenta alterar um agendamento já confirmado pelo barbeiro. O sistema exibe uma mensagem de erro informando que alterações não são mais permitidas.                                               |
+| TA02.07   | Tentativa de remover agendamento já realizado (RF16)          | O usuário tenta excluir um agendamento que já ocorreu. O sistema exibe uma mensagem informando que esse tipo de agendamento não pode mais ser removido.                                                  |
+
 
 ### User Story US03 - Disponibilizar Horário
 
@@ -110,11 +124,20 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | O barbeiro entrará na tela de disponibilizar horário. O sistema exibe uma tela com uma representação visual de dias e horas. O barbeiro deverá selecionar os horários que deseja disponibilizar para agendamento.                          |
-| **TA02.01**              | Alteração de disponibilidade: O barbeiro deverá selecionar os horários que deseja alterar a disponibilidade, tirando-os. O sistema deve informar (Se existir) a quantidade de agendamentos marcados para aquele horário. |
+#### Testes de Aceitação
+
+| Código    | Cenário                                                   | Descrição                                                                                                                                                                                                     |
+|-----------|------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA03.01   | Barbeiro visualiza interface de criação de horários (RF22) | O barbeiro acessa a tela de disponibilizar horário. O sistema exibe uma grade de horários/dias. O barbeiro seleciona os horários desejados e clica em "Salvar". O sistema confirma a criação dos horários.     |
+| TA03.02   | Barbeiro lista seus horários disponíveis (RF23)            | O barbeiro acessa a área "Meus Horários". O sistema exibe a lista de todos os horários cadastrados, com data, hora e status (disponível/indisponível/agendado).                                               |
+| TA03.03   | Barbeiro atualiza horário específico (RF24)                | O barbeiro edita um horário específico (ex: muda de 14:00 para 15:00). O sistema salva a alteração e exibe mensagem de sucesso.                                                                                |
+| TA03.04   | Barbeiro remove horário sem agendamento (RF25)             | O barbeiro tenta remover um horário ainda não agendado. O sistema exclui o horário e exibe confirmação da remoção.                                                                                              |
+| TA03.05   | Barbeiro tenta remover horário com agendamento (RF25)      | O barbeiro tenta remover um horário que já possui agendamento. O sistema bloqueia a remoção e exibe uma mensagem informando que é necessário reagendar ou cancelar o agendamento antes.                        |
+| TA03.06   | Barbeiro tenta alterar horário com agendamento (RF24)      | O barbeiro tenta editar um horário já agendado. O sistema exibe mensagem informando que a alteração impactará um agendamento existente e solicita confirmação ou bloqueia a ação.                              |
+| TA03.07   | Cliente tenta agendar em horário removido (RF13/RF25)      | O cliente seleciona um horário que acabou de ser removido. Ao clicar em agendar, o sistema exibe mensagem: “Este horário não está mais disponível. Por favor, escolha outro.”                                  |
+| TA03.08   | Cliente vê agenda apenas com horários disponíveis (RF23)   | O cliente acessa a agenda de agendamentos. O sistema exibe apenas os horários cadastrados como "disponíveis" pelos barbeiros, excluindo os já ocupados ou removidos.                                          |
+| TA03.09   | Verificar barbeiros disponíveis para horários (RF10)       | O cliente acessa um horário específico e o sistema exibe quais barbeiros estão disponíveis naquele período, com base nos horários que cada um disponibilizou.                                                  |
+
 
 ### User Story US04 - Manter Serviços
 
@@ -140,13 +163,19 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | Os atores entrarão na aba de consultas de serviços. O sistema disponibiliza uma tabela com todos os serviços disponíveis, com nome, descrição e preço.                          |
-| **TA02.01**              | Marcar horários: O cliente escolhe o serviço desejado. |
-| **TA02.02**              | Alterar ou excluir serviços: O barbeiro escolhe o serviço que deseja alterar ou excluir. O sistema informa,recebe e avalia todas as alterações do barbeiro.                                    |
-| **TA03.01**              | Ao abrir a aba de serviços, o cliente só terá a opção de vê-los, sem poder editar ou criar novos.           |
+#### Testes de Aceitação
+
+| Código    | Cenário                                                 | Descrição                                                                                                                                                                                          |
+|-----------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA04.01   | Barbeiro cadastra novo serviço (RF01)                    | O barbeiro acessa a aba de "Cadastrar Serviço", preenche os campos obrigatórios (nome, descrição e preço) e confirma. O sistema salva e exibe mensagem: "Serviço cadastrado com sucesso".           |
+| TA04.02   | Barbeiro visualiza todos os serviços cadastrados (RF02)  | O barbeiro acessa a aba de "Meus Serviços". O sistema exibe todos os serviços em formato de tabela com nome, descrição e preço.                                                                     |
+| TA04.03   | Barbeiro edita um serviço existente (RF03)               | O barbeiro acessa um serviço da lista e clica em "Editar". Após atualizar os dados e confirmar, o sistema exibe mensagem: "Serviço atualizado com sucesso".                                         |
+| TA04.04   | Barbeiro remove um serviço (RF04)                        | O barbeiro acessa a lista de serviços e clica em "Remover" em um serviço específico. O sistema solicita confirmação e, ao aceitar, exibe mensagem: "Serviço removido com sucesso".                 |
+| TA04.05   | Cliente acessa lista de serviços disponíveis (RF02)      | O cliente acessa a aba de serviços. O sistema exibe todos os serviços cadastrados, com nome, descrição e preço. Cliente não vê botões de editar, remover ou criar.                                  |
+| TA04.06   | Cliente seleciona um serviço para agendamento (RF02)     | O cliente, ao marcar um horário, acessa a lista de serviços. Ele seleciona um serviço desejado, e o sistema associa esse serviço ao agendamento em andamento.                                       |
+| TA04.07   | Barbeiro tenta cadastrar serviço sem preencher campos (RF01) | O barbeiro tenta cadastrar um serviço deixando campos obrigatórios em branco. O sistema exibe mensagens de erro de validação e impede o cadastro até que todos os campos sejam preenchidos.         |
+| TA04.08   | Barbeiro tenta remover serviço já agendado (RF04)        | O barbeiro tenta excluir um serviço vinculado a um agendamento futuro. O sistema exibe mensagem de erro informando que é necessário desvincular o serviço antes de excluí-lo.                       |
+
 
 ### User Story US05 - Aprovar agendamentos
 
@@ -170,12 +199,16 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | O sistema notifica o barbeiro que existe um agendamento pendente de aprovação. O sistema mostra uma listagem com todos os agendamentos ainda não aprovados, com o nome do cliente, serviço, forma de pagamento e horário. O barbeiro seleciona a opção para aprovar.                          |
-| **TA02.01**              | O barbeiro fará a alteração dos campos que achar necessário. |
-| **TA02.02**              | O barbeiro recusa o agendamento. O sistema disponibiliza uma caixa em texto para esclarecer os motivos da recusa. O barbeiro descreve a motivação para a recusa.                                    |
+#### Testes de Aceitação 
+
+| Código    | Cenário                                                                 | Descrição                                                                                                                                                                                                                                                                 |
+|-----------|--------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA05.01   | Barbeiro visualiza agendamentos pendentes (RF17)                         | O sistema notifica o barbeiro sobre um novo agendamento pendente. Ao acessar a aba de aprovações, o barbeiro vê uma lista com nome do cliente, serviço solicitado, forma de pagamento e horário agendado.                                                               |
+| TA05.02   | Barbeiro aprova agendamento (RF17)                                       | O barbeiro acessa a lista de pendentes e clica em “Aprovar” em um dos agendamentos. O sistema confirma a aprovação e exibe a mensagem: “Agendamento confirmado com sucesso.”                                                                                              |
+| TA05.03   | Barbeiro altera dados do agendamento antes de aprovar (RF17)             | O barbeiro clica em “Editar” em um agendamento pendente, modifica os campos necessários (como horário ou serviço) e, em seguida, aprova. O sistema registra a alteração e confirma a aprovação com os novos dados.                                                         |
+| TA05.04   | Barbeiro recusa agendamento (RF17)                                       | O barbeiro opta por recusar o agendamento. O sistema apresenta um campo de texto obrigatório para justificar a recusa. Após preenchido e confirmado, o sistema envia a resposta ao cliente com a justificativa: “Agendamento recusado. Motivo: [mensagem do barbeiro]”. |
+| TA05.05   | Barbeiro tenta aprovar agendamento com conflito de horário (RF13, RF17)  | O barbeiro tenta aprovar um agendamento que conflita com outro já confirmado. O sistema bloqueia a ação e exibe a mensagem: “Horário indisponível. Verifique outro horário ou entre em contato com o cliente.”                                                           |
+                             |
 
 ### User Story US06 - Manter pagamento
 
@@ -201,11 +234,15 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | O cliente realiza o pagamento de um agendamento pendente. Após concluir, ele vê a confirmação do pagamento e é redirecionado para a tela principal. O sistema salva a data do pagamento e o status do agendamento fica como "Pago".                          |
-| **TA01.02**              | O cliente acessa a listagem de pagamentos realizados e vê os registros organizados por data. Em Pagamentos há um detalhamento de informações sobre o serviço, como a data, o valor e serviço prestado. |
+#### Testes de Aceitação 
+
+| Código    | Cenário                                                                 | Descrição                                                                                                                                                                                                                                                                             |
+|-----------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA06.01   | Cliente realiza pagamento de um agendamento (RF22)                       | O cliente acessa um agendamento pendente e realiza o pagamento. Após a transação, o sistema confirma a operação com a mensagem: “Pagamento realizado com sucesso”, registra a data do pagamento e altera o status do agendamento para “Pago”. Em seguida, redireciona para a tela principal. |
+| TA06.02   | Cliente consulta listagem de pagamentos (RF23)                           | O cliente acessa a aba “Pagamentos” e vê todos os registros organizados por data. Cada item mostra detalhes do serviço pago, incluindo valor, data de realização, nome do serviço e status do pagamento.                                                                                |
+| TA06.03   | Cliente atualiza um pagamento incorreto (RF24)                           | O cliente percebe um erro nas informações de um pagamento e solicita edição. O sistema permite alteração de campos permitidos (como forma de pagamento) e salva a modificação, mantendo o histórico da atualização.                                                                     |
+| TA06.04   | Cliente remove um pagamento cancelado (RF25)                             | O cliente acessa a listagem de pagamentos e seleciona um pagamento marcado como cancelado. O sistema exibe uma confirmação para remoção e, após a ação, o registro é excluído do histórico de pagamentos.                                                                                |
+
 
 ### User Story US07 - Manter Barbeiro
 
@@ -235,13 +272,17 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | Um barbeiro já cadastrado, inicia o cadastro de um novo barbeiro, e informa os dados no formulário de registro. Ele informa os dados de maneira correta para ser enviado, Ao clicar em “enviar”, os dados são aceitos pelo sistema, e o novo barbeiro passa a possuir um cadastro, e é redirecionado para a página principal.                          |
-| **TA01.02**              | Um barbeiro já cadastrado, inicia o cadastro de um novo barbeiro, e informa os dados no formulário de registro. Ele informa os dados de maneira incorreta para ser enviado, Ao clicar em “enviar”, os dados são negados pelo sistema, e é mostrado um texto em vermelho que os dados não são aceitos. |
-| **TA01.03**              | O barbeiro, no formulário de login, informa os dados de maneira correta, e é redirecionado para a página do barbeiro. |
-| **TA01.04**              | O barbeiro, no formulário de login, informa os dados de maneira incorreta, e é redirecionado para a página principal. |
+####  Testes de Aceitação
+
+| Código    | Cenário                                                                 | Descrição                                                                                                                                                                                                                                                     |
+|-----------|--------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA07.01   | Cadastro de barbeiro com dados válidos (RF09, RF18)                      | Um barbeiro já cadastrado acessa o formulário de cadastro de um novo barbeiro. Ele preenche todos os campos corretamente e clica em “Enviar”. O sistema aceita os dados, cria o cadastro, autentica o usuário e redireciona para a página principal.           |
+| TA07.02   | Cadastro de barbeiro com dados inválidos (RF09)                          | Um barbeiro acessa o formulário de cadastro de um novo barbeiro, mas preenche dados inválidos. Ao clicar em “Enviar”, o sistema exibe uma mensagem em vermelho informando que os dados não foram aceitos e o cadastro não é realizado.                         |
+| TA07.03   | Login com dados corretos (RF19)                                          | Um barbeiro acessa o formulário de login, insere dados válidos e clica em “Entrar”. O sistema valida a sessão, autentica o usuário e redireciona para a área de barbeiros.                                                                                     |
+| TA07.04   | Login com dados incorretos (RF19)                                        | Um barbeiro acessa o formulário de login e informa dados incorretos. O sistema exibe uma mensagem de erro e o usuário permanece na tela principal, sem ser autenticado.                                                                                        |
+| TA07.05   | Atualizar perfil de barbeiro (RF11, RF20)                                | Um barbeiro logado acessa a tela de edição do perfil, altera seus dados (nome, e-mail etc.) e clica em “Salvar”. O sistema valida os dados, atualiza o cadastro e confirma a alteração com uma mensagem de sucesso.                                           |
+| TA07.06   | Remover barbeiro e conta associada (RF12, RF21)                          | Um barbeiro logado acessa a opção de exclusão de conta, confirma a remoção e o sistema deleta tanto o registro do barbeiro quanto a conta de usuário associada, redirecionando-o para a tela inicial com uma mensagem de confirmação.                           |
+
 
 ### User Story US08 - Extrato de Pagamento
 
@@ -264,8 +305,9 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | **Testador**            | Júlio     |
 | **Desenvolvedor**       | Guilherme |
 
-| Testes de Aceitação (TA) |                                                                                                                                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Código**               | **Descrição**                                                                                                                                                                         |
-| **TA01.01**              | O barbeiro irá acessar a página de Pagamentos e poderá filtrar as informações de pagamentos baseado em tempo e quantidade, e o sistema deve produzir um relatório de acordo com que foi filtrado pelo barbeiro.                          |
-| **TA01.02**              | O barbeiro na página de Pagamentos, ao colocar um filtro de tempo anterior a criação do do primeiro pagamento, ao a criação do aplicativo, ao selecionar “Produzir Relatório”, o sistema irá exibir a mensagem: “Filtro de tempo excedido”. |
+####  Testes de Aceitação
+
+| Código    | Cenário                                                                   | Descrição                                                                                                                                                                                                                                                   |
+|-----------|----------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TA08.01   | Filtrar pagamentos por período e quantidade (RF23)                         | O barbeiro acessa a página de Pagamentos e utiliza os filtros disponíveis (ex: data inicial, data final, limite de resultados). O sistema processa a requisição e retorna um relatório com os pagamentos realizados no período e quantidade informados.         |
+| TA08.02   | Filtro de tempo anterior à criação do sistema (RF23)                       | O barbeiro acessa a página de Pagamentos, define um intervalo de tempo que antecede o primeiro pagamento registrado no sistema e clica em “Produzir Relatório”. O sistema exibe a mensagem: “Filtro de tempo excedido” e não retorna nenhum dado.              |
