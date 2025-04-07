@@ -64,12 +64,18 @@ class Horario:
 
 # Pagamento
 class Pagamento:
-    def __init__(self, id, data, adicional, metodo, valor):
+    def __init__(self, id, data, servico=None, metodo=MetodoPagamento.DINHEIRO):
         self._id = id
         self._data = data
-        self._adicional = adicional
+        self._adicional = 0
         self._metodo = metodo
-        self._valor = valor
+        self._valor = 0
+
+        if servico:
+            self._definir_pagamento(servico)
+
+    def _definir_pagamento(self, servico):
+        self._valor = servico._valor_base + self._adicional
 
 # Agendamento
 class HorarioDeAtendimento:
