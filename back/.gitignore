@@ -8,6 +8,7 @@ venv/
 *.pyc
 *.pyo
 __pycache__/
+.pytest_cache/
 
 # Logs e Debug
 logs/

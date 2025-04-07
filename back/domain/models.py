@@ -97,4 +97,4 @@ def criar_horario_de_atendimento(cliente: Cliente, barbeiro: Barbeiro, horario: 
         horario=horario,
         pagamento=pagamento
     )
-    return atendimento._id, atendimento._pagamento
+    return atendimento
