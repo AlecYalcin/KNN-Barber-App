@@ -15,6 +15,12 @@ class Disponibilidade(Enum):
     DISPONIVEL = "Disponível"
     INDISPONIVEL = "Indisponível"
 
+#Enum para Método de pagamento
+class MetodoPagamento(Enum):
+    DINHEIRO = "Dinheiro"
+    CARTAO = "Cartão"
+    PIX = "Pix"
+
 # Exceção personalizada para horário indisponível
 class HorarioIndisponivelParaBarbeiro(Exception):
     def __init__(self):
