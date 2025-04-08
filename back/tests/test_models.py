@@ -1,14 +1,6 @@
 import pytest
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
-from domain.models import (
-    Cliente, Barbeiro, Servico, Horario,
-    MetodoPagamento, StatusServico, HorarioIndisponivelParaBarbeiro,
-    criar_horario_de_atendimento
-)
+from domain.models import * 
 
 @pytest.mark.parametrize(
     "cliente, barbeiro, servico",
