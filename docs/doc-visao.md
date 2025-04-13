@@ -121,17 +121,19 @@ erDiagram
 | RF17   | Registrar Horário Indisponível       | Permitir ao barbeiro registrar horários em que estará indisponível, com data, horário e justificativa. |
 | RF18   | Editar Horário Indisponível          | Permitir que o barbeiro edite um horário previamente registrado como indisponível.                     |
 | RF19   | Remover Horário Indisponível         | Permitir que o barbeiro exclua um horário registrado como indisponível.                                |
-| RF20   | Verificar Disponibilidade de Horário | Verificar se o horário está dentro da jornada, não é um horário indisponível e não está ocupado.       |
-| RF21   | Selecionar Serviços para Agendamento | Permitir que o cliente selecione um ou mais serviços para o agendamento.                               |
-| RF22   | Calcular Duração de Agendamento      | Calcular automaticamente a duração do agendamento com base nos serviços escolhidos.                    |
-| RF23   | Realizar Agendamento                 | Permitir que o cliente agende serviços em horários disponíveis.                                        |
-| RF24   | Cancelar Agendamento                 | Permitir que o cliente cancele um agendamento existente.                                               |
-| RF25   | Bloquear Horário após Agendamento    | Marcar automaticamente como ocupado o horário agendado.                                                |
-| RF26   | Exibir Valor de Pagamento            | Exibir ao cliente o valor total do agendamento após a seleção dos serviços.                            |
-| RF27   | Informar Forma de Pagamento          | Permitir que o cliente escolha a forma de pagamento no momento do agendamento.                         |
-| RF28   | Confirmar Pagamento                  | Permitir que o barbeiro confirme que o pagamento foi realizado.                                        |
-| RF29   | Relatório de Pagamentos do Cliente   | Permitir que o cliente veja seus agendamentos e pagamentos passados.                                   |
-| RF30   | Relatório de Pagamentos do Barbeiro  | Permitir que o barbeiro veja todos os agendamentos e pagamentos realizados.                            |
+| RF20   | Listar Horários Indisponíveis        | O cliente deve ser capaz de visualizar os horários não disponívesi para agendamento                    |
+| RF21   | Verificar Disponibilidade de Horário | Verificar se o horário está dentro da jornada, não é um horário indisponível e não está ocupado.       |
+| RF22   | Selecionar Serviços para Agendamento | Permitir que o cliente selecione um ou mais serviços para o agendamento.                               |
+| RF23   | Calcular Duração de Agendamento      | Calcular automaticamente a duração do agendamento com base nos serviços escolhidos.                    |
+| RF24   | Realizar Agendamento                 | Permitir que o cliente agende serviços em horários disponíveis.                                        |
+| RF25   | Cancelar Agendamento                 | Permitir que o cliente ou barbeiro cancele um agendamento existente.                                   |
+| RF26   | Visualizar Agendamentos              | Os usuários do sistema devem ser capazes de visualizar os agendamentos do sistema                      |
+| RF27   | Bloquear Horário após Agendamento    | Marcar automaticamente como ocupado o horário agendado.                                                |
+| RF28   | Exibir Valor de Pagamento            | Exibir ao cliente o valor total do agendamento após a seleção dos serviços.                            |
+| RF29   | Informar Forma de Pagamento          | Permitir que o cliente escolha a forma de pagamento no momento do agendamento.                         |
+| RF30   | Confirmar Pagamento                  | Permitir que o barbeiro confirme que o pagamento foi realizado.                                        |
+| RF31   | Relatório de Pagamentos do Cliente   | Permitir que o cliente veja seus agendamentos e pagamentos passados.                                   |
+| RF32   | Relatório de Pagamentos do Barbeiro  | Permitir que o barbeiro veja todos os agendamentos e pagamentos realizados.                            |
 
 ### 3.2 Requisitos Não Funcionais
 

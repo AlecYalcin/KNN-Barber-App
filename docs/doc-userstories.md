@@ -22,9 +22,13 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | ------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Descrição** | Como proprietário do sistema, quero ser capaz de atualizar minhas informações pessoais para que meus clientes tenham acesso a dados corretos. |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                                                       |
+| ------------------------- | :-------------------------------------------------------------------------------------------------- |
+| RF01                      | Permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada. |
+| RF02                      | Diferenciar as permissões de funcionalidades entre barbeiros e clientes.                            |
+| RF06                      | Permitir o cadastro de um barbeiro com nome, número de contato e horários de atendimento.           |
+| RF07                      | Permitir que o barbeiro edite suas informações pessoais.                                            |
+| RF08                      | Permitir que o barbeiro exclua sua conta do sistema.                                                |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -49,9 +53,14 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | ------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
 | **Descrição** | Como proprietário do sistema, quero poder alterar minha jornada de trabalho para me adaptar às necessidades do mês, da semana ou do dia. |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                                                          |
+| ------------------------- | :----------------------------------------------------------------------------------------------------- |
+| RF14                      | Permitir que o barbeiro defina dias da semana e horários de expediente.                                |
+| RF15                      | Permitir que o barbeiro edite uma jornada cadastrada.                                                  |
+| RF16                      | Permitir que o barbeiro desligue temporariamente sua jornada de trabalho.                              |
+| RF17                      | Permitir ao barbeiro registrar horários em que estará indisponível, com data, horário e justificativa. |
+| RF18                      | Permitir que o barbeiro edite um horário previamente registrado como indisponível.                     |
+| RF19                      | Permitir que o barbeiro exclua um horário registrado como indisponível.                                |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -76,9 +85,11 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | ------------- | :--------------------------------------------------------------------------------------------------------------------- |
 | **Descrição** | Como proprietário do sistema, quero cadastrar e editar os serviços que ofereço, com informações sobre duração e preço. |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                               |
+| ------------------------- | :-------------------------------------------------------------------------- |
+| RF10                      | Permitir que o barbeiro registre um novo serviço com nome, preço e duração. |
+| RF11                      | Permitir que o barbeiro atualize dados de um serviço existente.             |
+| RF12                      | Permitir que o barbeiro exclua um serviço cadastrado.                       |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -99,13 +110,20 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 
 ### User Story US04 - Realizar Agendamentos
 
-|               |                                                                                                                  |
-| ------------- | :--------------------------------------------------------------------------------------------------------------- |
-| **Descrição** | Como cliente do sistema, quero marcar meus agendamentos com base nos serviços escolhidos e horários disponíveis. |
+|               |                                                                                                                               |
+| ------------- | :---------------------------------------------------------------------------------------------------------------------------- |
+| **Descrição** | Como cliente do sistema, quero marcar ou desmarcar meus agendamentos com base nos serviços escolhidos e horários disponíveis. |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                                                    |
+| ------------------------- | :----------------------------------------------------------------------------------------------- |
+| RF13                      | Permitir que o cliente visualize todos os serviços ativos.                                       |
+| RF20                      | O cliente deve ser capaz de visualizar os horários não disponívesi para agendamento              |
+| RF21                      | Verificar se o horário está dentro da jornada, não é um horário indisponível e não está ocupado. |
+| RF22                      | Permitir que o cliente selecione um ou mais serviços para o agendamento.                         |
+| RF23                      | Calcular automaticamente a duração do agendamento com base nos serviços escolhidos.              |
+| RF24                      | Permitir que o cliente agende serviços em horários disponíveis.                                  |
+| RF25                      | Permitir que o cliente ou barbeiro cancele um agendamento existente.                             |
+| RF27                      | Marcar automaticamente como ocupado o horário agendado.                                          |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -130,9 +148,11 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | ------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
 | **Descrição** | Como proprietário do sistema, quero visualizar os agendamentos marcados, desmarcar quando necessário e justificar faltas ou emergências. |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                                                          |
+| ------------------------- | :----------------------------------------------------------------------------------------------------- |
+| RF17                      | Permitir ao barbeiro registrar horários em que estará indisponível, com data, horário e justificativa. |
+| RF25                      | Permitir que o cliente ou barbeiro cancele um agendamento existente.                                   |
+| RF26                      | Os usuários do sistema devem ser capazes de visualizar os agendamentos do sistema                      |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -157,9 +177,10 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | ------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Descrição** | Como proprietário do sistema, quero visualizar o histórico completo de pagamentos realizados, com detalhes dos usuários e formas de pagamento. |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                               |
+| ------------------------- | :-------------------------------------------------------------------------- |
+| RF30                      | Permitir que o barbeiro confirme que o pagamento foi realizado.             |
+| RF32                      | Permitir que o barbeiro veja todos os agendamentos e pagamentos realizados. |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -178,26 +199,27 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | ------- | ------- | --------- |
 | TA06.01 | --      | --        |
 
-### User Story US07 - Consultar Histórico de Agendamentos e Pagamentos
+### User Story US07 - Pagamentos do Sistema
 
-|               |                                                                                                                     |
-| ------------- | :------------------------------------------------------------------------------------------------------------------ |
-| **Descrição** | Como usuário do sistema, quero visualizar o histórico de agendamentos realizados e os pagamentos associados a eles. |
+|               |                                                                                                                                                    |
+| ------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descrição** | Como Cliente que realizou um agendamento, eu quero ser capaz de ver o valor final, as formas de pagamentos disponíveis e selecionar qual eu desejo |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                                  |
+| ------------------------- | :----------------------------------------------------------------------------- |
+| RF28                      | Exibir ao cliente o valor total do agendamento após a seleção dos serviços.    |
+| RF29                      | Permitir que o cliente escolha a forma de pagamento no momento do agendamento. |
 
-|                         |           |
-| ----------------------- | --------- |
-| **Prioridade**          | Desejável |
-| **Estimativa**          | 3 h       |
-| **Tempo Gasto (real):** | --        |
-| **Tamanho Funcional**   | 3 PF      |
-| **Analista**            | --        |
-| **Testador**            | --        |
-| **Desenvolvedor**       | --        |
-| **Desenvolvedor**       | --        |
+|                         |            |
+| ----------------------- | ---------- |
+| **Prioridade**          | Importante |
+| **Estimativa**          | 3 h        |
+| **Tempo Gasto (real):** | --         |
+| **Tamanho Funcional**   | 3 PF       |
+| **Analista**            | --         |
+| **Testador**            | --         |
+| **Desenvolvedor**       | --         |
+| **Desenvolvedor**       | --         |
 
 #### Testes de Aceitação – US07
 
@@ -211,9 +233,13 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | ------------- | :------------------------------------------------------------------------------------ |
 | **Descrição** | Como cliente do sistema, quero alterar minhas informações pessoais salvas no sistema. |
 
-| **Requisitos envolvidos** | **Descrição** |
-| ------------------------- | :------------ |
-| RF--                      | --            |
+| **Requisitos envolvidos** | **Descrição**                                                                                       |
+| ------------------------- | :-------------------------------------------------------------------------------------------------- |
+| RF01                      | Permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada. |
+| RF02                      | Diferenciar as permissões de funcionalidades entre barbeiros e clientes.                            |
+| RF03                      | Permitir o cadastro de um cliente com nome, CPF e número de contato.                                |
+| RF04                      | Permitir que o cliente edite suas informações pessoais.                                             |
+| RF05                      | Permitir que o cliente exclua sua conta do sistema.                                                 |
 
 |                         |           |
 | ----------------------- | --------- |
@@ -231,3 +257,30 @@ Este documento descreve os User Stories do projeto KNN Barber App, criado a part
 | Código  | Cenário | Descrição |
 | ------- | ------- | --------- |
 | TA08.01 | --      | --        |
+
+### User Story US09 - Consultar Histórico de Agendamentos e Pagamentos
+
+|               |                                                                                                                     |
+| ------------- | :------------------------------------------------------------------------------------------------------------------ |
+| **Descrição** | Como usuário do sistema, quero visualizar o histórico de agendamentos realizados e os pagamentos associados a eles. |
+
+| **Requisitos envolvidos** | **Descrição**                                                        |
+| ------------------------- | :------------------------------------------------------------------- |
+| RF31                      | Permitir que o cliente veja seus agendamentos e pagamentos passados. |
+
+|                         |           |
+| ----------------------- | --------- |
+| **Prioridade**          | Desejável |
+| **Estimativa**          | 3 h       |
+| **Tempo Gasto (real):** | --        |
+| **Tamanho Funcional**   | 3 PF      |
+| **Analista**            | --        |
+| **Testador**            | --        |
+| **Desenvolvedor**       | --        |
+| **Desenvolvedor**       | --        |
+
+#### Testes de Aceitação – US09
+
+| Código  | Cenário | Descrição |
+| ------- | ------- | --------- |
+| TA07.01 | --      | --        |
