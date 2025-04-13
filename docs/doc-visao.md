@@ -100,55 +100,45 @@ erDiagram
 
 ### 3.1 Requisitos Funcionais
 
-| Cod.    | Nome                          | Descrição                                                                                                                          | Categoria |
-| ------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| Cod.    | Nome                          | Descrição                                                                                                                          |
-| ------- | ----------------------------- | ---------------------------------------------------------------------------                                                        |
-| RF01    | Criar Serviço                 | O sistema deve permitir o cadastro de um serviço com Nome, Descrição e Média de preços.                                            |
-| RF02    | Listar Serviços               | O sistema deve permitir a visualização de todos os serviços cadastrados e a consulta de um serviço específico.                     |
-| RF03    | Atualizar Serviço             | O sistema deve permitir a edição de um serviço, permitindo a alteração de Nome, Descrição e Média de preços.                       |
-| RF04    | Remover Serviço               | O sistema deve permitir a exclusão de um serviço cadastrado.                                                                       |
-| RF05    | Criar Cliente                 | O sistema deve permitir o cadastro de um cliente com Nome, CPF e Número de contato.                                                |
-| RF06    | Listar Clientes               | O sistema deve permitir a visualização de todos os clientes cadastrados e a busca por CPF ou Nome.                                 |
-| RF07    | Atualizar Cliente             | O sistema deve permitir a edição dos dados de um cliente (Nome, CPF e Número de contato).                                          |
-| RF08    | Remover Cliente               | O sistema deve permitir a exclusão de um cliente cadastrado.                                                                       |
-| RF09    | Criar Barbeador               | O sistema deve permitir o cadastro de um barbeador com Nome, Número de contato e Horários de atendimento.                          |
-| RF10    | Listar Barbeadores            | O sistema deve permitir a visualização de todos os barbeadores cadastrados e a busca por Nome ou Número.                           |
-| RF11    | Atualizar Barbeador           | O sistema deve permitir a edição dos dados de um barbeador (Nome, Número de contato, Horários de atendimento).                     |
-| RF12    | Remover Barbeador             | O sistema deve permitir a exclusão de um barbeador cadastrado.                                                                     |
-| RF13    | Criar Agendamento             | O sistema deve permitir o cadastro de um agendamento com Horário, Cliente e Serviço.                                               |
-| RF14    | Listar Agendamentos           | O sistema deve permitir a visualização de todos os agendamentos cadastrados e a consulta filtrando por Cliente, Barbeador ou Data. |
-| RF15    | Atualizar Agendamento         | O sistema deve permitir a alteração dos dados de um agendamento, permitindo o reagendamento do horário, cliente ou serviço.        |
-| RF16    | Remover Agendamento           | O sistema deve permitir o cancelamento de um agendamento.                                                                          |
-| RF17    | Confirmar Atendimento         | O sistema deve permitir que um barceiro decida se vai aceitar o agendamento ou não.                                                |
-| RF18    | Criar Conta de Usuário        | O sistema deve permitir a criação de uma conta de usuário informando Login e Senha.                                                |
-| RF19    | Verificar Sessão              | O sistema deve permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada.                 |
-| RF20    | Atualizar Conta de Usuário    | O sistema deve permitir a alteração da senha ou a atualização de informações da conta.                                             |
-| RF21    | Remover Conta de Usuário      | O sistema deve permitir a exclusão de uma conta de usuário.                                                                        |
-| RF22    | Criar Horário                 | O sistema deve permitir o cadastro de um Horário com Data, Hora e Disponibilidade.                                            |
-| RF23    | Listar Horários               | O sistema deve permitir a visualização de todos os Horários cadastrados e a consulta de um Horário específico.                     |
-| RF24    | Atualizar Horário             | O sistema deve permitir a edição de um Horário, permitindo a alteração de Data, Hora e Disponibilidade                       |
-| RF25    | Remover Horário               | O sistema deve permitir a exclusão de um Horário cadastrado.                                                                       |
-| RF22    | Criar Pagamento                 | O sistema deve permitir o cadastro de um Pagamento com Data, Valor, Método e Adicional                                    |
-| RF23    | Listar Pagamentos               | O sistema deve permitir a visualização de todos os Pagamentos cadastrados e a consulta de um Pagamento específico.                     |
-| RF24    | Atualizar Pagamento             | O sistema deve permitir a edição de um Pagamento, permitindo a alteração de Data, Valor, Método e Adicional                       |
-| RF25    | Remover Pagamento               | O sistema deve permitir a exclusão de um Pagamento cadastrado.                                                                       |
+| Cod. | Nome                       | Descrição                                                                                                                          |
+| ---- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| RF01 | Criar Serviço              | O sistema deve permitir o cadastro de um serviço com Nome, Descrição e Média de preços.                                            |
+| RF02 | Listar Serviços            | O sistema deve permitir a visualização de todos os serviços cadastrados e a consulta de um serviço específico.                     |
+| RF03 | Atualizar Serviço          | O sistema deve permitir a edição de um serviço, permitindo a alteração de Nome, Descrição e Média de preços.                       |
+| RF04 | Remover Serviço            | O sistema deve permitir a exclusão de um serviço cadastrado.                                                                       |
+| RF05 | Criar Cliente              | O sistema deve permitir o cadastro de um cliente com Nome, CPF e Número de contato.                                                |
+| RF06 | Listar Clientes            | O sistema deve permitir a visualização de todos os clientes cadastrados e a busca por CPF ou Nome.                                 |
+| RF07 | Atualizar Cliente          | O sistema deve permitir a edição dos dados de um cliente (Nome, CPF e Número de contato).                                          |
+| RF08 | Remover Cliente            | O sistema deve permitir a exclusão de um cliente cadastrado.                                                                       |
+| RF09 | Criar Barbeador            | O sistema deve permitir o cadastro de um barbeador com Nome, Número de contato e Horários de atendimento.                          |
+| RF10 | Listar Barbeadores         | O sistema deve permitir a visualização de todos os barbeadores cadastrados e a busca por Nome ou Número.                           |
+| RF11 | Atualizar Barbeador        | O sistema deve permitir a edição dos dados de um barbeador (Nome, Número de contato, Horários de atendimento).                     |
+| RF12 | Remover Barbeador          | O sistema deve permitir a exclusão de um barbeador cadastrado.                                                                     |
+| RF13 | Criar Agendamento          | O sistema deve permitir o cadastro de um agendamento com Horário, Cliente e Serviço.                                               |
+| RF14 | Listar Agendamentos        | O sistema deve permitir a visualização de todos os agendamentos cadastrados e a consulta filtrando por Cliente, Barbeador ou Data. |
+| RF15 | Atualizar Agendamento      | O sistema deve permitir a alteração dos dados de um agendamento, permitindo o reagendamento do horário, cliente ou serviço.        |
+| RF16 | Remover Agendamento        | O sistema deve permitir o cancelamento de um agendamento.                                                                          |
+| RF17 | Confirmar Atendimento      | O sistema deve permitir que um barceiro decida se vai aceitar o agendamento ou não.                                                |
+| RF18 | Criar Conta de Usuário     | O sistema deve permitir a criação de uma conta de usuário informando Login e Senha.                                                |
+| RF19 | Verificar Sessão           | O sistema deve permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada.                 |
+| RF20 | Atualizar Conta de Usuário | O sistema deve permitir a alteração da senha ou a atualização de informações da conta.                                             |
+| RF21 | Remover Conta de Usuário   | O sistema deve permitir a exclusão de uma conta de usuário.                                                                        |
 
 ### 3.2 Requisitos Não Funcionais
 
-| Cod.  | Nome                              | Descrição                                                                                                                                                              |
-| ----- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| RNF01 | Especificidade de layout          | O software será web e seu layout deverá funcionar tanto em dispositivos móveis quanto em desktop.                                                                      |
-| RNF02 | Interface auto explicativa        | Sua interface deverá conter “widgets” com nomes e ícones auto explicativos o suficiente para rápido entendimento.                                                      |
-| RNF03 | Interface de uso rápido           | Sua interface, principalmente para o administrador, deverá ser muito bem dividida em cada função, sendo suficiente apertar um ou dois botões para acessar cada tarefa. |
-| RNF04 | Permissão de clientes não logados | Clientes não logados no sistema devem poder ter acesso somente aos horários disponíveis.                                                                               |
+| Cod.  | Nome                              | Descrição                                                                                         |
+| ----- | --------------------------------- | ------------------------------------------------------------------------------------------------- |
+| RNF01 | Especificidade de layout          | O software será web e seu layout deverá funcionar tanto em dispositivos móveis quanto em desktop. |
+| RNF02 | Permissão de clientes não logados | Clientes não logados no sistema devem ter acesso aos horários e serviços disponíveis.             |
+| RNF03 | Limite de Marcação                | Clientes só podem marcar horários com até uma semana de adiantamento.                             |
+| RNF04 | Limite de Agendamentos            | Clientes só podem realizar até dois agendamentos por semana                                       |
 
 ## 3.3 Perfis de Usuário
 
-| Perfil       | Descrição                                                                                                                                                                                               |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cliente**  | Usuário que utiliza os serviços do aplicativo. Pode ter diferentes níveis de familiaridade com tecnologia, então a interface deve ser intuitiva e de fácil uso.                                         |
-| **Barbeiro** | Atua como administrador da aplicação, podendo gerenciar serviços e acessar dados financeiros. Assim como o cliente, pode ter pouca experiência com tecnologia, então a usabilidade deve ser priorizada. |
+| Perfil       | Descrição                                                                                     |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| **Cliente**  | Usuário que utiliza os serviços do aplicativo.                                                |
+| **Barbeiro** | Atua como administrador da aplicação, podendo gerenciar serviços e acessar dados financeiros. |
 
 ---
 
@@ -158,9 +148,9 @@ A tabela abaixo apresenta os riscos identificados para o início do projeto. Ess
 
 | Data       | Risco                                                             | Prioridade | Responsável   | Status       | Providência/Solução                                                                                             |
 | ---------- | ----------------------------------------------------------------- | ---------- | ------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
-| 02/12/2024 | Dificuldade dos usuários em compreender a interface do aplicativo | Alta       | Desenvolvedor | Vigente      | Realizar testes de usabilidade com clientes da barbearia e ajustar a interface com base no feedback.            |
-| 02/12/2024 | Relatórios financeiros com dados inconsistentes ou atrasados      | Média      | Desenvolvedor | Não iniciado | Validar a lógica de geração de relatórios e realizar testes com cenários reais de entrada antes da implantação. |
-| 02/12/2024 | Resistência dos clientes à adoção do aplicativo                   | Baixa      | Cliente       | Não iniciado | Criar campanhas de conscientização e guias explicativos para os clientes sobre os benefícios do aplicativo.     |
+| xx/xx/2025 | Dificuldade dos usuários em compreender a interface do aplicativo | Alta       | Desenvolvedor | Vigente      | Realizar testes de usabilidade com clientes da barbearia e ajustar a interface com base no feedback.            |
+| xx/xx/2025 | Relatórios financeiros com dados inconsistentes ou atrasados      | Média      | Desenvolvedor | Não iniciado | Validar a lógica de geração de relatórios e realizar testes com cenários reais de entrada antes da implantação. |
+| xx/xx/2025 | Resistência dos clientes à adoção do aplicativo                   | Baixa      | Cliente       | Não iniciado | Criar campanhas de conscientização e guias explicativos para os clientes sobre os benefícios do aplicativo.     |
 
 ---
 
