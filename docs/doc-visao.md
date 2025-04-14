@@ -48,7 +48,7 @@ Ademais, o software pode ser uma ponte para uma nova forma de controle de pagame
 
 Abaixo apresentamos o modelo conceitual usando o **Mermaid**.
 
-```mermaid
+<!-- ```mermaid
 erDiagram
     CLIENTE {
         string cpf PK
@@ -93,6 +93,76 @@ erDiagram
     AGENDAMENTO ||--o{ PAGAMENTO : "gera"
     USUARIO }o--o{ CLIENTE : "pode ser"
     USUARIO }o--o{ BARBEIRO : "pode ser"
+
+``` -->
+
+```mermaid
+erDiagram
+    USUARIO {
+        string email PK
+        string nome
+        string senha
+        string telefone
+    }
+
+    CLIENTE {
+    }
+
+    BARBEIRO {
+
+    }
+
+    JORNADA_DE_TRABALHO {
+        string id PK
+        string dia
+        boolean ativa
+        datetime horario_inicio
+        datetime horario_pausa
+        datetime horario_retorno
+        datetime horario_fim
+    }
+
+    HORARIO_INDISPONIVEL {
+        string id PK
+        datetime horario_inicio
+        datetime horario_fim
+        string justificativa
+    }
+
+
+    SERVICO {
+        string id PK
+        string nome
+        string descricao
+        float preco
+        datetime duracao
+    }
+
+    AGENDAMENTO {
+        int id PK
+        datetime horario_inicio
+        datetime horario_fim
+    }
+
+
+    PAGAMENTO {
+        int id PK
+        float valor
+        datetime data
+        string metodo
+    }
+
+    USUARIO ||--|{ CLIENTE: "pode ser"
+    USUARIO ||--|{ BARBEIRO: "pode ser"
+
+    BARBEIRO ||--o{ JORNADA_DE_TRABALHO: "personaliza"
+    BARBEIRO ||--o{ HORARIO_INDISPONIVEL: "adiciona"
+
+    BARBEIRO ||--o{ AGENDAMENTO: "atende"
+    CLIENTE ||--o{ AGENDAMENTO: "realiza"
+    SERVICO ||--o{ AGENDAMENTO: "possui"
+    AGENDAMENTO ||--|| PAGAMENTO: "gera"
+
 
 ```
 
