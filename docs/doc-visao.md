@@ -48,7 +48,7 @@ Ademais, o software pode ser uma ponte para uma nova forma de controle de pagame
 
 Abaixo apresentamos o modelo conceitual usando o **Mermaid**.
 
-```mermaid
+<!-- ```mermaid
 erDiagram
     CLIENTE {
         string cpf PK
@@ -94,35 +94,117 @@ erDiagram
     USUARIO }o--o{ CLIENTE : "pode ser"
     USUARIO }o--o{ BARBEIRO : "pode ser"
 
+``` -->
+
+```mermaid
+erDiagram
+    USUARIO {
+        string email PK
+        string nome
+        string senha
+        string telefone
+    }
+
+    CLIENTE {
+    }
+
+    BARBEIRO {
+
+    }
+
+    JORNADA_DE_TRABALHO {
+        string id PK
+        string dia
+        boolean ativa
+        datetime horario_inicio
+        datetime horario_pausa
+        datetime horario_retorno
+        datetime horario_fim
+    }
+
+    HORARIO_INDISPONIVEL {
+        string id PK
+        datetime horario_inicio
+        datetime horario_fim
+        string justificativa
+    }
+
+
+    SERVICO {
+        string id PK
+        string nome
+        string descricao
+        float preco
+        datetime duracao
+    }
+
+    AGENDAMENTO {
+        int id PK
+        datetime horario_inicio
+        datetime horario_fim
+    }
+
+
+    PAGAMENTO {
+        int id PK
+        float valor
+        datetime data
+        string metodo
+        boolean status
+    }
+
+    USUARIO ||--|{ CLIENTE: "pode ser"
+    USUARIO ||--|{ BARBEIRO: "pode ser"
+
+    BARBEIRO ||--o{ JORNADA_DE_TRABALHO: "personaliza"
+    BARBEIRO ||--o{ HORARIO_INDISPONIVEL: "adiciona"
+
+    BARBEIRO ||--o{ AGENDAMENTO: "atende"
+    CLIENTE ||--o{ AGENDAMENTO: "realiza"
+    SERVICO ||--o{ AGENDAMENTO: "possui"
+    AGENDAMENTO ||--|| PAGAMENTO: "gera"
+
+
 ```
 
 ## 3. Descrição Geral
 
 ### 3.1 Requisitos Funcionais
 
-| Cod. | Nome                       | Descrição                                                                                                                          |
-| ---- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| RF01 | Criar Serviço              | O sistema deve permitir o cadastro de um serviço com Nome, Descrição e Média de preços.                                            |
-| RF02 | Listar Serviços            | O sistema deve permitir a visualização de todos os serviços cadastrados e a consulta de um serviço específico.                     |
-| RF03 | Atualizar Serviço          | O sistema deve permitir a edição de um serviço, permitindo a alteração de Nome, Descrição e Média de preços.                       |
-| RF04 | Remover Serviço            | O sistema deve permitir a exclusão de um serviço cadastrado.                                                                       |
-| RF05 | Criar Cliente              | O sistema deve permitir o cadastro de um cliente com Nome, CPF e Número de contato.                                                |
-| RF06 | Listar Clientes            | O sistema deve permitir a visualização de todos os clientes cadastrados e a busca por CPF ou Nome.                                 |
-| RF07 | Atualizar Cliente          | O sistema deve permitir a edição dos dados de um cliente (Nome, CPF e Número de contato).                                          |
-| RF08 | Remover Cliente            | O sistema deve permitir a exclusão de um cliente cadastrado.                                                                       |
-| RF09 | Criar Barbeador            | O sistema deve permitir o cadastro de um barbeador com Nome, Número de contato e Horários de atendimento.                          |
-| RF10 | Listar Barbeadores         | O sistema deve permitir a visualização de todos os barbeadores cadastrados e a busca por Nome ou Número.                           |
-| RF11 | Atualizar Barbeador        | O sistema deve permitir a edição dos dados de um barbeador (Nome, Número de contato, Horários de atendimento).                     |
-| RF12 | Remover Barbeador          | O sistema deve permitir a exclusão de um barbeador cadastrado.                                                                     |
-| RF13 | Criar Agendamento          | O sistema deve permitir o cadastro de um agendamento com Horário, Cliente e Serviço.                                               |
-| RF14 | Listar Agendamentos        | O sistema deve permitir a visualização de todos os agendamentos cadastrados e a consulta filtrando por Cliente, Barbeador ou Data. |
-| RF15 | Atualizar Agendamento      | O sistema deve permitir a alteração dos dados de um agendamento, permitindo o reagendamento do horário, cliente ou serviço.        |
-| RF16 | Remover Agendamento        | O sistema deve permitir o cancelamento de um agendamento.                                                                          |
-| RF17 | Confirmar Atendimento      | O sistema deve permitir que um barceiro decida se vai aceitar o agendamento ou não.                                                |
-| RF18 | Criar Conta de Usuário     | O sistema deve permitir a criação de uma conta de usuário informando Login e Senha.                                                |
-| RF19 | Verificar Sessão           | O sistema deve permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada.                 |
-| RF20 | Atualizar Conta de Usuário | O sistema deve permitir a alteração da senha ou a atualização de informações da conta.                                             |
-| RF21 | Remover Conta de Usuário   | O sistema deve permitir a exclusão de uma conta de usuário.                                                                        |
+| Código | Nome                                 | Descrição                                                                                              |
+| ------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| RF01   | Verificar Sessão                     | Permitir que o usuário verifique seu status de sessão e visualize informações da conta autenticada.    |
+| RF02   | Controle de Permissões de Acesso     | Diferenciar as permissões de funcionalidades entre barbeiros e clientes.                               |
+| RF03   | Criar Conta de Cliente               | Permitir o cadastro de um cliente com nome, CPF e número de contato.                                   |
+| RF04   | Editar Conta de Cliente              | Permitir que o cliente edite suas informações pessoais.                                                |
+| RF05   | Remover Conta de Cliente             | Permitir que o cliente exclua sua conta do sistema.                                                    |
+| RF06   | Criar Conta de Barbeiro              | Permitir o cadastro de um barbeiro com nome, número de contato e horários de atendimento.              |
+| RF07   | Editar Conta de Barbeiro             | Permitir que o barbeiro edite suas informações pessoais.                                               |
+| RF08   | Remover Conta de Barbeiro            | Permitir que o barbeiro exclua sua conta do sistema.                                                   |
+| RF09   | Listar Barbeiros                     | Permitir a visualização de barbeiros cadastrados, com busca por nome ou número de contato.             |
+| RF10   | Cadastrar Serviço                    | Permitir que o barbeiro registre um novo serviço com nome, preço e duração.                            |
+| RF11   | Editar Serviço                       | Permitir que o barbeiro atualize dados de um serviço existente.                                        |
+| RF12   | Remover Serviço                      | Permitir que o barbeiro exclua um serviço cadastrado.                                                  |
+| RF13   | Listar Serviços Disponíveis          | Permitir que o cliente visualize todos os serviços ativos.                                             |
+| RF14   | Cadastrar Jornada de Trabalho        | Permitir que o barbeiro defina dias da semana e horários de expediente.                                |
+| RF15   | Editar Jornada de Trabalho           | Permitir que o barbeiro edite uma jornada cadastrada.                                                  |
+| RF16   | Desativar Jornada                    | Permitir que o barbeiro desligue temporariamente sua jornada de trabalho.                              |
+| RF17   | Registrar Horário Indisponível       | Permitir ao barbeiro registrar horários em que estará indisponível, com data, horário e justificativa. |
+| RF18   | Editar Horário Indisponível          | Permitir que o barbeiro edite um horário previamente registrado como indisponível.                     |
+| RF19   | Remover Horário Indisponível         | Permitir que o barbeiro exclua um horário registrado como indisponível.                                |
+| RF20   | Listar Horários Indisponíveis        | O cliente deve ser capaz de visualizar os horários não disponívesi para agendamento                    |
+| RF21   | Verificar Disponibilidade de Horário | Verificar se o horário está dentro da jornada, não é um horário indisponível e não está ocupado.       |
+| RF22   | Selecionar Serviços para Agendamento | Permitir que o cliente selecione um ou mais serviços para o agendamento.                               |
+| RF23   | Calcular Duração de Agendamento      | Calcular automaticamente a duração do agendamento com base nos serviços escolhidos.                    |
+| RF24   | Realizar Agendamento                 | Permitir que o cliente agende serviços em horários disponíveis.                                        |
+| RF25   | Cancelar Agendamento                 | Permitir que o cliente ou barbeiro cancele um agendamento existente.                                   |
+| RF26   | Visualizar Agendamentos              | Os usuários do sistema devem ser capazes de visualizar os agendamentos do sistema                      |
+| RF27   | Bloquear Horário após Agendamento    | Marcar automaticamente como ocupado o horário agendado.                                                |
+| RF28   | Exibir Valor de Pagamento            | Exibir ao cliente o valor total do agendamento após a seleção dos serviços.                            |
+| RF29   | Informar Forma de Pagamento          | Permitir que o cliente escolha a forma de pagamento no momento do agendamento.                         |
+| RF30   | Confirmar Pagamento                  | Permitir que o barbeiro confirme que o pagamento foi realizado.                                        |
+| RF31   | Relatório de Pagamentos do Cliente   | Permitir que o cliente veja seus agendamentos e pagamentos passados.                                   |
+| RF32   | Relatório de Pagamentos do Barbeiro  | Permitir que o barbeiro veja todos os agendamentos e pagamentos realizados.                            |
 
 ### 3.2 Requisitos Não Funcionais
 

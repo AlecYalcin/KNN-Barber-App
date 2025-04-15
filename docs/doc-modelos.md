@@ -10,180 +10,302 @@ Neste documento temos o **modelo Conceitual (UML)** e o de **Dados (Entidade-Rel
 
 ```mermaid
 classDiagram
-    class Pessoa {
-        - cpf: string
-        - nome: string
+    class Usuario {
         - email: string
-        - telefone: string
+        - nome: string
         - senha: string
-        + setCpf(cpf: string): void
-        + getCpf(): string
-        + setNome(nome: string): void
-        + getNome(): string
-        + setEmail(email: string): void
-        + getEmail(): string
-        + setTelefone(tel: string): void
-        + getTelefone(): string
-        + consultar(cpf: string): Pessoa
-        + setSenha(senha: string): void
-        + getSenha(): string
-        + set(pessoa: Pessoa): void
-        + excluir(cpf: string): void
+        - telefone: string
+        + registro(): void
+        + autenticar(): void
+        + desconectar(): void
+        + esqueciMinhaSenha(): void
+        + alterarDados(): void
+    }
+
+    class Cliente {
+        + consultarAgendamentos(): List~Agendamento~
     }
 
     class Barbeiro {
-        - tel_trabalho: string
-        + setTel_trabalho(tel: string): void
-        + getTel_trabalho(): string
-        + consultar(cpf: string): Barbeiro
+        + consultarAgendamentos(): List~Agendamento~
+        + adicionarHorarioIndisponivel(h: HorarioIndisponivel): void
+        + definirJornada(jornada: JornadaDeTrabalho): void
+    }
+
+    class JornadaDeTrabalho {
+        - id: string
+        - dia: string
+        - ativa: bool
+        - horario_inicio: datetime
+        - horario_pausa: datetime
+        - horario_retorno: datetime
+        - horario_fim: datetime
+        +criarJornada(): void
+        +alterarJornada(): void
+        +desligarJornada(): void
+        +pesquisarJornada(parametros: Dict~List~St~~): JornadaDeTrabalho
+    }
+
+    class HorarioIndisponivel {
+        - id: string
+        - horario_inicio: datetime
+        - horario_fim: datetime
+        - justificativa: string
+        +criarHorarioIndisponivel(): void
+        +alterarHorarioIndisponivel(): void
+        +retirarHorarioIndisponivel(): void
+        +pesquisarHorarioIndisponivel(horario_inicio: datetime, horario_fim: datetime): HorarioIndisponivel
     }
 
     class Servico {
-        - codigo: int
+        - id: string
         - nome: string
         - descricao: string
-        - valorBase: float
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setNome(nome: string): void
-        + getNome(): string
-        + setDescricao(desc: string): void
-        + getDescricao(): string
-        + setValorBase(valor: float): void
-        + getValorBase(): float
-        + adicionar(nome: string, desc: string, valor: float): void
-        + alterar(servico: Servico): void
-        + excluir(cod: int): void
+        - preco: float
+        - duracao: datetime
+        + criarServico(): void
+        + alterarServico(): void
+        + removerServico(): void
+        + retornarServicos(): List~Servico~
+    }
+
+    class Agendamento {
+        - id: int
+        - horario_inicio: datetime
+        - horario_fim: datetime
+        + gerarPagamento(): Pagamento
+        + cancelar(): void
     }
 
     class Pagamento {
-        - codigo: int
-        - data: date
-        - adicional: float
-        - metodo: string
+        - id: int
         - valor: float
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setData(data: date): void
-        + getData(): date
-        + setAdicional(adic: float): void
-        + getAdicional(): float
-        + setMetodo(metodo: string): void
-        + getMetodo(): string
-        + calcularPagamento(agendamento: Agendamento, adicional: float): float
+        - data: datetime
+        - metodo: string
+        + calcularValorFinal(): float
+        + detalhesDoPagamento(): void
     }
 
-    class Horario {
-        - codigo: int
-        - data: date
-        - hora: time
-        - disponibilidade: bool
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setData(data: date): void
-        + getData(): date
-        + setHora(hora: time): void
-        + getHora(): time
-        + setDisponibilidade(disp: bool): void
-        + getDisponibilidade(): bool
-        + consultar(cod: int): Horario
-        + adicionar(data: date, hora: time): void
-        + alterar(horario: Horario): void
-        + excluir(cod: int): void
-    }
+    Usuario <|-- Cliente
+    Usuario <|-- Barbeiro
 
-    class Horario_de_Atendimento {
-        - codigo: int
-        - cliente: Pessoa
-        - barbeiro: Pessoa
-        - servico: Servico
-        - statusServico: bool
-        - statusPagamento: bool
-        - justificativa: string
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setConfirmacao(conf: bool): void
-        + getConfirmacao(): bool
-        + consultar(cod: int): Agendamento
-        + recusar(cod: int, justificativa: string): bool
-        + aceitar(cod: int): bool
-        + gerarRelatorioCliente(cli: Pessoa, ser: Servico): void
-        + gerarRelatorioPagamentos(cli: Pessoa, pag: Pagamento): void
-    }
+    Barbeiro "1" --> "0..n" JornadaDeTrabalho
+    Barbeiro "1" --> "0..n" HorarioIndisponivel
 
-    Pessoa <|-- Barbeiro
-    Pessoa "1" --> "1..n" Horario_de_Atendimento : cliente
-    Barbeiro "1" --> "1..n" Horario_de_Atendimento : barbeiro
-    Servico "1" --> "1..n" Horario_de_Atendimento : servico
-    Pagamento "1" --> "1..1" Horario_de_Atendimento
-    Horario "1" --> "1..n" Horario_de_Atendimento
+    Barbeiro "1" --> "0..n" Agendamento
+    Cliente "1" --> "0..n" Agendamento
+    Servico "1" --> "0..n" Agendamento
+    Agendamento "1" --> "1" Pagamento
+
 
 ```
 
-### Descrição das Entidades
+## Descrição das Entidades
 
-| Entidade               | Descrição                                                                                                                                                                                             |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Pessoa                 | Entidade abstrata para representar informações gerais das pessoas no sistema: cpf, nome, email, telefone, senha, além de métodos como consultar(), alterar() e excluir().                             |
-| Barbeiro               | Entidade que representa um barbeiro. Estende a classe Pessoa e adiciona o atributo tel_trabalho, além de métodos específicos como consultar().                                                        |
-| Serviço                | Entidade que representa um serviço oferecido pela barbearia. Possui atributos como codigo, nome, descricao e valorBase, com métodos para alterar, adicionar e excluir.                                |
-| Horário de atendimento | Entidade que representa um agendamento entre cliente e barbeiro, incluindo cliente, barbeiro, servico, statusServico, statusPagamento e justificativa, com métodos como recusar() e gerarRelatorio(). |
-| Pagamento              | Entidade que representa os dados de pagamento de um agendamento, incluindo codigo, data, adicional, metodo, valor e o método calcularPagamento().                                                     |
-| Horário                | Entidade que representa a data e hora de um possível agendamento. Inclui data, hora, disponibilidade e métodos como alocar() e consultar().                                                           |
+### `Usuario`
+
+Representa qualquer usuário do sistema (cliente ou barbeiro).
+
+- **Atributos:**
+
+  - `email`: string — Endereço de email do usuário.
+  - `nome`: string — Nome completo.
+  - `senha`: string — Senha de acesso (devidamente criptografada).
+  - `telefone`: string — Telefone de contato.
+
+- **Métodos:**
+  - `registro()`: void — Criação de uma nova conta
+  - `autenticar()`: void — Autenticação de uma conta já existente
+  - `desconectar()`: void — Desconectar uma conta autenticada
+  - `esqueciMinhaSenha()`: void — Método de recuperação de senha
+  - `alterarDados()`: void — Alteração de dados do usuário
 
 ---
+
+### `Cliente` (herda de `Usuario`)
+
+Usuário que pode realizar agendamentos e consultar histórico de atendimentos.
+
+- **Métodos:**
+  - `consultarAgendamentos()`: List<Agendamento> — Lista os agendamentos feitos pelo cliente.
+
+---
+
+### `Barbeiro` (herda de `Usuario`)
+
+Usuário que realiza os atendimentos e define sua agenda.
+
+- **Métodos:**
+  - `consultarAgendamentos()`: List<Agendamento> — Lista os agendamentos a serem realizados.
+  - `adicionarHorarioIndisponivel(h: HorarioIndisponivel)`: void — Adiciona indisponibilidades específicas.
+  - `definirJornada(jornada: JornadaDeTrabalho)`: void — Define ou altera a jornada de trabalho semanal.
+
+---
+
+### `JornadaDeTrabalho`
+
+Define os horários padrão de trabalho do barbeiro.
+
+- **Atributos:**
+
+  - `id`: string
+  - `dia`: string — Dia da semana (ex: "Segunda-feira").
+  - `ativa`: bool — Se a jornada está ativa.
+  - `horario_inicio`: datetime
+  - `horario_pausa`: datetime
+  - `horario_retorno`: datetime
+  - `horario_fim`: datetime
+
+- **Métodos:**
+  - `criarJornada()`: void — Cria uma nova jornada de trabalho
+  - `alterarJornada()`: void — Altera uma jornada existente
+  - `desligarJornada()`: void — Desliga a atividade de uma jornada
+  - `pesquisarJornada()`: JornadaDeTrabalho — Pesquisa por uma jornada através de parâmetros
+
+---
+
+### `HorarioIndisponivel`
+
+Define períodos específicos em que o barbeiro não poderá atender.
+
+- **Atributos:**
+
+  - `id`: string
+  - `horario_inicio`: datetime
+  - `horario_fim`: datetime
+  - `justificativa`: string — Motivo da indisponibilidade.
+
+- **Métodos:**
+  - `criarHorarioIndisponivel()`: void — Adiciona um novo horário indisponível ao sistema
+  - `alterarHorarioIndisponivel()`: void — Altera um horário indisponível já existnete
+  - `retirarHorarioIndisponivel()`: void — Exclui um horário indisponivel no sistema
+  - `pesquisarHorarioIndisponivel(horario_inicio: datetime, horario_fim: datetime`): HorarioIndisponivel — Pesquisa por horários indisponiveis de acordo com os parâmetros
+
+---
+
+### `Servico`
+
+Representa um serviço oferecido pela barbearia.
+
+- **Atributos:**
+
+  - `id`: string
+  - `nome`: string
+  - `descricao`: string
+  - `preco`: float
+  - `duracao`: datetime
+
+- **Métodos:**
+  - `alterarServico()`: void — Altera os dados do serviço.
+  - `removerServico()`: void — Remove o serviço do catálogo.
+  - `criarServico()`: void — Cria um novo serviço
+  - `retornarServicos()`: List~Servico~ — Retorna todos os serviços do sistema
+
+---
+
+### `Agendamento`
+
+Reúne os dados de um atendimento entre cliente e barbeiro.
+
+- **Atributos:**
+
+  - `id`: int
+  - `horario_inicio`: datetime
+  - `horario_fim`: datetime
+
+- **Métodos:**
+  - `confirmar()`: void — Confirma o agendamento.
+  - `cancelar()`: void — Cancela o agendamento.
+
+---
+
+### `Pagamento`
+
+Informações referentes ao pagamento de um agendamento.
+
+- **Atributos:**
+
+  - `id`: int
+  - `valor`: float
+  - `data`: datetime
+  - `metodo`: string — Ex: "Cartão de Crédito", "PIX", "Dinheiro".
+
+- **Métodos:**
+  - `calcularValorFinal()`: float — Pode aplicar descontos ou acréscimos.
+  - `detalhesDoPagamento()`: void — Texto informativo sobre o pagamento.
 
 ## Modelo de Dados (Entidade-Relacionamento)
 
 ```mermaid
 erDiagram
-    PESSOA ||--o{ HORARIO_DE_ATENDIMENTO : cliente
-    BARBEIRO ||--o{ HORARIO_DE_ATENDIMENTO : barbeiro
-    SERVICO ||--o{ HORARIO_DE_ATENDIMENTO : servico
-    HORARIO ||--o{ HORARIO_DE_ATENDIMENTO : alocacao
-    PAGAMENTO ||--|| HORARIO_DE_ATENDIMENTO : pagamento
-
-    PESSOA {
-        string cpf
+    USUARIO {
+        string email PK
         string nome
-        string email
-        string telefone
         string senha
+        string telefone
+        boolean eh_barbeiro
     }
 
-    BARBEIRO {
-        string tel_trabalho
+    JORNADA_DE_TRABALHO {
+        string id PK
+        boolean ativa
+        datetime horario_inicio
+        datetime horario_pausa
+        datetime horario_retorno
+        datetime horario_fim
     }
 
-    SERVICO {
-        int codigo
-        string nome
-        string descricao
-        float valorBase
+    DIA_DA_SEMANA {
+      string id PK
+      string dia
     }
 
-    HORARIO {
-        int codigo
-        date data
-        time hora
-        bool disponibilidade
-    }
-
-    PAGAMENTO {
-        int codigo
-        date data
-        float adicional
-        string metodo
-        float valor
-    }
-
-    HORARIO_DE_ATENDIMENTO {
-        int codigo
-        bool StatusServico
-        bool StatusPagamento
-        bool confirmado
+    HORARIO_INDISPONIVEL {
+        string id PK
+        datetime horario_inicio
+        datetime horario_fim
         string justificativa
     }
+
+
+    SERVICO {
+        string id PK
+        string nome
+        string descricao
+        float preco
+        datetime duracao
+    }
+
+    AGENDAMENTO {
+        int id PK
+        datetime horario_inicio
+        datetime horario_fim
+    }
+
+
+    PAGAMENTO {
+        int id PK
+        float valor
+        datetime data
+    }
+
+    METODO_DE_PAGAMENTO {
+      int id pk
+      string metodo
+    }
+
+    USUARIO ||--o{ JORNADA_DE_TRABALHO: "personaliza"
+    USUARIO ||--o{ HORARIO_INDISPONIVEL: "adiciona"
+
+    JORNADA_DE_TRABALHO ||--o{ DIA_DA_SEMANA: "possui"
+
+    USUARIO ||--o{ AGENDAMENTO: "atende"
+    USUARIO ||--o{ AGENDAMENTO: "realiza"
+
+    SERVICO ||--o{ AGENDAMENTO: "possui"
+
+    AGENDAMENTO ||--|| PAGAMENTO: "gera"
+    PAGAMENTO }o--|| METODO_DE_PAGAMENTO: "possui"
 
 ```
 
@@ -191,50 +313,71 @@ erDiagram
 
 ### Dicionário de Dados
 
-#### Pessoa
+---
+
+#### Usuario
 
 | Tabela     | Pessoa                                                   |
 | ---------- | -------------------------------------------------------- |
 | Descrição  | Armazena os dados gerais de qualquer usuário do sistema. |
 | Observação | Entidade base para clientes e barbeiros.                 |
 
-| Nome do Campo | Descrição do Campo        | Tipo de Dado | Tamanho | Restrições de Domínio  |
-| ------------- | ------------------------- | ------------ | ------- | ---------------------- |
-| cpf           | Cadastro de Pessoa Física | STRING       | 14      | PK / Not Null / Unique |
-| nome          | Nome completo da pessoa   | VARCHAR      | 100     | Not Null               |
-| email         | E-mail da pessoa          | VARCHAR      | 150     | Not Null / Unique      |
-| telefone      | Telefone de contato       | VARCHAR      | 20      |                        |
-| senha         | Senha de acesso           | VARCHAR      | 100     | Not Null               |
+| Nome do Campo | Descrição do Campo                       | Tipo de Dado | Tamanho | Restrições de Domínio  |
+| ------------- | ---------------------------------------- | ------------ | ------- | ---------------------- |
+| email         | E-mail da pessoa                         | VARCHAR      | 150     | PK / Not Null / Unique |
+| nome          | Nome completo da pessoa                  | VARCHAR      | 100     | Not Null               |
+| telefone      | Telefone de contato                      | VARCHAR      | 20      |                        |
+| senha         | Senha de acesso                          | VARCHAR      | 100     | Not Null               |
+| eh_barbeiro   | Identifica usuários com permissão ou não | BOOLEAN      | --      | Default: 0             |
 
 ---
 
-#### Barbeiro
+#### Jornada de Trabalho
 
-| Tabela     | Barbeiro                                    |
-| ---------- | ------------------------------------------- |
-| Descrição  | Armazena dados complementares de barbeiros. |
-| Observação | Subclasse da entidade Pessoa.               |
-
-| Nome do Campo | Descrição do Campo   | Tipo de Dado | Tamanho | Restrições de Domínio |
-| ------------- | -------------------- | ------------ | ------- | --------------------- |
-| cpf           | CPF do barbeiro      | STRING       | 14      | PK / FK / Not Null    |
-| tel_trabalho  | Telefone de trabalho | VARCHAR      | 20      |                       |
-
----
-
-#### Horario
-
-| Tabela     | Horario                                                 |
-| ---------- | ------------------------------------------------------- |
-| Descrição  | Armazena datas e horários disponíveis para agendamento. |
-| Observação | Utilizado para vincular agendamentos.                   |
+| Tabela     | Horario                                                                                            |
+| ---------- | -------------------------------------------------------------------------------------------------- |
+| Descrição  | Armazena a jornada de trabalho do usuário barbeiro com o dia, horário de trabalho e se está ativo. |
+| Observação | Usada para definir os horários de atendimento do barbeiro                                          |
 
 | Nome do Campo   | Descrição do Campo       | Tipo de Dado | Tamanho | Restrições de Domínio |
 | --------------- | ------------------------ | ------------ | ------- | --------------------- |
-| codigo          | Identificador do horário | SERIAL       | ---     | PK                    |
-| data            | Data do horário          | DATE         | ---     | Not Null              |
-| hora            | Hora do horário          | TIME         | ---     | Not Null              |
-| disponibilidade | Se o horário está livre  | BOOLEAN      | ---     | Default: TRUE         |
+| codigo          | Identificador da Jornada | SERIAL       | ---     | PK                    |
+| ativa           | Jornada atualmente ativa | BOOLEAN      | ---     | Default: 1            |
+| horario_inicio  | Início da jornada        | DATETIME     | ---     | Not Null              |
+| horario_pausa   | Pausa da jornada         | DATETIME     | ---     | Not Null              |
+| horario_retorno | Retorno da jornada       | DATETIME     | ---     | Not Null              |
+| horario_fim     | Fim da jornada           | DATETIME     | ---     | Not Null              |
+| dia_codigo      | Dia identificado         | INT          | ---     | FK \ Not Null         |
+
+| data | Data do horário | DATE | --- | Not Null |
+| hora | Hora do horário | TIME | --- | Not Null |
+| disponibilidade | Se o horário está livre | BOOLEAN | --- | Default: TRUE |
+
+#### Dia da Semana
+
+| Tabela     | Horario                                              |
+| ---------- | ---------------------------------------------------- |
+| Descrição  | Armazena os dias comuns de trabalho                  |
+| Observação | Referência para dia da semana na jornada de trabalho |
+
+| Nome do Campo | Descrição do Campo   | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | -------------------- | ------------ | ------- | --------------------- |
+| codigo        | Identificador do Dia | SERIAL       | ---     | PK                    |
+| dia           | Dia identificado     | STRING       | ---     | Not Null              |
+
+#### Horários Indisponíveis
+
+| Tabela     | Horario                                                                |
+| ---------- | ---------------------------------------------------------------------- |
+| Descrição  | Armazena horários com início e fim para definir horários indisponíveis |
+| Observação | Serve para definir dias indisponíveis, férias e cancelar horários      |
+
+| Nome do Campo  | Descrição do Campo                    | Tipo de Dado | Tamanho | Restrições de Domínio |
+| -------------- | ------------------------------------- | ------------ | ------- | --------------------- |
+| codigo         | Identificador do Horário Indisponível | SERIAL       | ---     | PK                    |
+| horario_inicio | Início do horário restrito            | DATETIME     | ---     | Not Null              |
+| horario_fim    | Fim do horário restrito               | DATETIME     | ---     | Not Null              |
+| justificativa  | Explicação do horário indisponível    | VARCHAR      | 300     |                       |
 
 ---
 
@@ -250,7 +393,7 @@ erDiagram
 | codigo        | Identificador do serviço | SERIAL       | ---     | PK                    |
 | nome          | Nome do serviço          | VARCHAR      | 100     | Not Null              |
 | descricao     | Descrição do serviço     | VARCHAR      | 250     |                       |
-| valorBase     | Valor base               | FLOAT        | ---     | Not Null              |
+| valor         | Valor base               | FLOAT        | ---     | Not Null              |
 
 ---
 
@@ -261,32 +404,43 @@ erDiagram
 | Descrição  | Armazena informações financeiras dos atendimentos. |
 | Observação | Vinculado a cada horário de atendimento.           |
 
-| Nome do Campo | Descrição do Campo         | Tipo de Dado | Tamanho | Restrições de Domínio |
-| ------------- | -------------------------- | ------------ | ------- | --------------------- |
-| codigo        | Identificador do pagamento | SERIAL       | ---     | PK                    |
-| data          | Data do pagamento          | DATE         | ---     | Not Null              |
-| adicional     | Valor adicional aplicado   | FLOAT        | ---     | Default: 0            |
-| metodo        | Método de pagamento        | VARCHAR      | 50      |                       |
-| valor         | Valor total pago           | FLOAT        | ---     | Not Null              |
+| Nome do Campo | Descrição do Campo           | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | ---------------------------- | ------------ | ------- | --------------------- |
+| codigo        | Identificador do pagamento   | SERIAL       | ---     | PK                    |
+| data          | Data do pagamento            | DATE         | ---     | Not Null              |
+| valor         | Valor total pago             | FLOAT        | ---     | Not Null              |
+| metodo_id     | Método de pagamento          | INT          | ---     | FK / Not Null         |
+| status        | Se o pagamento foi realizado | BOOLEAN      | ---     | Default: FALSE        |
 
 ---
 
-#### Horario_de_Atendimento
+#### Métodos de Pagamento
+
+| Tabela     | Pagamento                                               |
+| ---------- | ------------------------------------------------------- |
+| Descrição  | Tabela que armazena os métodos de pagamento disponívies |
+| Observação | Serve para definir métodos em pagamentos                |
+
+| Nome do Campo | Descrição do Campo                   | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | ------------------------------------ | ------------ | ------- | --------------------- |
+| codigo        | Identificador do metodo de pagamento | SERIAL       | ---     | PK                    |
+| metodo        | nome do metodo de pagamento          | VARCHAR      | 100     | Not Null              |
+
+---
+
+#### Agendamento
 
 | Tabela     | Horario_de_Atendimento                               |
 | ---------- | ---------------------------------------------------- |
 | Descrição  | Armazena os agendamentos entre clientes e barbeiros. |
 | Observação | Entidade principal de ligação entre as demais.       |
 
-| Nome do Campo   | Descrição do Campo              | Tipo de Dado | Tamanho | Restrições de Domínio |
-| --------------- | ------------------------------- | ------------ | ------- | --------------------- |
-| codigo          | Identificador do agendamento    | SERIAL       | ---     | PK                    |
-| cliente         | CPF do cliente                  | STRING       | 14      | FK / Not Null         |
-| barbeiro        | CPF do barbeiro                 | STRING       | 14      | FK / Not Null         |
-| servico         | Código do serviço               | INT          | ---     | FK / Not Null         |
-| horario         | Código do horário               | INT          | ---     | FK / Not Null         |
-| pagamento       | Código do pagamento             | INT          | ---     | FK                    |
-| statusServico   | Se o serviço foi realizado      | BOOLEAN      | ---     | Default: FALSE        |
-| statusPagamento | Se o pagamento foi realizado    | BOOLEAN      | ---     | Default: FALSE        |
-| confirmado      | Se o agendamento foi confirmado | BOOLEAN      | ---     | Default: FALSE        |
-| justificativa   | Motivo da recusa, se houver     | VARCHAR      | 250     | Opcional              |
+| Nome do Campo    | Descrição do Campo               | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ---------------- | -------------------------------- | ------------ | ------- | --------------------- |
+| codigo           | Identificador do agendamento     | SERIAL       | ---     | PK                    |
+| horario_inicio   | Horário do início do atendimento | DATETIME     | ---     | Not Null              |
+| horario_fim      | Horário do fim do atendimento    | DATETIME     | ---     | Not Null              |
+| cliente_email    | Email do cliente                 | VARCHAR      | 100     | FK / Not Null         |
+| barbeiro_email   | Email do barbeiro                | VARCHAR      | 100     | FK / Not Null         |
+| servico_codigo   | Código do serviço                | INT          | ---     | FK / Not Null         |
+| pagamento_codigo | Código do pagamento              | INT          | ---     | FK                    |
