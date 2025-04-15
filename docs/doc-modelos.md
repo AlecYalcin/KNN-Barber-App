@@ -293,9 +293,8 @@ erDiagram
 
 | Nome do Campo | Descrição do Campo                       | Tipo de Dado | Tamanho | Restrições de Domínio  |
 | ------------- | ---------------------------------------- | ------------ | ------- | ---------------------- |
-| cpf           | Cadastro de Pessoa Física                | VARCHAR      | 14      | PK / Not Null / Unique |
+| email         | E-mail da pessoa                         | VARCHAR      | 150     | PK / Not Null / Unique |
 | nome          | Nome completo da pessoa                  | VARCHAR      | 100     | Not Null               |
-| email         | E-mail da pessoa                         | VARCHAR      | 150     | Not Null / Unique      |
 | telefone      | Telefone de contato                      | VARCHAR      | 20      |                        |
 | senha         | Senha de acesso                          | VARCHAR      | 100     | Not Null               |
 | eh_barbeiro   | Identifica usuários com permissão ou não | BOOLEAN      | --      | Default: 0             |
@@ -410,7 +409,7 @@ erDiagram
 | codigo           | Identificador do agendamento     | SERIAL       | ---     | PK                    |
 | horario_inicio   | Horário do início do atendimento | DATETIME     | ---     | Not Null              |
 | horario_fim      | Horário do fim do atendimento    | DATETIME     | ---     | Not Null              |
-| cliente_cpf      | CPF do cliente                   | VARCHAR      | 14      | FK / Not Null         |
-| barbeiro_cpf     | CPF do barbeiro                  | VARCHAR      | 14      | FK / Not Null         |
+| cliente_email    | Email do cliente                 | VARCHAR      | 100     | FK / Not Null         |
+| barbeiro_email   | Email do barbeiro                | VARCHAR      | 100     | FK / Not Null         |
 | servico_codigo   | Código do serviço                | INT          | ---     | FK / Not Null         |
 | pagamento_codigo | Código do pagamento              | INT          | ---     | FK                    |
