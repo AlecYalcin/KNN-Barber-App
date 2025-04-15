@@ -6,4 +6,9 @@ Essa pasta é responsável por guardar todos os documentos produzidos para o KNN
 
 ## Links para os Arquivos
 
+- [Documento de Modelos](doc-modelos.md)
+- [Documento de User Stories](doc-userstories.md)
+- [Documento de Visão](doc-visao.md)
 - [Plano de Iteração](plano-de-iteracao.md)
+- [Arquitetura do Sistema](arquitetura/doc-arquitetura.md)
+- [Wireframes do Sistema](wireframes/wireframes-knn.png)
