@@ -70,7 +70,7 @@ classDiagram
         - data: datetime
         - metodo: string
         + calcularValorFinal(): float
-        + gerarComprovante(): void
+        + detalhesDoPagamento(): void
     }
 
     Usuario <|-- Cliente
@@ -90,9 +90,11 @@ classDiagram
 ## Descrição das Entidades
 
 ### `Usuario`
+
 Representa qualquer usuário do sistema (cliente ou barbeiro).
 
 - **Atributos:**
+
   - `email`: string — Endereço de email do usuário.
   - `nome`: string — Nome completo.
   - `senha`: string — Senha de acesso (devidamente criptografada).
@@ -105,6 +107,7 @@ Representa qualquer usuário do sistema (cliente ou barbeiro).
 ---
 
 ### `Cliente` (herda de `Usuario`)
+
 Usuário que pode realizar agendamentos e consultar histórico de atendimentos.
 
 - **Métodos:**
@@ -113,6 +116,7 @@ Usuário que pode realizar agendamentos e consultar histórico de atendimentos.
 ---
 
 ### `Barbeiro` (herda de `Usuario`)
+
 Usuário que realiza os atendimentos e define sua agenda.
 
 - **Métodos:**
@@ -123,6 +127,7 @@ Usuário que realiza os atendimentos e define sua agenda.
 ---
 
 ### `JornadaDeTrabalho`
+
 Define os horários padrão de trabalho do barbeiro.
 
 - **Atributos:**
@@ -137,6 +142,7 @@ Define os horários padrão de trabalho do barbeiro.
 ---
 
 ### `HorarioIndisponivel`
+
 Define períodos específicos em que o barbeiro não poderá atender.
 
 - **Atributos:**
@@ -148,9 +154,11 @@ Define períodos específicos em que o barbeiro não poderá atender.
 ---
 
 ### `Servico`
+
 Representa um serviço oferecido pela barbearia.
 
 - **Atributos:**
+
   - `id`: string
   - `nome`: string
   - `descricao`: string
@@ -164,9 +172,11 @@ Representa um serviço oferecido pela barbearia.
 ---
 
 ### `Agendamento`
+
 Reúne os dados de um atendimento entre cliente e barbeiro.
 
 - **Atributos:**
+
   - `id`: int
   - `horario_inicio`: datetime
   - `horario_fim`: datetime
@@ -178,9 +188,11 @@ Reúne os dados de um atendimento entre cliente e barbeiro.
 ---
 
 ### `Pagamento`
+
 Informações referentes ao pagamento de um agendamento.
 
 - **Atributos:**
+
   - `id`: int
   - `valor`: float
   - `data`: datetime
@@ -188,89 +200,81 @@ Informações referentes ao pagamento de um agendamento.
 
 - **Métodos:**
   - `calcularValorFinal()`: float — Pode aplicar descontos ou acréscimos.
-  - `gerarComprovante()`: void — Gera um recibo ou nota fiscal.
-"""
-
-## Modelo de Dados (Entidade-Relacionamento)
+  - `detalhesDoPagamento()`: void — Texto informativo sobre o pagamento.
+    """
 
 ## Modelo de Dados (Entidade-Relacionamento)
 
 ```mermaid
 erDiagram
-    PESSOA ||--|| CLIENTE : especializa
-    PESSOA ||--|| BARBEIRO : especializa
-
-    BARBEIRO ||--o{ JORNADA : define
-    JORNADA ||--o{ HORARIO : contem
-
-    CLIENTE ||--o{ HORARIO_DE_ATENDIMENTO : agenda
-    BARBEIRO ||--o{ HORARIO_DE_ATENDIMENTO : realiza
-    SERVICO ||--o{ HORARIO_DE_ATENDIMENTO : executa
-    HORARIO ||--o{ HORARIO_DE_ATENDIMENTO : alocado
-    HORARIO_DE_ATENDIMENTO ||--|| PAGAMENTO : vincula
-
-    PESSOA {
-        string cpf PK
+    USUARIO {
+        string email PK
         string nome
-        string email
-        string telefone
         string senha
+        string telefone
+        boolean eh_barbeiro
     }
 
-    CLIENTE {
-        string cpf FK
+    JORNADA_DE_TRABALHO {
+        string id PK
+        boolean ativa
+        datetime horario_inicio
+        datetime horario_pausa
+        datetime horario_retorno
+        datetime horario_fim
     }
 
-    BARBEIRO {
-        string cpf FK
-        string telefoneTrabalho
+    DIA_DA_SEMANA {
+      string id PK
+      string dia
     }
 
-    JORNADA {
-        int codigo PK
-        string diaSemana
-        time horarioInicio
-        time horarioFim
-        string barbeiroCpf FK
+    HORARIO_INDISPONIVEL {
+        string id PK
+        datetime horario_inicio
+        datetime horario_fim
+        string justificativa
     }
 
-    HORARIO {
-        int codigo PK
-        date data
-        time hora
-        bool disponivel
-        int jornadaCodigo FK
-    }
 
     SERVICO {
-        int codigo PK
+        string id PK
         string nome
         string descricao
-        float valorBase
+        float preco
+        datetime duracao
     }
+
+    AGENDAMENTO {
+        int id PK
+        datetime horario_inicio
+        datetime horario_fim
+    }
+
 
     PAGAMENTO {
-        int codigo PK
-        date data
-        float adicional
-        string metodo
+        int id PK
         float valor
+        datetime data
     }
 
-    HORARIO_DE_ATENDIMENTO {
-        int codigo PK
-        bool statusServico
-        bool statusPagamento
-        bool confirmado
-        string justificativa
-        string clienteCpf FK
-        string barbeiroCpf FK
-        int servicoCodigo FK
-        int horarioCodigo FK
-        int pagamentoCodigo FK
+    METODO_DE_PAGAMENTO {
+      int id pk
+      string metodo
     }
 
+    USUARIO ||--o{ JORNADA_DE_TRABALHO: "personaliza"
+    USUARIO ||--o{ HORARIO_INDISPONIVEL: "adiciona"
 
+    JORNADA_DE_TRABALHO ||--o{ DIA_DA_SEMANA: "possui"
+
+    USUARIO ||--o{ AGENDAMENTO: "atende"
+    USUARIO ||--o{ AGENDAMENTO: "realiza"
+
+    SERVICO ||--o{ AGENDAMENTO: "possui"
+
+    AGENDAMENTO ||--|| PAGAMENTO: "gera"
+    PAGAMENTO }o--|| METODO_DE_PAGAMENTO: "possui"
 
 ```
 
@@ -280,63 +284,70 @@ erDiagram
 
 ---
 
-#### Pessoa
+#### Usuario
 
 | Tabela     | Pessoa                                                   |
 | ---------- | -------------------------------------------------------- |
 | Descrição  | Armazena os dados gerais de qualquer usuário do sistema. |
 | Observação | Entidade base para clientes e barbeiros.                 |
 
-| Nome do Campo | Descrição do Campo        | Tipo de Dado | Tamanho | Restrições de Domínio  |
-| ------------- | ------------------------- | ------------ | ------- | ---------------------- |
-| cpf           | Cadastro de Pessoa Física | STRING       | 14      | PK / Not Null / Unique |
-| nome          | Nome completo da pessoa   | VARCHAR      | 100     | Not Null               |
-| email         | E-mail da pessoa          | VARCHAR      | 150     | Not Null / Unique      |
-| telefone      | Telefone de contato       | VARCHAR      | 20      |                        |
-| senha         | Senha de acesso           | VARCHAR      | 100     | Not Null               |
+| Nome do Campo | Descrição do Campo                       | Tipo de Dado | Tamanho | Restrições de Domínio  |
+| ------------- | ---------------------------------------- | ------------ | ------- | ---------------------- |
+| cpf           | Cadastro de Pessoa Física                | VARCHAR      | 14      | PK / Not Null / Unique |
+| nome          | Nome completo da pessoa                  | VARCHAR      | 100     | Not Null               |
+| email         | E-mail da pessoa                         | VARCHAR      | 150     | Not Null / Unique      |
+| telefone      | Telefone de contato                      | VARCHAR      | 20      |                        |
+| senha         | Senha de acesso                          | VARCHAR      | 100     | Not Null               |
+| eh_barbeiro   | Identifica usuários com permissão ou não | BOOLEAN      | --      | Default: 0             |
 
 ---
 
-#### Barbeiro
+#### Jornada de Trabalho
 
-| Tabela     | Barbeiro                                    |
-| ---------- | ------------------------------------------- |
-| Descrição  | Armazena dados complementares de barbeiros. |
-| Observação | Subclasse da entidade Pessoa.               |
-
-| Nome do Campo | Descrição do Campo   | Tipo de Dado | Tamanho | Restrições de Domínio |
-| ------------- | -------------------- | ------------ | ------- | --------------------- |
-| cpf           | CPF do barbeiro      | STRING       | 14      | PK / FK / Not Null    |
-| tel_trabalho  | Telefone de trabalho | VARCHAR      | 20      |                       |
-
----
-
-#### Cliente
-
-| Tabela     | Cliente                                     |
-| ---------- | ------------------------------------------- |
-| Descrição  | Armazena dados complementares de clientes.  |
-| Observação | Subclasse da entidade Pessoa.               |
-
-| Nome do Campo | Descrição do Campo  | Tipo de Dado | Tamanho | Restrições de Domínio |
-| ------------- | ------------------- | ------------ | ------- | --------------------- |
-| cpf           | CPF do cliente      | STRING       | 14      | PK / FK / Not Null    |
-
----
-
-#### Horario
-
-| Tabela     | Horario                                                 |
-| ---------- | ------------------------------------------------------- |
-| Descrição  | Armazena datas e horários disponíveis para agendamento. |
-| Observação | Utilizado para vincular agendamentos.                   |
+| Tabela     | Horario                                                                                            |
+| ---------- | -------------------------------------------------------------------------------------------------- |
+| Descrição  | Armazena a jornada de trabalho do usuário barbeiro com o dia, horário de trabalho e se está ativo. |
+| Observação | Usada para definir os horários de atendimento do barbeiro                                          |
 
 | Nome do Campo   | Descrição do Campo       | Tipo de Dado | Tamanho | Restrições de Domínio |
 | --------------- | ------------------------ | ------------ | ------- | --------------------- |
-| codigo          | Identificador do horário | SERIAL       | ---     | PK                    |
-| data            | Data do horário          | DATE         | ---     | Not Null              |
-| hora            | Hora do horário          | TIME         | ---     | Not Null              |
-| disponibilidade | Se o horário está livre  | BOOLEAN      | ---     | Default: TRUE         |
+| codigo          | Identificador da Jornada | SERIAL       | ---     | PK                    |
+| ativa           | Jornada atualmente ativa | BOOLEAN      | ---     | Default: 1            |
+| horario_inicio  | Início da jornada        | DATETIME     | ---     | Not Null              |
+| horario_pausa   | Pausa da jornada         | DATETIME     | ---     | Not Null              |
+| horario_retorno | Retorno da jornada       | DATETIME     | ---     | Not Null              |
+| horario_fim     | Fim da jornada           | DATETIME     | ---     | Not Null              |
+| dia_codigo      | Dia identificado         | INT          | ---     | FK \ Not Null         |
+
+| data | Data do horário | DATE | --- | Not Null |
+| hora | Hora do horário | TIME | --- | Not Null |
+| disponibilidade | Se o horário está livre | BOOLEAN | --- | Default: TRUE |
+
+#### Dia da Semana
+
+| Tabela     | Horario                                              |
+| ---------- | ---------------------------------------------------- |
+| Descrição  | Armazena os dias comuns de trabalho                  |
+| Observação | Referência para dia da semana na jornada de trabalho |
+
+| Nome do Campo | Descrição do Campo   | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | -------------------- | ------------ | ------- | --------------------- |
+| codigo        | Identificador do Dia | SERIAL       | ---     | PK                    |
+| dia           | Dia identificado     | STRING       | ---     | Not Null              |
+
+#### Horários Indisponíveis
+
+| Tabela     | Horario                                                                |
+| ---------- | ---------------------------------------------------------------------- |
+| Descrição  | Armazena horários com início e fim para definir horários indisponíveis |
+| Observação | Serve para definir dias indisponíveis, férias e cancelar horários      |
+
+| Nome do Campo  | Descrição do Campo                    | Tipo de Dado | Tamanho | Restrições de Domínio |
+| -------------- | ------------------------------------- | ------------ | ------- | --------------------- |
+| codigo         | Identificador do Horário Indisponível | SERIAL       | ---     | PK                    |
+| horario_inicio | Início do horário restrito            | DATETIME     | ---     | Not Null              |
+| horario_fim    | Fim do horário restrito               | DATETIME     | ---     | Not Null              |
+| justificativa  | Explicação do horário indisponível    | VARCHAR      | 300     |                       |
 
 ---
 
@@ -352,7 +363,7 @@ erDiagram
 | codigo        | Identificador do serviço | SERIAL       | ---     | PK                    |
 | nome          | Nome do serviço          | VARCHAR      | 100     | Not Null              |
 | descricao     | Descrição do serviço     | VARCHAR      | 250     |                       |
-| valorBase     | Valor base               | FLOAT        | ---     | Not Null              |
+| valor         | Valor base               | FLOAT        | ---     | Not Null              |
 
 ---
 
@@ -363,32 +374,43 @@ erDiagram
 | Descrição  | Armazena informações financeiras dos atendimentos. |
 | Observação | Vinculado a cada horário de atendimento.           |
 
-| Nome do Campo | Descrição do Campo         | Tipo de Dado | Tamanho | Restrições de Domínio |
-| ------------- | -------------------------- | ------------ | ------- | --------------------- |
-| codigo        | Identificador do pagamento | SERIAL       | ---     | PK                    |
-| data          | Data do pagamento          | DATE         | ---     | Not Null              |
-| adicional     | Valor adicional aplicado   | FLOAT        | ---     | Default: 0            |
-| metodo        | Método de pagamento        | VARCHAR      | 50      |                       |
-| valor         | Valor total pago           | FLOAT        | ---     | Not Null              |
+| Nome do Campo | Descrição do Campo           | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | ---------------------------- | ------------ | ------- | --------------------- |
+| codigo        | Identificador do pagamento   | SERIAL       | ---     | PK                    |
+| data          | Data do pagamento            | DATE         | ---     | Not Null              |
+| valor         | Valor total pago             | FLOAT        | ---     | Not Null              |
+| metodo_id     | Método de pagamento          | INT          | ---     | FK / Not Null         |
+| status        | Se o pagamento foi realizado | BOOLEAN      | ---     | Default: FALSE        |
 
 ---
 
-#### Horario_de_Atendimento
+#### Métodos de Pagamento
+
+| Tabela     | Pagamento                                               |
+| ---------- | ------------------------------------------------------- |
+| Descrição  | Tabela que armazena os métodos de pagamento disponívies |
+| Observação | Serve para definir métodos em pagamentos                |
+
+| Nome do Campo | Descrição do Campo                   | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | ------------------------------------ | ------------ | ------- | --------------------- |
+| codigo        | Identificador do metodo de pagamento | SERIAL       | ---     | PK                    |
+| metodo        | nome do metodo de pagamento          | VARCHAR      | 100     | Not Null              |
+
+---
+
+#### Agendamento
 
 | Tabela     | Horario_de_Atendimento                               |
 | ---------- | ---------------------------------------------------- |
 | Descrição  | Armazena os agendamentos entre clientes e barbeiros. |
 | Observação | Entidade principal de ligação entre as demais.       |
 
-| Nome do Campo   | Descrição do Campo              | Tipo de Dado | Tamanho | Restrições de Domínio |
-| --------------- | ------------------------------- | ------------ | ------- | --------------------- |
-| codigo          | Identificador do agendamento    | SERIAL       | ---     | PK                    |
-| cliente         | CPF do cliente                  | STRING       | 14      | FK / Not Null         |
-| barbeiro        | CPF do barbeiro                 | STRING       | 14      | FK / Not Null         |
-| servico         | Código do serviço               | INT          | ---     | FK / Not Null         |
-| horario         | Código do horário               | INT          | ---     | FK / Not Null         |
-| pagamento       | Código do pagamento             | INT          | ---     | FK                    |
-| statusServico   | Se o serviço foi realizado      | BOOLEAN      | ---     | Default: FALSE        |
-| statusPagamento | Se o pagamento foi realizado    | BOOLEAN      | ---     | Default: FALSE        |
-| confirmado      | Se o agendamento foi confirmado | BOOLEAN      | ---     | Default: FALSE        |
-| justificativa   | Motivo da recusa, se houver     | VARCHAR      | 250     | Opcional              |
+| Nome do Campo    | Descrição do Campo               | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ---------------- | -------------------------------- | ------------ | ------- | --------------------- |
+| codigo           | Identificador do agendamento     | SERIAL       | ---     | PK                    |
+| horario_inicio   | Horário do início do atendimento | DATETIME     | ---     | Not Null              |
+| horario_fim      | Horário do fim do atendimento    | DATETIME     | ---     | Not Null              |
+| cliente_cpf      | CPF do cliente                   | VARCHAR      | 14      | FK / Not Null         |
+| barbeiro_cpf     | CPF do barbeiro                  | VARCHAR      | 14      | FK / Not Null         |
+| servico_codigo   | Código do serviço                | INT          | ---     | FK / Not Null         |
+| pagamento_codigo | Código do pagamento              | INT          | ---     | FK                    |

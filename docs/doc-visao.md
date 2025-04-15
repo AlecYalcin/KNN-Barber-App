@@ -150,6 +150,7 @@ erDiagram
         float valor
         datetime data
         string metodo
+        boolean status
     }
 
     USUARIO ||--|{ CLIENTE: "pode ser"
