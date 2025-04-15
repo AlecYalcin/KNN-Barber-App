@@ -10,167 +10,247 @@ Neste documento temos o **modelo Conceitual (UML)** e o de **Dados (Entidade-Rel
 
 ```mermaid
 classDiagram
-    class Pessoa {
-        - cpf: string
-        - nome: string
+    class Usuario {
         - email: string
-        - telefone: string
+        - nome: string
         - senha: string
-        + setCpf(cpf: string): void
-        + getCpf(): string
-        + setNome(nome: string): void
-        + getNome(): string
-        + setEmail(email: string): void
-        + getEmail(): string
-        + setTelefone(tel: string): void
-        + getTelefone(): string
-        + consultar(cpf: string): Pessoa
-        + setSenha(senha: string): void
-        + getSenha(): string
-        + set(pessoa: Pessoa): void
-        + excluir(cpf: string): void
+        - telefone: string
+        + autenticar(): bool
+        + alterarDados(): void
+    }
+
+    class Cliente {
+        + consultarAgendamentos(): List~Agendamento~
     }
 
     class Barbeiro {
-        - tel_trabalho: string
-        + setTel_trabalho(tel: string): void
-        + getTel_trabalho(): string
-        + consultar(cpf: string): Barbeiro
+        + consultarAgendamentos(): List~Agendamento~
+        + adicionarHorarioIndisponivel(h: HorarioIndisponivel): void
+        + definirJornada(jornada: JornadaDeTrabalho): void
+    }
+
+    class JornadaDeTrabalho {
+        - id: string
+        - dia: string
+        - ativa: bool
+        - horario_inicio: datetime
+        - horario_pausa: datetime
+        - horario_retorno: datetime
+        - horario_fim: datetime
+    }
+
+    class HorarioIndisponivel {
+        - id: string
+        - horario_inicio: datetime
+        - horario_fim: datetime
+        - justificativa: string
     }
 
     class Servico {
-        - codigo: int
+        - id: string
         - nome: string
         - descricao: string
-        - valorBase: float
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setNome(nome: string): void
-        + getNome(): string
-        + setDescricao(desc: string): void
-        + getDescricao(): string
-        + setValorBase(valor: float): void
-        + getValorBase(): float
-        + adicionar(nome: string, desc: string, valor: float): void
-        + alterar(servico: Servico): void
-        + excluir(cod: int): void
+        - preco: float
+        - duracao: datetime
+        + alterarServico(): void
+        + removerServico(): void
+    }
+
+    class Agendamento {
+        - id: int
+        - horario_inicio: datetime
+        - horario_fim: datetime
+        + confirmar(): void
+        + cancelar(): void
     }
 
     class Pagamento {
-        - codigo: int
-        - data: date
-        - adicional: float
-        - metodo: string
+        - id: int
         - valor: float
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setData(data: date): void
-        + getData(): date
-        + setAdicional(adic: float): void
-        + getAdicional(): float
-        + setMetodo(metodo: string): void
-        + getMetodo(): string
-        + calcularPagamento(agendamento: Agendamento, adicional: float): float
+        - data: datetime
+        - metodo: string
+        + calcularValorFinal(): float
+        + gerarComprovante(): void
     }
 
-    class Horario {
-        - codigo: int
-        - data: date
-        - hora: time
-        - disponibilidade: bool
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setData(data: date): void
-        + getData(): date
-        + setHora(hora: time): void
-        + getHora(): time
-        + setDisponibilidade(disp: bool): void
-        + getDisponibilidade(): bool
-        + consultar(cod: int): Horario
-        + adicionar(data: date, hora: time): void
-        + alterar(horario: Horario): void
-        + excluir(cod: int): void
-    }
+    Usuario <|-- Cliente
+    Usuario <|-- Barbeiro
 
-    class Horario_de_Atendimento {
-        - codigo: int
-        - cliente: Pessoa
-        - barbeiro: Pessoa
-        - servico: Servico
-        - statusServico: bool
-        - statusPagamento: bool
-        - justificativa: string
-        + setCodigo(cod: int): void
-        + getCodigo(): int
-        + setConfirmacao(conf: bool): void
-        + getConfirmacao(): bool
-        + consultar(cod: int): Agendamento
-        + recusar(cod: int, justificativa: string): bool
-        + aceitar(cod: int): bool
-        + gerarRelatorioCliente(cli: Pessoa, ser: Servico): void
-        + gerarRelatorioPagamentos(cli: Pessoa, pag: Pagamento): void
-    }
+    Barbeiro "1" --> "0..n" JornadaDeTrabalho
+    Barbeiro "1" --> "0..n" HorarioIndisponivel
 
-    Pessoa <|-- Barbeiro
-    Pessoa "1" --> "1..n" Horario_de_Atendimento : cliente
-    Barbeiro "1" --> "1..n" Horario_de_Atendimento : barbeiro
-    Servico "1" --> "1..n" Horario_de_Atendimento : servico
-    Pagamento "1" --> "1..1" Horario_de_Atendimento
-    Horario "1" --> "1..n" Horario_de_Atendimento
+    Barbeiro "1" --> "0..n" Agendamento
+    Cliente "1" --> "0..n" Agendamento
+    Servico "1" --> "0..n" Agendamento
+    Agendamento "1" --> "1" Pagamento
+
 
 ```
 
-### Descrição das Entidades
+## Descrição das Entidades
 
-| Entidade               | Descrição                                                                                                                                                                                             |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Pessoa                 | Entidade abstrata para representar informações gerais das pessoas no sistema: cpf, nome, email, telefone, senha, além de métodos como consultar(), alterar() e excluir().                             |
-| Barbeiro               | Entidade que representa um barbeiro. Estende a classe Pessoa e adiciona o atributo tel_trabalho, além de métodos específicos como consultar().                                                        |
-| Serviço                | Entidade que representa um serviço oferecido pela barbearia. Possui atributos como codigo, nome, descricao e valorBase, com métodos para alterar, adicionar e excluir.                                |
-| Horário de atendimento | Entidade que representa um agendamento entre cliente e barbeiro, incluindo cliente, barbeiro, servico, statusServico, statusPagamento e justificativa, com métodos como recusar() e gerarRelatorio(). |
-| Pagamento              | Entidade que representa os dados de pagamento de um agendamento, incluindo codigo, data, adicional, metodo, valor e o método calcularPagamento().                                                     |
-| Horário                | Entidade que representa a data e hora de um possível agendamento. Inclui data, hora, disponibilidade e métodos como alocar() e consultar().                                                           |
+### `Usuario`
+Representa qualquer usuário do sistema (cliente ou barbeiro).
+
+- **Atributos:**
+  - `email`: string — Endereço de email do usuário.
+  - `nome`: string — Nome completo.
+  - `senha`: string — Senha de acesso (devidamente criptografada).
+  - `telefone`: string — Telefone de contato.
+
+- **Métodos:**
+  - `autenticar()`: bool — Verifica se o usuário pode acessar o sistema.
+  - `alterarDados()`: void — Permite alterar dados cadastrais.
 
 ---
+
+### `Cliente` (herda de `Usuario`)
+Usuário que pode realizar agendamentos e consultar histórico de atendimentos.
+
+- **Métodos:**
+  - `consultarAgendamentos()`: List<Agendamento> — Lista os agendamentos feitos pelo cliente.
+
+---
+
+### `Barbeiro` (herda de `Usuario`)
+Usuário que realiza os atendimentos e define sua agenda.
+
+- **Métodos:**
+  - `consultarAgendamentos()`: List<Agendamento> — Lista os agendamentos a serem realizados.
+  - `adicionarHorarioIndisponivel(h: HorarioIndisponivel)`: void — Adiciona indisponibilidades específicas.
+  - `definirJornada(jornada: JornadaDeTrabalho)`: void — Define ou altera a jornada de trabalho semanal.
+
+---
+
+### `JornadaDeTrabalho`
+Define os horários padrão de trabalho do barbeiro.
+
+- **Atributos:**
+  - `id`: string
+  - `dia`: string — Dia da semana (ex: "Segunda-feira").
+  - `ativa`: bool — Se a jornada está ativa.
+  - `horario_inicio`: datetime
+  - `horario_pausa`: datetime
+  - `horario_retorno`: datetime
+  - `horario_fim`: datetime
+
+---
+
+### `HorarioIndisponivel`
+Define períodos específicos em que o barbeiro não poderá atender.
+
+- **Atributos:**
+  - `id`: string
+  - `horario_inicio`: datetime
+  - `horario_fim`: datetime
+  - `justificativa`: string — Motivo da indisponibilidade.
+
+---
+
+### `Servico`
+Representa um serviço oferecido pela barbearia.
+
+- **Atributos:**
+  - `id`: string
+  - `nome`: string
+  - `descricao`: string
+  - `preco`: float
+  - `duracao`: datetime
+
+- **Métodos:**
+  - `alterarServico()`: void — Altera os dados do serviço.
+  - `removerServico()`: void — Remove o serviço do catálogo.
+
+---
+
+### `Agendamento`
+Reúne os dados de um atendimento entre cliente e barbeiro.
+
+- **Atributos:**
+  - `id`: int
+  - `horario_inicio`: datetime
+  - `horario_fim`: datetime
+
+- **Métodos:**
+  - `confirmar()`: void — Confirma o agendamento.
+  - `cancelar()`: void — Cancela o agendamento.
+
+---
+
+### `Pagamento`
+Informações referentes ao pagamento de um agendamento.
+
+- **Atributos:**
+  - `id`: int
+  - `valor`: float
+  - `data`: datetime
+  - `metodo`: string — Ex: "Cartão de Crédito", "PIX", "Dinheiro".
+
+- **Métodos:**
+  - `calcularValorFinal()`: float — Pode aplicar descontos ou acréscimos.
+  - `gerarComprovante()`: void — Gera um recibo ou nota fiscal.
+"""
+
+## Modelo de Dados (Entidade-Relacionamento)
 
 ## Modelo de Dados (Entidade-Relacionamento)
 
 ```mermaid
 erDiagram
-    PESSOA ||--o{ HORARIO_DE_ATENDIMENTO : cliente
-    BARBEIRO ||--o{ HORARIO_DE_ATENDIMENTO : barbeiro
-    SERVICO ||--o{ HORARIO_DE_ATENDIMENTO : servico
-    HORARIO ||--o{ HORARIO_DE_ATENDIMENTO : alocacao
-    PAGAMENTO ||--|| HORARIO_DE_ATENDIMENTO : pagamento
+    PESSOA ||--|| CLIENTE : especializa
+    PESSOA ||--|| BARBEIRO : especializa
+
+    BARBEIRO ||--o{ JORNADA : define
+    JORNADA ||--o{ HORARIO : contem
+
+    CLIENTE ||--o{ HORARIO_DE_ATENDIMENTO : agenda
+    BARBEIRO ||--o{ HORARIO_DE_ATENDIMENTO : realiza
+    SERVICO ||--o{ HORARIO_DE_ATENDIMENTO : executa
+    HORARIO ||--o{ HORARIO_DE_ATENDIMENTO : alocado
+    HORARIO_DE_ATENDIMENTO ||--|| PAGAMENTO : vincula
 
     PESSOA {
-        string cpf
+        string cpf PK
         string nome
         string email
         string telefone
         string senha
     }
 
+    CLIENTE {
+        string cpf FK
+    }
+
     BARBEIRO {
-        string tel_trabalho
+        string cpf FK
+        string telefoneTrabalho
+    }
+
+    JORNADA {
+        int codigo PK
+        string diaSemana
+        time horarioInicio
+        time horarioFim
+        string barbeiroCpf FK
+    }
+
+    HORARIO {
+        int codigo PK
+        date data
+        time hora
+        bool disponivel
+        int jornadaCodigo FK
     }
 
     SERVICO {
-        int codigo
+        int codigo PK
         string nome
         string descricao
         float valorBase
     }
 
-    HORARIO {
-        int codigo
-        date data
-        time hora
-        bool disponibilidade
-    }
-
     PAGAMENTO {
-        int codigo
+        int codigo PK
         date data
         float adicional
         string metodo
@@ -178,18 +258,27 @@ erDiagram
     }
 
     HORARIO_DE_ATENDIMENTO {
-        int codigo
-        bool StatusServico
-        bool StatusPagamento
+        int codigo PK
+        bool statusServico
+        bool statusPagamento
         bool confirmado
         string justificativa
+        string clienteCpf FK
+        string barbeiroCpf FK
+        int servicoCodigo FK
+        int horarioCodigo FK
+        int pagamentoCodigo FK
     }
+
+
 
 ```
 
 ---
 
 ### Dicionário de Dados
+
+---
 
 #### Pessoa
 
@@ -219,6 +308,19 @@ erDiagram
 | ------------- | -------------------- | ------------ | ------- | --------------------- |
 | cpf           | CPF do barbeiro      | STRING       | 14      | PK / FK / Not Null    |
 | tel_trabalho  | Telefone de trabalho | VARCHAR      | 20      |                       |
+
+---
+
+#### Cliente
+
+| Tabela     | Cliente                                     |
+| ---------- | ------------------------------------------- |
+| Descrição  | Armazena dados complementares de clientes.  |
+| Observação | Subclasse da entidade Pessoa.               |
+
+| Nome do Campo | Descrição do Campo  | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | ------------------- | ------------ | ------- | --------------------- |
+| cpf           | CPF do cliente      | STRING       | 14      | PK / FK / Not Null    |
 
 ---
 
