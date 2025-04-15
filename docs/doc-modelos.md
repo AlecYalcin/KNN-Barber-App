@@ -15,7 +15,10 @@ classDiagram
         - nome: string
         - senha: string
         - telefone: string
-        + autenticar(): bool
+        + registro(): void
+        + autenticar(): void
+        + desconectar(): void
+        + esqueciMinhaSenha(): void
         + alterarDados(): void
     }
 
@@ -37,6 +40,10 @@ classDiagram
         - horario_pausa: datetime
         - horario_retorno: datetime
         - horario_fim: datetime
+        +criarJornada(): void
+        +alterarJornada(): void
+        +desligarJornada(): void
+        +pesquisarJornada(parametros: Dict~List~St~~): JornadaDeTrabalho
     }
 
     class HorarioIndisponivel {
@@ -44,6 +51,10 @@ classDiagram
         - horario_inicio: datetime
         - horario_fim: datetime
         - justificativa: string
+        +criarHorarioIndisponivel(): void
+        +alterarHorarioIndisponivel(): void
+        +retirarHorarioIndisponivel(): void
+        +pesquisarHorarioIndisponivel(horario_inicio: datetime, horario_fim: datetime): HorarioIndisponivel
     }
 
     class Servico {
@@ -52,15 +63,17 @@ classDiagram
         - descricao: string
         - preco: float
         - duracao: datetime
+        + criarServico(): void
         + alterarServico(): void
         + removerServico(): void
+        + retornarServicos(): List~Servico~
     }
 
     class Agendamento {
         - id: int
         - horario_inicio: datetime
         - horario_fim: datetime
-        + confirmar(): void
+        + gerarPagamento(): Pagamento
         + cancelar(): void
     }
 
@@ -101,8 +114,11 @@ Representa qualquer usuário do sistema (cliente ou barbeiro).
   - `telefone`: string — Telefone de contato.
 
 - **Métodos:**
-  - `autenticar()`: bool — Verifica se o usuário pode acessar o sistema.
-  - `alterarDados()`: void — Permite alterar dados cadastrais.
+  - `registro()`: void — Criação de uma nova conta
+  - `autenticar()`: void — Autenticação de uma conta já existente
+  - `desconectar()`: void — Desconectar uma conta autenticada
+  - `esqueciMinhaSenha()`: void — Método de recuperação de senha
+  - `alterarDados()`: void — Alteração de dados do usuário
 
 ---
 
@@ -131,6 +147,7 @@ Usuário que realiza os atendimentos e define sua agenda.
 Define os horários padrão de trabalho do barbeiro.
 
 - **Atributos:**
+
   - `id`: string
   - `dia`: string — Dia da semana (ex: "Segunda-feira").
   - `ativa`: bool — Se a jornada está ativa.
@@ -139,6 +156,12 @@ Define os horários padrão de trabalho do barbeiro.
   - `horario_retorno`: datetime
   - `horario_fim`: datetime
 
+- **Métodos:**
+  - `criarJornada()`: void — Cria uma nova jornada de trabalho
+  - `alterarJornada()`: void — Altera uma jornada existente
+  - `desligarJornada()`: void — Desliga a atividade de uma jornada
+  - `pesquisarJornada()`: JornadaDeTrabalho — Pesquisa por uma jornada através de parâmetros
+
 ---
 
 ### `HorarioIndisponivel`
@@ -146,10 +169,17 @@ Define os horários padrão de trabalho do barbeiro.
 Define períodos específicos em que o barbeiro não poderá atender.
 
 - **Atributos:**
+
   - `id`: string
   - `horario_inicio`: datetime
   - `horario_fim`: datetime
   - `justificativa`: string — Motivo da indisponibilidade.
+
+- **Métodos:**
+  - `criarHorarioIndisponivel()`: void — Adiciona um novo horário indisponível ao sistema
+  - `alterarHorarioIndisponivel()`: void — Altera um horário indisponível já existnete
+  - `retirarHorarioIndisponivel()`: void — Exclui um horário indisponivel no sistema
+  - `pesquisarHorarioIndisponivel(horario_inicio: datetime, horario_fim: datetime`): HorarioIndisponivel — Pesquisa por horários indisponiveis de acordo com os parâmetros
 
 ---
 
@@ -168,6 +198,8 @@ Representa um serviço oferecido pela barbearia.
 - **Métodos:**
   - `alterarServico()`: void — Altera os dados do serviço.
   - `removerServico()`: void — Remove o serviço do catálogo.
+  - `criarServico()`: void — Cria um novo serviço
+  - `retornarServicos()`: List~Servico~ — Retorna todos os serviços do sistema
 
 ---
 
@@ -201,7 +233,6 @@ Informações referentes ao pagamento de um agendamento.
 - **Métodos:**
   - `calcularValorFinal()`: float — Pode aplicar descontos ou acréscimos.
   - `detalhesDoPagamento()`: void — Texto informativo sobre o pagamento.
-    """
 
 ## Modelo de Dados (Entidade-Relacionamento)
 
