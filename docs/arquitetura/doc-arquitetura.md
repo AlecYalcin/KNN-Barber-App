@@ -20,12 +20,12 @@ Imagem com a organização geral dos componentes da arquitetura do projeto. Segu
 
 ## Requisitos Não-Funcionais
 
-| Cod.  | Nome                              | Descrição                                                                                         |
-| ----- | --------------------------------- | ------------------------------------------------------------------------------------------------- |
-| RNF01 | Especificidade de layout          | O software será web e seu layout deverá funcionar tanto em dispositivos móveis quanto em desktop. |
-| RNF02 | Permissão de clientes não logados | Clientes não logados no sistema devem ter acesso aos horários e serviços disponíveis.             |
-| RNF03 | Limite de Marcação                | Clientes só podem marcar horários com até uma semana de adiantamento.                             |
-| RNF04 | Limite de Agendamentos            | Clientes só podem realizar até dois agendamentos por semana                                       |
+| Cod.  | Nome                              | Descrição                                                                                               |
+| ----- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| RNF01 | Especificidade de layout          | O software será web e seu layout deverá funcionar tanto em dispositivos móveis quanto em desktop.       |
+| RNF02 | Permissão de clientes não logados | Permitir que clientes não autorizados no sistema possam ter acesso aos horários e serviços disponíveis. |
+| RNF03 | Limite de Marcação                | Limitar clientes com marcação de horários com até uma semana de adiantamento.                           |
+| RNF04 | Limite de Agendamentos            | Limitar clientes com até dois agendamentos por semana                                                   |
 
 ## Mecanismos arquiteturais
 

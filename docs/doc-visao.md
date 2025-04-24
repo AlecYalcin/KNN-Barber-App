@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-O sistema de informação desenvolvido tem como foco ser utilizado pela Barbearia KN, no formato de um aplicativo de agendamento de horários. O software busca acima de tudo trazer a simplicidade para que o usuário, de forma intuitiva, consiga agendar os horários e o tipo de serviço que deseja dentre os oferecidos pela empresa.
+O sistema de informação desenvolvido tem como foco ser utilizado pela Barbearia KNN, no formato de um aplicativo de agendamento de horários. O software busca acima de tudo trazer a simplicidade para que o usuário, de forma intuitiva, consiga agendar os horários e o tipo de serviço que deseja dentre os oferecidos pela empresa.
 
 Dentro da ideia de agendamento de horários, é importante destacar as funcionalidades principais deste módulo. Além da criação do horário de atendimento com nome e descrição, há a possibilidade de modificar os agendamentos manualmente ou até mesmo desmarcá-los caso haja necessidade. Por fim, os horários seguirão o padrão de Brasília, para evitar conflitos de fuso horário.
 
@@ -12,23 +12,24 @@ Ademais, o software pode ser uma ponte para uma nova forma de controle de pagame
 
 ### Histórico de Revisões
 
-| Data       | Versão | Descrição            | Autor           |
-| ---------- | ------ | -------------------- | --------------- |
-| 02/12/2024 | 1.0    | Criação do Documento | Alec Can Yalcin |
-| 02/12/2024 | 1.1    | Definição de Equipe  | Júlio César     |
-| 02/12/2024 | 1.2    | Definição dos Riscos | Stênio Eric     |
+| Data       | Versão | Descrição              | Autor       |
+| ---------- | ------ | ---------------------- | ----------- |
+| 02/12/2024 | 1.0    | Criação do Documento   | Alec Yalcin |
+| 02/12/2024 | 1.1    | Definição de Equipe    | Júlio César |
+| 02/12/2024 | 1.2    | Definição dos Riscos   | Stênio Eric |
+| 24/04/2024 | 1.3    | Correções no Documento | Alec Yalcin |
 
 ---
 
 ### Equipe e Definição de Papéis
 
-| Equipe             | Papel                   | E-mail                               |
-| ------------------ | ----------------------- | ------------------------------------ |
-| Alec Can Yalcin    | Gerente, Desenvolvedor  | <alecyalcin@gmail.com>               |
-| Denner Bismarck    | Analista, Desenvolvedor | <dennerbismarck@gmail.com>           |
-| Júlio César        | Desenvolvedor, Analista | <juliocosta10@gmail.com>             |
-| Stênio Eric        | Testador, Analista      | <stenioeric1@gmail.com>              |
-| Guilherme Medeiros | Testador, Analista      | <guilherme.medeiros.706@ufrn.edu.br> |
+| Equipe             | Papel         | E-mail                               |
+| ------------------ | ------------- | ------------------------------------ |
+| Alec Yalcin        | Líder Técnico | <alecyalcin@gmail.com>               |
+| Júlio César        | Analista      | <juliocosta10@gmail.com>             |
+| Guilherme Medeiros | Testador      | <guilherme.medeiros.706@ufrn.edu.br> |
+| Denner Bismarck    | Desenvolvedor | <dennerbismarck@gmail.com>           |
+| Stênio Eric        | Desenvolvedor | <stenioeric1@gmail.com>              |
 
 ---
 
@@ -36,7 +37,7 @@ Ademais, o software pode ser uma ponte para uma nova forma de controle de pagame
 
 | Equipe             | Competências                                          |
 | ------------------ | ----------------------------------------------------- |
-| Alec Can Yalcin    | Desenvolvedor full-stack com Laravel, Django e Vue.js |
+| Alec Yalcin        | Desenvolvedor full-stack com Laravel, Django e Vue.js |
 | Denner Bismarck    | Desenvolvedor back-end com Django, Node.js e PHP      |
 | Júlio César        | Desenvolvedor front-end com Django, Vue.js e React    |
 | Stênio Eric        | Desenvolvedor front-end com React, Node.js e Tailwind |
@@ -47,54 +48,6 @@ Ademais, o software pode ser uma ponte para uma nova forma de controle de pagame
 ### Modelo Conceitual
 
 Abaixo apresentamos o modelo conceitual usando o **Mermaid**.
-
-<!-- ```mermaid
-erDiagram
-    CLIENTE {
-        string cpf PK
-        string nome
-        string telefone
-    }
-
-    BARBEIRO {
-        string id PK
-        string nome
-        string telefone
-        string horariosAtendimento
-    }
-
-    SERVICO {
-        string id PK
-        string nome
-        string descricao
-        float precoMedio
-    }
-
-    AGENDAMENTO {
-        string id PK
-        datetime horario
-    }
-
-    PAGAMENTO {
-        string id PK
-        float valor
-        string status
-    }
-
-    USUARIO {
-        string email PK
-        string nome
-        string senha
-    }
-
-    CLIENTE ||--o{ AGENDAMENTO : "realiza"
-    BARBEIRO ||--o{ AGENDAMENTO : "atende"
-    SERVICO ||--o{ AGENDAMENTO : "está associado"
-    AGENDAMENTO ||--o{ PAGAMENTO : "gera"
-    USUARIO }o--o{ CLIENTE : "pode ser"
-    USUARIO }o--o{ BARBEIRO : "pode ser"
-
-``` -->
 
 ```mermaid
 erDiagram
@@ -192,13 +145,13 @@ erDiagram
 | RF17   | Registrar Horário Indisponível       | Permitir ao barbeiro registrar horários em que estará indisponível, com data, horário e justificativa. |
 | RF18   | Editar Horário Indisponível          | Permitir que o barbeiro edite um horário previamente registrado como indisponível.                     |
 | RF19   | Remover Horário Indisponível         | Permitir que o barbeiro exclua um horário registrado como indisponível.                                |
-| RF20   | Listar Horários Indisponíveis        | O cliente deve ser capaz de visualizar os horários não disponívesi para agendamento                    |
+| RF20   | Listar Horários Indisponíveis        | Permitir que o cliente seja capaz de visualizar os horários não disponíveis para agendamento.          |
 | RF21   | Verificar Disponibilidade de Horário | Verificar se o horário está dentro da jornada, não é um horário indisponível e não está ocupado.       |
 | RF22   | Selecionar Serviços para Agendamento | Permitir que o cliente selecione um ou mais serviços para o agendamento.                               |
 | RF23   | Calcular Duração de Agendamento      | Calcular automaticamente a duração do agendamento com base nos serviços escolhidos.                    |
 | RF24   | Realizar Agendamento                 | Permitir que o cliente agende serviços em horários disponíveis.                                        |
 | RF25   | Cancelar Agendamento                 | Permitir que o cliente ou barbeiro cancele um agendamento existente.                                   |
-| RF26   | Visualizar Agendamentos              | Os usuários do sistema devem ser capazes de visualizar os agendamentos do sistema                      |
+| RF26   | Visualizar Agendamentos              | Permitir que os usuários do sistema sejam capazes de visualizar os agendamentos do sistema             |
 | RF27   | Bloquear Horário após Agendamento    | Marcar automaticamente como ocupado o horário agendado.                                                |
 | RF28   | Exibir Valor de Pagamento            | Exibir ao cliente o valor total do agendamento após a seleção dos serviços.                            |
 | RF29   | Informar Forma de Pagamento          | Permitir que o cliente escolha a forma de pagamento no momento do agendamento.                         |
@@ -208,12 +161,12 @@ erDiagram
 
 ### 3.2 Requisitos Não Funcionais
 
-| Cod.  | Nome                              | Descrição                                                                                         |
-| ----- | --------------------------------- | ------------------------------------------------------------------------------------------------- |
-| RNF01 | Especificidade de layout          | O software será web e seu layout deverá funcionar tanto em dispositivos móveis quanto em desktop. |
-| RNF02 | Permissão de clientes não logados | Clientes não logados no sistema devem ter acesso aos horários e serviços disponíveis.             |
-| RNF03 | Limite de Marcação                | Clientes só podem marcar horários com até uma semana de adiantamento.                             |
-| RNF04 | Limite de Agendamentos            | Clientes só podem realizar até dois agendamentos por semana                                       |
+| Cod.  | Nome                              | Descrição                                                                                               |
+| ----- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| RNF01 | Especificidade de layout          | O software será web e seu layout deverá funcionar tanto em dispositivos móveis quanto em desktop.       |
+| RNF02 | Permissão de clientes não logados | Permitir que clientes não autorizados no sistema possam ter acesso aos horários e serviços disponíveis. |
+| RNF03 | Limite de Marcação                | Limitar clientes com marcação de horários com até uma semana de adiantamento.                           |
+| RNF04 | Limite de Agendamentos            | Limitar clientes com até dois agendamentos por semana                                                   |
 
 ## 3.3 Perfis de Usuário
 
