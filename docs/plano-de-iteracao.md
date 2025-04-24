@@ -8,7 +8,7 @@ O plano de iteração e release, elaborado no semestre 2025.1, consiste em um do
 | -------- | ----------- | ---------- | ------------ | --------------- | ----------------------------------------------- |
 | It1      | 21/03/2025  | 27/04/2025 | 17/04/2025   | Alec Yalcin     | [Iteração 01](iteracao-detalhes/iteracao_01.md) |
 | It2      | 28/03/2025  | 01/04/2025 | 17/04/2025   | Alec Yalcin     | [Iteração 02](iteracao-detalhes/iteracao_02.md) |
-| It3      | 02/04/2025  | 14/04/2025 | 17/04/2025   | Alec Yalcin     | [Iteração 03](iteracao-detalhes/iteracao_03.md) |
+| It3      | 02/04/2025  | 17/04/2025 | 17/04/2025   | Alec Yalcin     | [Iteração 03](iteracao-detalhes/iteracao_03.md) |
 | It4      | ...         | ...        | ...          | Líder Técnico 4 | Link para a iteracao-detalhes/iteraoca_xx.md    |
 | It5      | ...         | ...        | ...          | Líder Técnico 5 | Link para a iteracao-detalhes/iteraoca_xx.md    |
 | It6      | ...         | ...        | ...          | Líder Técnico 6 | Link para a iteracao-detalhes/iteraoca_xx.md    |
@@ -20,7 +20,7 @@ O plano de iteração e release, elaborado no semestre 2025.1, consiste em um do
 
 | Release | Data início | Data Final | Líder Técnico   | Detalhes                                                                       |
 | ------- | ----------- | ---------- | --------------- | ------------------------------------------------------------------------------ |
-| R01     | 21/03/2025  | 04/02/2025 | Alec Yalcin     | Lista de funcionalidades da Release 02 (It1, It2, It3).                        |
-| R02     | 16/04/2025  | ...        | Denner Bismarck | Lista de funcionalidades da Release 02 (Itx, Itx, Itx).                        |
+| R01     | 21/03/2025  | 16/04/2025 | Alec Yalcin     | Lista de funcionalidades da Release 01 (It1, It2, It3).                        |
+| R02     | 18/04/2025  | ...        | Denner Bismarck | Lista de funcionalidades da Release 02 (Itx, Itx, Itx).                        |
 
 - Observação 3: Os releases são ajustados para fornecer um MVP. As release podem ter número de iterações diferentes, de acordo com as funcionalidades necessárias por release.
