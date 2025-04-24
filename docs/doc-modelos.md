@@ -127,7 +127,7 @@ Representa qualquer usuário do sistema (cliente ou barbeiro).
 Usuário que pode realizar agendamentos e consultar histórico de atendimentos.
 
 - **Métodos:**
-  - `consultarAgendamentos()`: List<Agendamento> — Lista os agendamentos feitos pelo cliente.
+  - `consultarAgendamentos()`: List<(Agendamento)> — Lista os agendamentos feitos pelo cliente.
 
 ---
 
@@ -136,7 +136,7 @@ Usuário que pode realizar agendamentos e consultar histórico de atendimentos.
 Usuário que realiza os atendimentos e define sua agenda.
 
 - **Métodos:**
-  - `consultarAgendamentos()`: List<Agendamento> — Lista os agendamentos a serem realizados.
+  - `consultarAgendamentos()`: List<(Agendamento)> — Lista os agendamentos a serem realizados.
   - `adicionarHorarioIndisponivel(h: HorarioIndisponivel)`: void — Adiciona indisponibilidades específicas.
   - `definirJornada(jornada: JornadaDeTrabalho)`: void — Define ou altera a jornada de trabalho semanal.
 
