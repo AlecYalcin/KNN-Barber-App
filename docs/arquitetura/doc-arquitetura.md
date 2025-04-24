@@ -2,13 +2,15 @@
 
 ## Histórico de revisões
 
-| Data      | Versão |      Descrição       | Autor       |
-| :-------- | :----: | :------------------: | :---------- |
-| 3/10/2025 |  1.0   | Criação do Documento | Júlio César |
+| Data       | Versão |      Descrição       | Autor       |
+| :--------- | :----: | :------------------: | :---------- |
+| 10/03/2025 |  1.0   | Criação do Documento | Júlio César |
+| 04/04/2025 |  2.0   |  Adição de Conteúdo  | Alec Yalcin |
+| 24/04/2025 |  2.1   |  Correção de Falhas  | Alec Yalcin |
 
 ## Descrição da Arquitetura do Projeto
 
-A arquitetura do KN BarberApp esta organizada em camadas seguindo a ideia de Design Orientado a Domínio(DDD) com a separação de domínios onde os componentes se comunicam e trocam informações via API. O Frontend será em React/Vite.js e Backend em Flask, e PostgreSQL para persistência.
+A arquitetura do KNN BarberApp está organizada em camadas seguindo a ideia de Design Orientado a Domínio (DDD) com a separação de domínios onde os componentes se comunicam e trocam informações via API. O Frontend será em React/Vite.js e Backend em FastAPI, e PostgreSQL para persistência.
 
 ## Visão Geral da Arquitetura
 
@@ -31,13 +33,13 @@ Imagem com a organização geral dos componentes da arquitetura do projeto. Segu
 | -------------------- | ------------------------- | -------------------------- |
 | Persistência         | Banco de dados relacional | PostgreSQL                 |
 | Frontend             | Interface com Componentes | React + Vite.js            |
-| Backend              | DDD, TDD e API REST       | Flask (Python)             |
+| Backend              | DDD, TDD e API REST       | FastAPI (Python)           |
 | Build                | Imagem Docker             | Docker e Dockerfile        |
 | Deploy               | Container Docker          | Docker compose             |
 
 ## Implantação
 
-A implantação do KN BarberApp será dividida em três componentes principais Frontend (React + Vite.js), Backend (Flask, estruturado em camadas de API, serviços, domínio e repositório) e Banco de Dados, se mantendo isolado.
+A implantação do KNN BarberApp será dividida em três componentes principais Frontend (React + Vite.js), Backend (FastAPI, estruturado em camadas de API, serviços, domínio e repositório) e Banco de Dados, se mantendo isolado.
 
 ### Frontend
 
