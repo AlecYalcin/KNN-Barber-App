@@ -122,11 +122,21 @@ Para classificar a complexidade de cada função, o método utilizado verifica o
 
 **Descrição:** Como proprietário do sistema, quero ser capaz de atualizar minhas informações pessoais para que meus clientes tenham acesso a dados corretos.
 
+- **Funcionalidade:** Entrada Externa (EE).
+- **MER**: Edição de quatro informações (4).
+- **RLR**: A tabela de USUARIO é afetada (1).
+- **Complexidade:** 1 RLR / 4 MER em EE (Baixa).
+
 ---
 
 #### User Story US02 - Gerenciar Jornada de Trabalho
 
 **Descrição:** Como proprietário do sistema, quero poder alterar minha jornada de trabalho para me adaptar às necessidades do mês, da semana ou do dia.
+
+- **Funcionalidade:** Entrada Externa (EE).
+- **MER**: Edição de cinco informações (5).
+- **RLR**: A tabela de JORNADA_DE_TRABALHO é afetada (1).
+- **Complexidade:** 1 RLR / 5 MER em EE (Baixa).
 
 ---
 
@@ -134,11 +144,30 @@ Para classificar a complexidade de cada função, o método utilizado verifica o
 
 **Descrição:** Como proprietário do sistema, quero cadastrar e editar os serviços que ofereço, com informações sobre duração e preço.
 
+- **Funcionalidade:** Entrada Externa (EE).
+- **MER**: Edição de quatro informações (4).
+- **RLR**: A tabela de USUARIO é afetada (1).
+- **Complexidade:** 1 RLR / 4 MER em EE (Baixa).
+
 ---
 
 #### User Story US04 - Realizar Agendamentos
 
 **Descrição:** Como cliente do sistema, quero marcar ou desmarcar meus agendamentos com base nos serviços escolhidos e horários disponíveis.
+
+Horários Disponíveis:
+
+- **Funcionalidade:** Consulta Externa (CE).
+- **MER**: Quatro informações de JORNADA_DE_TRABALHO, três informações de HORARIO_INDISPONIVEL, duas informações de AGENDAMENTO (9).
+- **RLR**: As tabelas de AGENDAMENTO, HORARIO_INDISPONIVEL e JORNADA_DE_TRABALHO são acessadas (3).
+- **Complexidade:** 3 RLR / 9 MER em CE (Média).
+
+Marcar Agendamento:
+
+- **Funcionalidade:** Entrada Externa (EE).
+- **MER**: Cria um novo agendamento com duas informações de AGENDAMENTO, o USUARIO e o SERVICO (4).
+- **RLR**: As tabelas USUARIO e SERVICO são acessadas, AGENDAMENTO é afetado. (3)
+- **Complexidade:** 3 RLR / 4 MER em EE (Média).
 
 ---
 
@@ -146,11 +175,30 @@ Para classificar a complexidade de cada função, o método utilizado verifica o
 
 **Descrição:** Como proprietário do sistema, quero visualizar os agendamentos marcados, desmarcar quando necessário e justificar faltas ou emergências.
 
+Visualizar Agendamentos:
+
+- **Funcionalidade:** Consulta Externa (CE).
+- **MER**: Visualizar a lista de agendamentos com horario_inicio, horario_fim, usuario e servico (4).
+- **RLR**: A tabela de AGENDAMENTO contêm todas as informações. (1)
+- **Complexidade:** 1 RLR / 4 MER em CE (Baixa).
+
+Desmarcar Agendamentos:
+
+- **Funcionalidade:** Entrada Externa (EE).
+- **MER**: Excluir instância de AGENDAMENTO e criar HORARIO_INDISPONIVEL com os horarios do agendamento e uma justificativa (4).
+- **RLR**: As tabelas de AGENDAMENTO e JORNADA_DE_TRABALHO são acessadas (2).
+- **Complexidade:** 2 RLR / 4 MER em CE (Baixa).
+
 ---
 
 #### User Story US06 - Visualizar Relatório Financeiro
 
 **Descrição:** Como proprietário do sistema, quero visualizar o histórico completo de pagamentos realizados, com detalhes dos usuários e formas de pagamento.
+
+- **Funcionalidade:** Saída Externa (SE).
+- **MER**: Lista de PAGAMENTO, Nome do USUARIO, metodo em METODO_DE_PAGAMENTO (3).
+- **RLR**: As tabelas de PAGAMENTO, USUARIO e METODO_DE_PAGAMENTO são acessadas. (3).
+- **Complexidade:** 3 RLR / 3 MER em CE (Média).
 
 ---
 
@@ -158,14 +206,59 @@ Para classificar a complexidade de cada função, o método utilizado verifica o
 
 **Descrição:** Como Cliente que realizou um agendamento, eu quero ser capaz de ver o valor final, as formas de pagamentos disponíveis e selecionar qual eu desejo.
 
+- **Funcionalidade:** Entrada Externa (EE).
+- **MER**: Visualizar os metodos em METODOS_DE_PAGAMENTO, Calcular o valor com o preço dos SERVICOs (2).
+- **RLR**: As tabelas de METODOS_DE_PAGAMENTO e SERVICO e acessa (2).
+- **Complexidade:** 2 RLR / 2 MER em CE (Baixa).
+
 ---
 
 #### User Story US08 - Gerenciar Conta de Cliente
 
 **Descrição:** Como cliente do sistema, quero alterar minhas informações pessoais salvas no sistema.
 
+- **Funcionalidade:** Entrada Externa (EE).
+- **MER**: Edição de quatro informações (4).
+- **RLR**: A tabela de USUARIO é afetada (1).
+- **Complexidade:** 1 RLR / 4 MER em EE (Baixa).
+
 ---
 
 #### User Story US09 - Consultar Histórico de Agendamentos e Pagamentos
 
 **Descrição:** Como usuário do sistema, quero visualizar o histórico de agendamentos realizados e os pagamentos associados a eles.
+
+- **Funcionalidade:** Saída Externa (SE).
+- **MER**: Lista de PAGAMENTO filtrada por com AGENDAMENTOS com id de usuário, metodo em METODO_DE_PAGAMENTO (3).
+- **RLR**: As tabelas de PAGAMENTO, AGENDAMENTOe METODO_DE_PAGAMENTO são acessadas. (3).
+- **Complexidade:** 3 RLR / 3 MER em EE (Baixa).
+
+---
+
+### Tabela de Contagem
+
+| Nome da Função                                  | Tipo de Função | Complexidade  | Pontos de Função |
+| ----------------------------------------------- | -------------- | ------------- | ---------------- |
+| ALI Usuario                                     | ALI            | Baixa         | 7                |
+| ALI Servico                                     | ALI            | Baixa         | 7                |
+| ALI Jornada de Trabalho                         | ALI            | Baixa         | 7                |
+| ALI Horario Indisponivel                        | ALI            | Baixa         | 7                |
+| ALI Agendamento                                 | ALI            | Baixa         | 7                |
+| ALI Pagamento                                   | ALI            | Baixa         | 7                |
+| AIE Dia da Semana                               | AIE            | Baixa         | 5                |
+| AIE Metodo de Pagamneto                         | AIE            | Baixa         | 5                |
+| Gerenciar Conta de Barbeiro                     | EE             | Baixa         | 3                |
+| Gerenciar Jornada de Trabalho                   | EE             | Baixa         | 3                |
+| Gerenciar Serviços Ofertados                    | EE             | Baixa         | 3                |
+| Realizar Agendamentos                           | CE + EE        | Média + Média | 8                |
+| Gerenciar Agendamentos                          | CE + EE        | Baixa + Baixa | 6                |
+| Visualizar Relatório Financeiro                 | SE             | Média         | 5                |
+| Pagamento do Sistema                            | EE             | Baixa         | 3                |
+| Gerenciar Conta do Cliente                      | EE             | Baixa         | 3                |
+| Consultar Histórico de Agendamentos e Pagamento | SE             | Baixa         | 4                |
+
+| Contagem Detalhada | Pontos  |
+| ------------------ | ------- |
+| **Total**          | 90PF    |
+| Ajuste 65%         | 58PF    |
+| Ajuste 135%        | 121.5PF |
