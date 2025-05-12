@@ -91,21 +91,22 @@ erDiagram
 
 ```
 
-| Função de Dado    | Entidades Relacionadas | Tamanho em PF |
-| ----------------- | ---------------------- | ------------- |
-| ALI Usuário       | Usuário                | 35PF          |
-| ALI Jornada       | Jornada_de_trabalho    | 35PF          |
-| ALI Horário       | Horario_indisponivel   | 35PF          |
-| ALI Agendamento   | Agendamento            | 35PF          |
-| ALI Serviço       | Servico                | 35PF          |
-| ALI Pagamento     | Pagamento              | 35PF          |
-| AIE Dia da Semana | Dia_da_semana          | 15PF          |
+| Função de Dado          | Entidades Relacionadas | Tamanho em PF |
+| ----------------------- | ---------------------- | ------------- |
+| ALI Usuário             | Usuário                | 35PF          |
+| ALI Jornada             | Jornada_de_trabalho    | 35PF          |
+| ALI Horário             | Horario_indisponivel   | 35PF          |
+| ALI Agendamento         | Agendamento            | 35PF          |
+| ALI Serviço             | Servico                | 35PF          |
+| ALI Pagamento           | Pagamento              | 35PF          |
+| AIE Dia da Semana       | Dia_da_semana          | 15PF          |
+| AIE Metodo de Pagamento | Metodo_de_pagamento    | 15PF          |
 
-| Contagem Indicativa | Pontos   |
-| ------------------- | -------- |
-| **Total**           | 225PF    |
-| Ajuste 65%          | 146.25PF |
-| Ajuste 135%         | 303.75PF |
+| Contagem Indicativa | Pontos |
+| ------------------- | ------ |
+| **Total**           | 240PF  |
+| Ajuste 65%          | 156PF  |
+| Ajuste 135%         | 324PF  |
 
 ## Contagem Detalhada (CD)
 
