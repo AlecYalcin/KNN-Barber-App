@@ -1,7 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, DateTime, Boolean, Enum, Date, Time, Float
 from sqlalchemy.orm import registry, relationship
 from back.domain.models import (
-    Barbeiro, Cliente, Servico, Jornada, Horario,
+    Pessoa, Barbeiro, Cliente, Servico, Jornada, Horario,
     Pagamento, HorarioDeAtendimento, StatusServico,
     StatusPagamento, MetodoPagamento
 )
@@ -11,25 +11,27 @@ mapper_registry = registry()
 metadata = mapper_registry.metadata
 
 # Tables
-barbeiros = Table(
-    'barbeiros',
-    metadata,
-    Column('cpf', String, primary_key=True),
-    Column('nome', String, nullable=False),
-    Column('email', String, nullable=False, unique=True),
-    Column('telefone', String, nullable=False),
-    Column('senha', String, nullable=False),
-    Column('tel_trabalho', String, nullable=False)
-)
-
-clientes = Table(
-    'clientes',
+pessoas = Table(
+    'pessoas',
     metadata,
     Column('cpf', String, primary_key=True),
     Column('nome', String, nullable=False),
     Column('email', String, nullable=False, unique=True),
     Column('telefone', String, nullable=False),
     Column('senha', String, nullable=False)
+)
+
+barbeiros = Table(
+    'barbeiros',
+    metadata,
+    Column('cpf', String, ForeignKey('pessoas.cpf'), primary_key=True),
+    Column('tel_trabalho', String, nullable=False)
+)
+
+clientes = Table(
+    'clientes',
+    metadata,
+    Column('cpf', String, ForeignKey('pessoas.cpf'), primary_key=True)
 )
 
 servicos = Table(
@@ -88,8 +90,14 @@ horarios_atendimento = Table(
 # Mappings
 def configure_mappers():
     mapper_registry.map_imperatively(
+        Pessoa,
+        pessoas
+    )
+
+    mapper_registry.map_imperatively(
         Barbeiro,
         barbeiros,
+        inherits=Pessoa,
         properties={
             'jornadas': relationship(Jornada, backref='barbeiro')
         }
@@ -97,7 +105,8 @@ def configure_mappers():
 
     mapper_registry.map_imperatively(
         Cliente,
-        clientes
+        clientes,
+        inherits=Pessoa
     )
 
     mapper_registry.map_imperatively(

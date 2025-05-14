@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from back.api.routes.pessoa_routes import router as pessoa_router
 from back.api.routes.barbeiro_routes import router as barbeiro_router
 from back.infrastructure.database.connection import engine
 from back.infrastructure.database.mappings import configure_mappers, metadata
@@ -23,6 +24,7 @@ async def startup():
     metadata.create_all(engine)
 
 # Incluir rotas
+app.include_router(pessoa_router, prefix="/pessoas", tags=["pessoas"])
 app.include_router(barbeiro_router, prefix="/barbeiros", tags=["barbeiros"])
 
 @app.get("/")
