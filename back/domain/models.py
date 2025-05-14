@@ -48,8 +48,8 @@ class Cliente(Pessoa):
     pass
 
 class Servico:
-    def __init__(self, id, nome, descricao, valor_base, duracao=30):
-        self.id = id
+    def __init__(self, nome, descricao, valor_base, duracao=30):
+        self.id = str(uuid.uuid4())
         self.nome = nome
         self.descricao = descricao
         self.valor_base = valor_base
@@ -57,6 +57,7 @@ class Servico:
 
 class Jornada:
     def __init__(self, dia: date, turno: str):
+        self.id = str(uuid.uuid4())
         self.dia = dia
         self.turno = turno  # "manhã", "tarde", "noite", "madrugada"
         self.horarios = []
@@ -72,12 +73,14 @@ class Jornada:
 
 class Horario:
     def __init__(self, hora_inicio: time, hora_fim: time):
+        self.id = str(uuid.uuid4())
         self.inicio = hora_inicio
         self.fim = hora_fim
         self.disponivel = True
 
 class Pagamento:
     def __init__(self, metodo: MetodoPagamento, servico: Servico, adicional=0):
+        self.id = str(uuid.uuid4())
         self.metodo = metodo
         self.adicional = adicional
         self.valor = servico.valor_base + adicional
@@ -90,8 +93,8 @@ class Pagamento:
         self.status = StatusPagamento.FALHOU
 
 class HorarioDeAtendimento:
-    def __init__(self, id, status_servico: StatusServico, justificativa, cliente: Cliente, barbeiro: Barbeiro, servico: Servico, jornada: Jornada, horario: Horario, pagamento: Pagamento):
-        self.id = id
+    def __init__(self, status_servico: StatusServico, justificativa, cliente: Cliente, barbeiro: Barbeiro, servico: Servico, jornada: Jornada, horario: Horario, pagamento: Pagamento):
+        self.id = str(uuid.uuid4())
         self.status_servico = status_servico
         self.justificativa = justificativa
         self.cliente = cliente
@@ -108,14 +111,10 @@ class HorarioDeAtendimento:
         self.pagamento.status = StatusPagamento.FALHOU
 
 # ---------------------- FUNÇÕES AUXILIARES ------------------------
-def gerar_id():
-    return str(uuid.uuid4())
-
 def criar_horario_de_atendimento(cliente: Cliente, barbeiro: Barbeiro, jornada: Jornada, horario: Horario, servico: Servico, metodo_pagamento: MetodoPagamento, adicional=0):
     barbeiro.verificar_disponibilidade(horario)
     pagamento = Pagamento(metodo_pagamento, servico, adicional)
     atendimento = HorarioDeAtendimento(
-        id=gerar_id(),
         status_servico=StatusServico.AGENDADO,
         justificativa=None,
         cliente=cliente,
