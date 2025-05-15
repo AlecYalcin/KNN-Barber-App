@@ -45,15 +45,7 @@ class Barbeiro(Pessoa):
             raise HorarioIndisponivelParaBarbeiro("Horário indisponível para o barbeiro")
 
 class Cliente(Pessoa):
-    def __init__(self, cpf, nome, email, telefone, senha):
-        super().__init__(cpf, nome, email, telefone, senha)
-
-    def autenticar(self, senha: str) -> bool:
-        return self.senha == senha
-
-    def verificar_disponibilidade(self, horario):
-        if not horario.disponivel:
-            raise HorarioIndisponivelParaCliente("Horário indisponível para o cliente")
+    pass
 
 class Servico:
     def __init__(self, id, nome, descricao, valor_base, duracao=30):
