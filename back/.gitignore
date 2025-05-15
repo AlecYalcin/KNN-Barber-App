@@ -47,3 +47,4 @@ htmlcov/
 # Outras Configurações
 .DS_Store
 Thumbs.db
+/migrations
