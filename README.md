@@ -133,3 +133,67 @@ A aplicação estará disponível em `http://localhost:5173/`.
   ```sh
   npm create vite@latest my-react-app --template react-ts
   ```
+
+## Migrações com Alembic
+
+O Alembic é usado para gerenciar as migrações do banco de dados. Aqui está como usar:
+
+### Gerando uma nova migração
+
+Para criar uma nova migração após alterar os modelos:
+
+```sh
+alembic revision --autogenerate -m "Descrição da migração"
+```
+
+### Aplicando migrações
+
+Para aplicar todas as migrações pendentes:
+
+```sh
+alembic upgrade head
+```
+
+Para reverter a última migração:
+
+```sh
+alembic downgrade -1
+```
+
+Para reverter todas as migrações:
+
+```sh
+alembic downgrade base
+```
+
+### Verificando o status
+
+Para ver o status atual das migrações:
+
+```sh
+alembic current
+```
+
+Para ver o histórico de migrações:
+
+```sh
+alembic history
+```
+
+### Dicas importantes
+
+1. **Sempre revise** as migrações geradas antes de aplicá-las
+2. **Faça backup** do banco de dados antes de aplicar migrações em produção
+3. **Versione** as migrações no controle de código (não adicione ao .gitignore)
+4. **Teste** as migrações em um ambiente de desenvolvimento primeiro
+
+### Estrutura de arquivos
+
+```
+migrations/
+├── versions/         # Arquivos de migração
+├── env.py           # Configuração do ambiente
+├── README           # Documentação do Alembic
+├── script.py.mako   # Template para novas migrações
+└── alembic.ini      # Configuração principal
+```
