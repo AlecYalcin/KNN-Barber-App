@@ -1,3 +1,4 @@
+--Função 1
 CREATE OR REPLACE FUNCTION verificar_horario_livre(
     p_cpf_barbeiro VARCHAR(11),
     p_data DATE,
@@ -15,5 +16,24 @@ BEGIN
     ) INTO v_livre;
     
     RETURN v_livre;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Função 2: Lista de Horários do Dia
+CREATE OR REPLACE FUNCTION listar_horarios_dia(
+    p_cpf_barbeiro VARCHAR(11),
+    p_data DATE
+) RETURNS TABLE (
+    horario TIME,
+    disponivel BOOLEAN
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT h.hora as horario, h.disponivel
+    FROM jornadas j
+    JOIN horarios h ON j.id = h.jornada_id
+    WHERE j.barbeiro_cpf = p_cpf_barbeiro
+    AND j.data = p_data
+    ORDER BY h.hora;
 END;
 $$ LANGUAGE plpgsql;
