@@ -91,3 +91,17 @@ BEGIN
     END LOOP;
 END;
 $$;
+
+-- Exemplos de uso:
+
+-- Função 1
+SELECT verificar_horario_livre('12345678900', CURRENT_DATE, '14:00'::TIME);
+
+-- Função 2
+SELECT * FROM listar_horarios_dia('12345678900', CURRENT_DATE);
+
+-- Procedimento 1
+CALL listar_agendamentos_dia(CURRENT_DATE);
+
+-- Procedimento 2
+CALL mostrar_barbeiros_disponiveis(CURRENT_DATE); 
