@@ -65,3 +65,29 @@ BEGIN
     END LOOP;
 END;
 $$;
+
+-- Procedimento 2
+CREATE OR REPLACE PROCEDURE mostrar_barbeiros_disponiveis(
+    p_data DATE
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_barbeiro RECORD;
+BEGIN
+    RAISE NOTICE 'Barbeiros disponíveis para o dia %:', p_data;
+    
+    FOR v_barbeiro IN 
+        SELECT DISTINCT b.cpf, p.nome
+        FROM barbeiros b
+        JOIN pessoas p ON b.cpf = p.cpf
+        JOIN jornadas j ON b.cpf = j.barbeiro_cpf
+        WHERE j.data = p_data
+        ORDER BY p.nome
+    LOOP
+        RAISE NOTICE 'CPF: % - Nome: %', 
+            v_barbeiro.cpf, 
+            v_barbeiro.nome;
+    END LOOP;
+END;
+$$;
