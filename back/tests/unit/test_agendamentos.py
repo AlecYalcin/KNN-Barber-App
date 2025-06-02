@@ -23,8 +23,8 @@ def test_criar_agendamento_completo(
     servicos = mock_servicos_teste
 
     horario = {
-        "inicio":datetime(2025, 5, 27, 10, 0), 
-        "fim":datetime(2025, 5, 27, 11, 40)
+        "inicio":datetime(2025, 5, 27, 8, 0), 
+        "fim":datetime(2025, 5, 27, 10, 30)
     }
 
     agendamento = criar_agendamento(usuario, barbeiro, servicos, tuple(horario.values()))
@@ -33,8 +33,8 @@ def test_criar_agendamento_completo(
     assert agendamento.cliente == usuario
     assert agendamento.barbeiro == barbeiro.usuario
     assert agendamento.servicos == servicos
-    assert agendamento.horario_inicio == datetime(2025, 5, 27, 10, 0)
-    assert agendamento.horario_fim == datetime(2025, 5,27, 12, 0)
+    assert agendamento.horario_inicio == datetime(2025, 5, 27, 8, 0)
+    assert agendamento.horario_fim == datetime(2025, 5,27, 10, 30)
 
 def test_agendamento_com_horario_invalido(
     mock_usuario_teste,
@@ -80,8 +80,8 @@ def test_agendamento_com_horario_indisponivel(
     servicos = mock_servicos_teste
 
     horario = {
-        "inicio":datetime(2025, 5, 29, 10, 0), 
-        "fim":datetime(2025, 5, 29, 11, 40)
+        "inicio":datetime(2025, 5, 29, 9, 0), 
+        "fim":datetime(2025, 5, 29, 10, 45)
     }
 
     with pytest.raises(HorarioIndisponivelException):
@@ -97,8 +97,8 @@ def test_agendamento_com_horario_insuficiente(
     servicos = mock_servicos_teste
 
     horario = {
-        "inicio":datetime(2025, 5, 29, 10, 0), 
-        "fim":datetime(2025, 5, 29, 10, 30)
+        "inicio":datetime(2025, 5, 29, 9, 0), 
+        "fim":datetime(2025, 5, 29, 10, 0)
     }
 
     with pytest.raises(HorarioInsuficiente):

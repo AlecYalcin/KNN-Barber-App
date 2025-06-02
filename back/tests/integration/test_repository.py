@@ -1,5 +1,3 @@
-import pytest
-from src.domain.models import Usuario, Servico
 from src.adapters.repositories import *
 from tests.mock import *
 
@@ -25,16 +23,16 @@ def test_usuario_repository(session):
     usuario_repo.adicionar(usuario2)
 
     # Procurando e assegurando que são iguais
-    usuario_deletado = usuario_repo.consultar_por_cpf(cpf=usuario1.cpf)
+    usuario_deletado = usuario_repo.consultar(cpf=usuario1.cpf)
     assert usuario1 == usuario_deletado
 
     # Procurando todos os clientes
-    usuarios_encontrados = usuario_repo.retornar_clientes()
+    usuarios_encontrados = usuario_repo.listar_clientes()
     assert usuarios_encontrados == [usuario1, usuario2]
 
     # Removendo usuário no banco de dados
     usuario_repo.remover(usuario1.cpf)
-    usuario_deletado = usuario_repo.consultar_por_cpf(cpf=usuario1.cpf)
+    usuario_deletado = usuario_repo.consultar(cpf=usuario1.cpf)
     assert usuario_deletado == None
 
 def test_servico_repository(session):
@@ -60,8 +58,6 @@ def test_servico_repository(session):
         duracao=15,
     )
 
-    print(servico_barba.id, servico_cabelo.id, servico_sobrancelha.id)
-
     # Criando serviços no banco de dados
     servico_repo = ServicoRepository(session=session)
     servico_repo.adicionar(servico_barba)
@@ -69,11 +65,11 @@ def test_servico_repository(session):
     servico_repo.adicionar(servico_sobrancelha)
 
     # Procurando pelos serviços adicionados
-    servicos_encontrados = servico_repo.retornar_servicos()
+    servicos_encontrados = servico_repo.listar()
     assert servicos_encontrados == [servico_barba, servico_cabelo, servico_sobrancelha]
 
     # Pesquisando por um serviço específico
-    servico_encontrado = servico_repo.consultar_por_id(id=servico_barba.id)
+    servico_encontrado = servico_repo.consultar(id=servico_barba.id)
     assert servico_encontrado == servico_barba
 
     # Pesquisnado por serviços parecidos
@@ -101,11 +97,11 @@ def test_jornada_repository(session, mock_jornada_teste):
 
     # Procurar jornada por ID
     for jornada in jornadas:
-        jornada_encontrada = jornada_repo.consultar_por_id(id=jornada.id)
+        jornada_encontrada = jornada_repo.consultar(id=jornada.id)
         assert jornada_encontrada == jornada
 
     # Comparar todas as jornadas
-    jornadas_encontradas = jornada_repo.consultar_por_barbeiro_e_vigente(cpf=barbeiro.cpf)
+    jornadas_encontradas = jornada_repo.listar_jornada_de_barbeiro(cpf=barbeiro.cpf)
     assert jornadas_encontradas == jornadas
 
 def test_horario_indisponivel_repostiroy(session, mock_dia_indisponivel_teste):
@@ -133,7 +129,7 @@ def test_horario_indisponivel_repostiroy(session, mock_dia_indisponivel_teste):
     horario_indisponivel_repo.adicionar(dia_indisponivel)
 
     # Procurando dia por id
-    horario_indisponivel_encontrado = horario_indisponivel_repo.consultar_por_id(dia_indisponivel.id)
+    horario_indisponivel_encontrado = horario_indisponivel_repo.consultar(dia_indisponivel.id)
     assert horario_indisponivel_encontrado == dia_indisponivel
 
     # Procurando por barbeiro
@@ -164,11 +160,11 @@ def test_barbeiro_repository(session, mock_barbeiro_teste):
         barbeiro_repo.horario_indisponivel_repo.adicionar(horario)
 
     # Procurando por barbeiro
-    barbeiro_encontrado = barbeiro_repo.consultar_por_cpf(barbeiro.usuario.cpf)
+    barbeiro_encontrado = barbeiro_repo.consultar(barbeiro.usuario.cpf)
     assert barbeiro_encontrado == barbeiro
 
     # Procurando por barbeiros
-    barbeiros_encontrados = barbeiro_repo.lista_de_barbeiros()
+    barbeiros_encontrados = barbeiro_repo.listar()
     assert barbeiros_encontrados == [barbeiro]
 
 def test_agendamento_repository(
@@ -215,15 +211,15 @@ def test_agendamento_repository(
     agendamento_repo.adicionar(agendamento)
 
     # Procurando agendamento
-    agendamento_encontrado = agendamento_repo.consultar_por_id(id=agendamento.id)
+    agendamento_encontrado = agendamento_repo.consultar(id=agendamento.id)
     assert agendamento_encontrado == agendamento
 
     # Procurando agendamentos
-    agendamentos_encontrados = agendamento_repo.retornar_agendamentos()
+    agendamentos_encontrados = agendamento_repo.listar()
     assert agendamentos_encontrados == [agendamento]
 
     # Procurando agendamento por horário
-    agendamento_horario = agendamento_repo.consultar_por_horario(horarios=(
+    agendamento_horario = agendamento_repo.listar_por_horario(horarios=(
         datetime(2025, 5, 27, 7),
         datetime(2025, 5, 27, 17),
     ))
@@ -285,7 +281,7 @@ def test_pagamento_repository(
     pagamento_repo.adicionar(pagamento)
 
     # Procurando pagamento
-    pagamento_encontrado = pagamento_repo.consultar_por_id(pagamento.id)
+    pagamento_encontrado = pagamento_repo.consultar(pagamento.id)
     assert pagamento_encontrado == pagamento
 
     # Procurando pagamento de agendamento 
@@ -293,5 +289,5 @@ def test_pagamento_repository(
     assert pagamento_de_agendamento == pagamento
 
     # Procurando pagamentos do cliente
-    pagamentos_do_cliente = pagamento_repo.retornar_pagamentos_de_cliente(usuario.cpf)
+    pagamentos_do_cliente = pagamento_repo.listar_pagamentos_de_cliente(usuario.cpf)
     assert pagamentos_do_cliente == [pagamento]

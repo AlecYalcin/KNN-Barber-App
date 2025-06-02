@@ -1,29 +1,40 @@
 import pytest
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from src.adapters.orm import start_mappers, metadata
-from sqlalchemy import text
 
 @pytest.fixture
 def in_memory_db():
     # Engine criada
     engine = create_engine("sqlite:///:memory:")
+
+    # Habilita foreign keys para SQLite
+    def enable_foreign_keys(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
     
-    # Iniciando mapeamento e depois criando tabelas
-    start_mappers()
+    event.listen(engine, "connect", enable_foreign_keys)
+
+    # Criando tabelas do banco de dados
     metadata.create_all(engine)
     
     # Generator a engine para ficar em lazy memory
-    yield engine
+    return engine
+
+@pytest.fixture
+def session_maker(in_memory_db):
+    # Iniciando o mapemaento de ORM 
+    start_mappers()
+
+    # Introduzindo a sessionmaker
+    yield sessionmaker(bind=in_memory_db, expire_on_commit=False)
     
-    # Limpar após uso
+    # Limpando mapeamento de ORM
     clear_mappers()
 
 @pytest.fixture
-def session(in_memory_db):
-    # Criador de sessão
-    session_maker = sessionmaker(bind=in_memory_db)
-    
+def session(session_maker):
     # Criando sessão
     session = session_maker()
 
