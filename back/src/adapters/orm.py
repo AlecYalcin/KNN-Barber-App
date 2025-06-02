@@ -65,7 +65,7 @@ jornadas = Table(
     Column('horario_retorno', Time, nullable=True),
     Column('horario_fim', Time, nullable=False),
     Column('dia_da_semana', Enum(DiaDaSemana), nullable=False),
-    Column('barbeiro_cpf', String, ForeignKey('usuario.cpf')),
+    Column('barbeiro_cpf', String, ForeignKey('usuario.cpf', ondelete="CASCADE")),
     Column('created_at', DateTime, default=func.now(), nullable=True),
     Column('updated_at', DateTime, default=func.now(), onupdate=func.now(), nullable=True),
 )
@@ -77,7 +77,7 @@ horarios_indisponiveis = Table(
     Column('horario_inicio', DateTime, nullable=False),
     Column('horario_fim', DateTime, nullable=False),
     Column('justificativa', String, nullable=True),
-    Column('barbeiro_cpf', String, ForeignKey('usuario.cpf')),
+    Column('barbeiro_cpf', String, ForeignKey('usuario.cpf', ondelete="CASCADE")),
     Column('created_at', DateTime, default=func.now(), nullable=True),
     Column('updated_at', DateTime, default=func.now(), onupdate=func.now(), nullable=True),
 )
@@ -88,8 +88,8 @@ agendamentos = Table(
     Column('id', String, primary_key=True),
     Column('horario_inicio', DateTime, nullable=False),
     Column('horario_fim', DateTime, nullable=False),
-    Column('barbeiro_cpf', String, ForeignKey('usuario.cpf')),
-    Column('cliente_cpf', String, ForeignKey('usuario.cpf')),
+    Column('barbeiro_cpf', String, ForeignKey('usuario.cpf', ondelete="SET NULL"), nullable=True),
+    Column('cliente_cpf', String, ForeignKey('usuario.cpf', ondelete="SET NULL"), nullable=True),
     Column('created_at', DateTime, default=func.now(), nullable=True),
     Column('updated_at', DateTime, default=func.now(), onupdate=func.now(), nullable=True),
 )
@@ -97,8 +97,8 @@ agendamentos = Table(
 servicos_do_agendamento = Table(
     'servicos_do_agendamento',
     metadata,
-    Column('agendamento', String, ForeignKey('agendamento.id'), primary_key=True),
-    Column('servico', String, ForeignKey('servico.id'), primary_key=True),
+    Column('agendamento', String, ForeignKey('agendamento.id', ondelete="CASCADE"), primary_key=True),
+    Column('servico', String, ForeignKey('servico.id', ondelete="SET NULL"), primary_key=True, nullable=True),
     Column('created_at', DateTime, default=func.now(), nullable=True),
     Column('updated_at', DateTime, default=func.now(), onupdate=func.now(), nullable=True),
 )
@@ -110,7 +110,7 @@ pagamentos = Table(
     Column('valor', Float, nullable=False),
     Column('data', DateTime, nullable=False),
     Column('metodo', Enum(MetodoPagamento), nullable=False),
-    Column('agendamento_id', String, ForeignKey('agendamento.id')),
+    Column('agendamento_id', String, ForeignKey('agendamento.id', ondelete="SET NULL"), nullable=True),
     Column('created_at', DateTime, default=func.now(), nullable=True),
     Column('updated_at', DateTime, default=func.now(), onupdate=func.now(), nullable=True),
 )
@@ -137,6 +137,7 @@ def start_mappers():
             'barbeiro': relationship(
                 Usuario,
                 primaryjoin=jornadas.c.barbeiro_cpf == usuarios.c.cpf,
+                passive_deletes=True
             )
         }
     )
@@ -149,6 +150,7 @@ def start_mappers():
             'barbeiro': relationship(
                 Usuario,
                 primaryjoin=horarios_indisponiveis.c.barbeiro_cpf == usuarios.c.cpf,
+                passive_deletes=True
             )
         }
     )
