@@ -1,1 +1,1 @@
-from .usuario import criar_usuario
+from .usuario import criar_usuario, consultar_usuario

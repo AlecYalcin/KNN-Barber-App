@@ -47,6 +47,15 @@ class Usuario:
             return False
         return True
 
+    def to_dict(self):
+        return {
+            "cpf": self.cpf,
+            "nome": self.nome,
+            "email": self.nome,
+            "senha": self.senha,
+            "telefone": self.telefone,
+            "eh_barbeiro": self.eh_barbeiro,
+        }
     def __eq__(self, other: any):
         if not isinstance(other, Usuario):
             return False

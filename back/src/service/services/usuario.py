@@ -4,7 +4,7 @@ from src.domain.exceptions import (
     CPFInvalido, 
     CPFEmUso, 
     EmailInvalido, 
-    EmailEmUso
+    EmailEmUso,
 )
 
 def criar_usuario(
@@ -47,6 +47,22 @@ def criar_usuario(
         usuario = Usuario(cpf, nome, email, senha, telefone, eh_barbeiro)
         uow.usuarios.adicionar(usuario)
         uow.commit()
+
+def consultar_usuario(
+    uow: AbstractUnidadeDeTrabalho,
+    cpf: str | None = None,
+    email: str | None = None,
+) -> dict:
+    
+    usuario = None
+    with uow:
+        if cpf:
+            usuario = uow.usuarios.consultar(cpf=cpf)
+        elif email:
+            usuario = uow.usuarios.consultar_por_email(email=email)
+        if not usuario:
+            return {}
+        return usuario.to_dict()
 
 def atualizar_usuario():
     """"""
