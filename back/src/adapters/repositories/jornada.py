@@ -1,19 +1,40 @@
 from src.adapters.repository import AbstractSQLAlchemyRepository
 from src.domain.models import Jornada
+import abc
 
-class JornadaRepository(AbstractSQLAlchemyRepository):
+class AbstractJornadaRepository():
+    @abc.abstractmethod
+    def adicionar(self, jornada: Jornada):
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def remover(self, id: str):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def consultar(self, id: str) -> Jornada|None:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def listar_jornada_de_barbeiro(self, cpf: str) -> list[Jornada]:
+        raise NotImplementedError        
+
+class JornadaRepository(AbstractJornadaRepository, AbstractSQLAlchemyRepository):
     def adicionar(self, jornada: Jornada):
         self.session.add(jornada)
     
     def remover(self, id: str):
-        jornada = self.consultar_por_id(id)
+        jornada = self.consultar(id)
         self.session.delete(jornada)
 
-    def consultar_por_id(self, id: str) -> Jornada|None:
+    def consultar(self, id: str) -> Jornada|None:
         jornada = self.session.query(Jornada).filter(Jornada.id == id).first()
         return jornada
     
-    def consultar_por_barbeiro_e_vigente(self, cpf: str) -> list[Jornada]:
-        jornada = self.session.query(Jornada).filter(Jornada.barbeiro_cpf == cpf).all()
+    def listar_jornada_de_barbeiro(self, cpf: str) -> list[Jornada]:
+        jornada = self.session.query(Jornada).filter(
+            Jornada.barbeiro_cpf == cpf,
+            Jornada.ativa,
+        ).all()
         return jornada
         

@@ -1,7 +1,7 @@
-from .agendamento import *
-from .horario_indisponivel import HorarioIndisponivelRepository
-from .jornada import JornadaRepository
-from .pagamento import *
-from .servico import ServicoRepository
-from .usuario import UsuarioRepository
-from .barbeiro import BarbeiroRepository
+from .horario_indisponivel import HorarioIndisponivelRepository, AbstractHorarioIndisponivelRepository
+from .agendamento import AgendamentoRepository, AbstractAgendamentoRepository
+from .pagamento import PagamentoRepository, AbstractPagamentoRepository
+from .barbeiro import BarbeiroRepository, AbstractBarbeiroRepository
+from .jornada import JornadaRepository, AbstractJornadaRepository
+from .servico import ServicoRepository, AbstractServicoRepository
+from .usuario import UsuarioRepository, AbstractUsuarioRepository

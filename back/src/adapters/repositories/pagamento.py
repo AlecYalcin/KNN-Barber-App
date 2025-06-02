@@ -1,15 +1,38 @@
 from src.domain.models import Pagamento, Agendamento, Usuario
 from src.adapters.repository import AbstractSQLAlchemyRepository
+import abc
 
-class PagamentoRepository(AbstractSQLAlchemyRepository):
+class AbstractPagamentoRepository():
+    @abc.abstractmethod
+    def adicionar(self, pagamento: Pagamento):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def remover(self, cpf: str):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def consultar(self, id: str) -> Pagamento | None:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def consultar_por_agendamento(self, agendamento_id: str) -> Pagamento | None:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def listar_pagamentos_de_cliente(self, cpf: str) -> list[Pagamento]:
+        raise NotImplementedError
+
+
+class PagamentoRepository(AbstractPagamentoRepository, AbstractSQLAlchemyRepository):
     def adicionar(self, pagamento: Pagamento):
         self.session.add(pagamento)
 
     def remover(self, cpf: str):
-        pagamento = self.consultar_por_id(cpf)
+        pagamento = self.consultar(cpf)
         self.session.delete(pagamento)
 
-    def consultar_por_id(self, id: str) -> Pagamento | None:
+    def consultar(self, id: str) -> Pagamento | None:
         pagamento = self.session.query(Pagamento).filter(Pagamento.id == id).first()
         return pagamento
     
@@ -17,7 +40,7 @@ class PagamentoRepository(AbstractSQLAlchemyRepository):
         pagamentos = self.session.query(Pagamento).filter(Pagamento.agendamento_id == agendamento_id).first()
         return pagamentos
 
-    def retornar_pagamentos_de_cliente(self, cpf: str) -> list[Pagamento]:
+    def listar_pagamentos_de_cliente(self, cpf: str) -> list[Pagamento]:
         pagamentos = (
             self.session.query(Pagamento)
             .join(Agendamento, Agendamento.id == Pagamento.agendamento_id)

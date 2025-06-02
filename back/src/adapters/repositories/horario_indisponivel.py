@@ -1,16 +1,38 @@
 from src.adapters.repository import AbstractSQLAlchemyRepository
 from src.domain.models import HorarioIndisponivel
 from datetime import datetime
+import abc
 
-class HorarioIndisponivelRepository(AbstractSQLAlchemyRepository):
+class AbstractHorarioIndisponivelRepository():
+    @abc.abstractmethod
+    def adicionar(self, HorarioIndisponivel: HorarioIndisponivel):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def remover(self, id: str):
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def consultar(self, id: str) -> HorarioIndisponivel|None:
+        raise NotImplementedError
+        
+    @abc.abstractmethod
+    def consultar_por_barbeiro(self, cpf: str) -> list[HorarioIndisponivel]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def consultar_por_horario(self, horarios: tuple[datetime,datetime]) -> list[HorarioIndisponivel]:
+        raise NotImplementedError
+
+class HorarioIndisponivelRepository(AbstractHorarioIndisponivelRepository, AbstractSQLAlchemyRepository):
     def adicionar(self, HorarioIndisponivel: HorarioIndisponivel):
         self.session.add(HorarioIndisponivel)
     
     def remover(self, id: str):
-        HorarioIndisponivel = self.consultar_por_id(id)
+        HorarioIndisponivel = self.consultar(id)
         self.session.delete(HorarioIndisponivel)
 
-    def consultar_por_id(self, id: str) -> HorarioIndisponivel|None:
+    def consultar(self, id: str) -> HorarioIndisponivel|None:
         horario_indisponivel = self.session.query(HorarioIndisponivel).filter(HorarioIndisponivel.id == id).first()
         return horario_indisponivel
     

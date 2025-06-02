@@ -1,15 +1,37 @@
 from src.domain.models import Servico
-from src.adapters.repository import AbstractSQLAlchemyRepository
+from src.adapters.repository import *
+import abc
 
-class ServicoRepository(AbstractSQLAlchemyRepository):
+class AbstractServicoRepository():
+    @abc.abstractmethod
+    def adicionar(self, servico: Servico):
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def remover(self, id: str):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def consultar(self, id: str) -> Servico | None:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def consultar_por_nome(self, nome: str) -> list[Servico]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def listar(self) -> list[Servico]:
+        raise NotImplementedError
+
+class ServicoRepository(AbstractServicoRepository, AbstractSQLAlchemyRepository):
     def adicionar(self, servico: Servico):
         self.session.add(servico)
 
-    def remover(self, cpf: str):
-        servico = self.consultar_por_id(cpf)
+    def remover(self, id: str):
+        servico = self.consultar(id)
         self.session.delete(servico)
 
-    def consultar_por_id(self, id: str) -> Servico | None:
+    def consultar(self, id: str) -> Servico | None:
         servico = self.session.query(Servico).filter(Servico.id == id).first()
         return servico
     
@@ -17,6 +39,6 @@ class ServicoRepository(AbstractSQLAlchemyRepository):
         servicos = self.session.query(Servico).filter(Servico.nome.like(f'%{nome}%')).all()
         return servicos
 
-    def retornar_servicos(self) -> list[Servico]:
+    def listar(self) -> list[Servico]:
         servicos = self.session.query(Servico).all()
         return servicos
