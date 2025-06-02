@@ -92,3 +92,29 @@ def test_consultar_usuario_service(session_maker, mock_usuario_teste):
     # Pesquisando por um Email inexistente
     usuario_inexistente = consultar_usuario(uow=UnidadeDeTrabalho(session_maker), email="email@inexistente.com")
     assert usuario_inexistente == {}
+
+def test_deletar_usuario_service(session_maker, mock_usuario_teste):
+    usuario = mock_usuario_teste
+
+    # Criando usuário através do repositório
+    with UnidadeDeTrabalho(session_maker) as uow:
+        uow.usuarios.adicionar(usuario)
+        uow.commit()
+
+    # Removendo usuario
+    remover_usuario(
+        uow=UnidadeDeTrabalho(session_maker),
+        cpf=usuario.cpf,
+    )
+
+    # Procurando por usuario
+    with UnidadeDeTrabalho(session_maker) as uow:
+        usuario_encontrado = uow.usuarios.consultar(cpf=usuario.cpf)
+        assert usuario_encontrado is None
+    
+    # Tenteando remover novamente
+    with pytest.raises(UsuarioNaoEncontrado):
+        remover_usuario(
+            uow=UnidadeDeTrabalho(session_maker),
+            cpf=usuario.cpf,
+        )

@@ -1,3 +1,5 @@
+# Agendamento
+
 class HorarioIndisponivelParaBarbeiro(Exception):
     pass
 
@@ -19,6 +21,8 @@ class HorarioOcupado(Exception):
 class HorarioInsuficiente(Exception):
     pass
 
+# Usuario
+
 class CPFInvalido(Exception):
     pass
 
@@ -29,4 +33,7 @@ class EmailInvalido(Exception):
     pass
 
 class EmailEmUso(Exception):
+    pass
+
+class UsuarioNaoEncontrado(Exception):
     pass

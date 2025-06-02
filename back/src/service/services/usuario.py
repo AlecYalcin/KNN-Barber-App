@@ -5,7 +5,9 @@ from src.domain.exceptions import (
     CPFEmUso, 
     EmailInvalido, 
     EmailEmUso,
+    UsuarioNaoEncontrado,
 )
+from sqlalchemy.orm.exc import UnmappedInstanceError
 
 def criar_usuario(
     uow: AbstractUnidadeDeTrabalho,
@@ -71,8 +73,23 @@ def consultar_usuario(
             return {}
         return usuario.to_dict()
 
-def deletar_usuario():
-    """"""
+def remover_usuario(
+    uow: AbstractUnidadeDeTrabalho,
+    cpf: str | None,
+) -> None:
+    """
+    Serviço de deletar usuários existentes no sistema.
+
+    Raises:
+        UsuarioNaoEncontrado: Usuário não foi encontrado para a remoção.
+    """
+
+    with uow:
+        try:
+            uow.usuarios.remover(cpf=cpf)
+            uow.commit()
+        except UnmappedInstanceError as e:
+            raise UsuarioNaoEncontrado("O cpf informado não foi encontrado na base de dados.")
 
 def atualizar_usuario():
     """"""
