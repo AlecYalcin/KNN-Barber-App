@@ -38,7 +38,7 @@ usuarios = Table(
     Column('senha', String, nullable=False),
     Column('telefone', String, nullable=True),
     Column('email', String, nullable=False, unique=True),
-    Column('eh_barbeiro', Boolean, server_default=text('0')),
+    Column('eh_barbeiro', Boolean, server_default=text('FALSE')),
     Column('created_at', DateTime, default=func.now(), nullable=True),
     Column('updated_at', DateTime, default=func.now(), onupdate=func.now(), nullable=True),
 )
