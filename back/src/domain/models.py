@@ -16,6 +16,14 @@ class Usuario:
     eh_barbeiro: bool = False
     telefone: str | None = None
 
+    def __eq__(self, other: any):
+        if not isinstance(other, Usuario):
+            return False
+        return self.cpf == other.cpf
+    
+    def __hash__(self):
+        return hash(self.cpf)
+
 @dataclass
 class Servico:
     nome: str
@@ -23,6 +31,14 @@ class Servico:
     preco: float
     duracao: int
     id: str = field(default_factory=lambda: str(uuid4()))
+
+    def __eq__(self, other: any):
+        if not isinstance(other, Servico):
+            return False
+        return self.id == other.id and self.nome == other.nome
+    
+    def __hash__(self):
+        return hash((self.id, self.nome))
 
 @dataclass
 class Jornada:
@@ -35,6 +51,41 @@ class Jornada:
     horario_pausa: time | None = None
     id: str = field(default_factory=lambda: str(uuid4()))
 
+    def verificar_se_horario_esta_na_jornada(self, horarios: tuple[datetime]) -> bool:
+        horario_1, horario_2 = horarios
+
+        # Está no mesmo dia?
+        if not (
+            self.dia_da_semana == DiaDaSemana.horario_para_dia(horario=horario_1)
+            and self.dia_da_semana == DiaDaSemana.horario_para_dia(horario=horario_2)
+        ):
+            return False
+
+        # Está nos horários padrão?
+        if not (
+            horario_1.time() >= self.horario_inicio 
+            and horario_2.time() <= self.horario_fim
+        ):
+            return False
+
+        # Está fora da pausa?
+        if (
+            (self.horario_pausa and self.horario_retorno)
+            and (horario_1.time() < self.horario_retorno
+            and horario_2.time() > self.horario_pausa)
+        ):
+            return False
+
+        return True
+
+    def __eq__(self, other: any):
+        if not isinstance(other, Jornada):
+            return False
+        return self.id == other.id and self.barbeiro == other.barbeiro
+    
+    def __hash__(self):
+        return hash((self.id, self.barbeiro.cpf))
+
 @dataclass
 class HorarioIndisponivel:
     horario_inicio: datetime 
@@ -42,6 +93,22 @@ class HorarioIndisponivel:
     justificativa: str
     barbeiro: Usuario
     id: str = field(default_factory=lambda: str(uuid4()))
+
+    def verificar_se_horario_esta_livre(self, horarios: tuple[datetime]) -> bool:
+        horario_1, horario_2 = horarios
+
+        # Acontece no intervalo de mesmo dia e horário?
+        if horario_1 <= self.horario_fim and horario_2 >= self.horario_inicio:
+            return False
+        return True
+
+    def __eq__(self, other: any):
+        if not isinstance(other, HorarioIndisponivel):
+            return False
+        return self.id == other.id and self.barbeiro == other.barbeiro
+    
+    def __hash__(self):
+        return hash((self.id, self.barbeiro.cpf))
 
 @dataclass
 class Agendamento:
@@ -52,6 +119,14 @@ class Agendamento:
     servicos: list[Servico]
     id: str = field(default_factory=lambda: str(uuid4()))
 
+    def __eq__(self, other: any):
+        if not isinstance(other, Agendamento):
+            return False
+        return self.id == other.id and self.barbeiro == other.barbeiro and self.cliente == other.cliente
+    
+    def __hash__(self):
+        return hash((self.id, self.barbeiro.cpf, self.cliente.cpf))
+
 @dataclass
 class Pagamento:
     valor: float
@@ -60,6 +135,14 @@ class Pagamento:
     agendamento: Agendamento
     id: str = field(default_factory=lambda: str(uuid4()))
 
+    def __eq__(self, other: any):
+        if not isinstance(other, Pagamento):
+            return False
+        return self.id == other.id and self.agendamento == other.agendamento
+    
+    def __hash__(self):
+        return hash((self.id, self.agendamento.id))
+
 # Agregados
 @dataclass
 class Barbeiro():
@@ -67,17 +150,15 @@ class Barbeiro():
     jornada_de_trabalho: list[Jornada] = field(default_factory=list)
     horarios_indisponiveis: list[HorarioIndisponivel] = field(default_factory=list)
 
-    def verificar_se_horario_esta_na_jornada(self, horario: tuple[datetime]) -> bool:
-        horario_inicio, _ = horario
+    def verificar_se_horario_esta_na_jornada(self, horarios: tuple[datetime]) -> bool:
         for jornada in self.jornada_de_trabalho:
-            if jornada.dia_da_semana == DiaDaSemana.horario_para_dia(horario_inicio):
+            if jornada.verificar_se_horario_esta_na_jornada(horarios):
                 return True
         return False
     
-    def verificar_se_horario_esta_disponivel(self, horario: tuple[datetime]) -> bool:
-        horario_inicio, horario_fim = horario
+    def verificar_se_horario_esta_disponivel(self, horarios: tuple[datetime]) -> bool:
         for h_indisponivel in self.horarios_indisponiveis:
-            if horario_inicio < h_indisponivel.horario_fim and horario_fim > h_indisponivel.horario_inicio:
+            if not h_indisponivel.verificar_se_horario_esta_livre(horarios):
                 return False
         return True
     
@@ -87,7 +168,7 @@ class Barbeiro():
         return False
 
 # Funções
-def criar_agendamento(cliente: Usuario, barbeiro: Barbeiro, servicos: list[Servico], horario: tuple[datetime]) -> Agendamento:
+def criar_agendamento(cliente: Usuario, barbeiro: Barbeiro, servicos: list[Servico], horarios: tuple[datetime]) -> Agendamento:
     """
     Realiza o agendamento de horário com um serviço para um cliente, verificando a disponibilidade do horário a partir do 
     barbeiro que está sendo contatado.
@@ -106,25 +187,25 @@ def criar_agendamento(cliente: Usuario, barbeiro: Barbeiro, servicos: list[Servi
     """
 
     # Formatando horário para modelo ideal
-    horario = normalizar_horarios(horario)
+    horarios = normalizar_horarios(horarios)
 
     # Verificar se o horário é suficiente para os serviços
     tempo_necessario = timedelta(minutes=sum(servico.duracao for servico in servicos))
-    if tempo_necessario > (horario[1] - horario[0]):
+    if tempo_necessario > (horarios[1] - horarios[0]):
         raise HorarioInsuficiente("Os horários escolhidos não cobrem a quantidade de tempo mínimo para realizar os serviçs.")
 
     # Verifica se está dentro da jornada de trabalho do barbeiro
-    if not barbeiro.verificar_se_horario_esta_na_jornada(horario):
+    if not barbeiro.verificar_se_horario_esta_na_jornada(horarios):
         raise HorarioForaDaJornada("O horário escolhido está fora da jornada do barbeiro.")
 
     # Verifica se está dentro de algum horário indisponível
-    if not barbeiro.verificar_se_horario_esta_disponivel(horario):
+    if not barbeiro.verificar_se_horario_esta_disponivel(horarios):
         raise HorarioIndisponivelException("O horário escolhido está indisponível de acordo com a disponibilidade do barbeiro.")
 
     return Agendamento(
         id=str(uuid4()),
-        horario_inicio=horario[0],
-        horario_fim=horario[1],
+        horario_inicio=horarios[0],
+        horario_fim=horarios[1],
         barbeiro=barbeiro.usuario,
         cliente=cliente,
         servicos=servicos,
