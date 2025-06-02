@@ -118,3 +118,62 @@ def test_deletar_usuario_service(session_maker, mock_usuario_teste):
             uow=UnidadeDeTrabalho(session_maker),
             cpf=usuario.cpf,
         )
+
+def test_alterar_usuario_service(session_maker, mock_usuario_teste):
+    usuario = mock_usuario_teste
+
+    usuario_teste = Usuario(
+        cpf="999.888.777-54",
+        nome="Usuário Teste 02",
+        email="email@utilizado.com.br",
+        senha="senhateste",
+    )
+
+    # Criando usuário através do repositório
+    with UnidadeDeTrabalho(session_maker) as uow:
+        uow.usuarios.adicionar(usuario)
+        uow.usuarios.adicionar(usuario_teste)
+        uow.commit()
+
+    # Atualizando usuário com e-mail inválido
+    with pytest.raises(EmailInvalido):
+        atualizar_usuario(
+            uow=UnidadeDeTrabalho(session_maker),
+            cpf=usuario.cpf,
+            novo_email="email-invalido",
+            nova_senha="senha1234",
+        )
+
+    # Atualizando usuário com CPF inexistente
+    with pytest.raises(UsuarioNaoEncontrado):
+        atualizar_usuario(
+            uow=UnidadeDeTrabalho(session_maker),
+            cpf="111.222.333-44",
+            novo_email="email@valido.com.br",
+            nova_senha="senha1234",
+        )
+
+    # Atualizando usuário com e-mail em uso
+    with pytest.raises(EmailEmUso):
+        atualizar_usuario(
+            uow=UnidadeDeTrabalho(session_maker),
+            cpf=usuario.cpf,
+            novo_email="email@utilizado.com.br",
+        )
+
+    # Atualiznado usuário com sucesso
+    atualizar_usuario(
+        uow=UnidadeDeTrabalho(session_maker),
+        cpf=usuario.cpf,
+        novo_nome="Novo Usuário",
+        novo_email="usuario@gmail.com.br",
+        nova_senha="senha_1234",
+        novo_telefone="(84) 98888-2222"
+    )
+
+    with UnidadeDeTrabalho(session_maker) as uow:
+        usuario_alterado = uow.usuarios.consultar(usuario.cpf)
+        assert usuario_alterado.nome == "Novo Usuário"
+        assert usuario_alterado.email == "usuario@gmail.com.br"
+        assert usuario_alterado.senha == "senha_1234"
+        assert usuario_alterado.telefone == "(84) 98888-2222"

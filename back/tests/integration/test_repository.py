@@ -30,6 +30,18 @@ def test_usuario_repository(session):
     usuarios_encontrados = usuario_repo.listar_clientes()
     assert usuarios_encontrados == [usuario1, usuario2]
 
+    # Alterando usuario 
+    usuario_repo.alterar(usuario1.cpf, novo_usuario=Usuario(
+        cpf=usuario1.cpf,
+        nome="Usuário 03",
+        senha="32123",
+        email="usuario3@teste.com",
+    ))
+    usuario_alterado = usuario_repo.consultar(cpf=usuario1.cpf)
+    assert usuario_alterado.nome =="Usuário 03"
+    assert usuario_alterado.senha =="32123"
+    assert usuario_alterado.email =="usuario3@teste.com"
+
     # Removendo usuário no banco de dados
     usuario_repo.remover(usuario1.cpf)
     usuario_deletado = usuario_repo.consultar(cpf=usuario1.cpf)

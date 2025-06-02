@@ -8,6 +8,7 @@ from src.domain.exceptions import (
     UsuarioNaoEncontrado,
 )
 from sqlalchemy.orm.exc import UnmappedInstanceError
+from sqlalchemy.exc import IntegrityError
 
 def criar_usuario(
     uow: AbstractUnidadeDeTrabalho,
@@ -91,7 +92,48 @@ def remover_usuario(
         except UnmappedInstanceError as e:
             raise UsuarioNaoEncontrado("O cpf informado não foi encontrado na base de dados.")
 
-def atualizar_usuario():
-    """"""
+def atualizar_usuario(
+    uow: AbstractUnidadeDeTrabalho,
+    cpf: str,
+    novo_nome: str | None = None,
+    novo_email: str | None = None,
+    novo_telefone: str | None = None,
+    nova_senha: str | None = None,
+) -> None:
+    """
+    Serviço para alterar usuários existentes no sistema.
 
+    Args:
+        cpf(str): CPF do usuário a ser alterado
+        novo_nome(str): Novo nome para o usuário
+        novo_email(str): Novo email para o usuário
+        novo_telefone(str): Novo telefone para o usuário
+        nova_senha(str): Nova senha para o usuário
+    Raises:
+        EmailInvalido: O Email informado não é válido.
+        UsuarioNaoEncontrado: Usuário não foi encontrado para a alteração.
+        EmailEmUso: O Email escolhido já está cadastrado em outro usuário.
+    """
 
+    # Verificar se Email é válido
+    if not Usuario.validar_email(novo_email):
+        raise EmailInvalido("O Email informado não é válido.")
+
+    # Criando usuário novo base
+    novo_usuario = Usuario(
+        cpf=cpf, 
+        nome=novo_nome, 
+        email=novo_email, 
+        senha=nova_senha, 
+        telefone=novo_telefone
+    )
+
+    # Realizando alteração
+    with uow:
+        try:
+            uow.usuarios.alterar(cpf=cpf, novo_usuario=novo_usuario)
+            uow.commit()
+        except AttributeError:
+            raise UsuarioNaoEncontrado("Usuário não foi encontrado para a alteração.")
+        except IntegrityError:
+            raise EmailEmUso("O Email escolhido já está cadastrado em outro usuário.")
