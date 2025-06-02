@@ -199,8 +199,8 @@ def test_agendamento_repository(
         
     # Criando horários
     horario = {
-        "inicio":datetime(2025, 5, 27, 10, 0), 
-        "fim":datetime(2025, 5, 27, 11, 40)
+        "inicio":datetime(2025, 5, 27, 8, 0), 
+        "fim":datetime(2025, 5, 27, 10, 40)
     }
 
     # Criando agendamento
@@ -257,8 +257,8 @@ def test_pagamento_repository(
         
     # Criando horários
     horario = {
-        "inicio":datetime(2025, 5, 27, 10, 0), 
-        "fim":datetime(2025, 5, 27, 11, 40)
+        "inicio":datetime(2025, 5, 27, 8, 0), 
+        "fim":datetime(2025, 5, 27, 10, 40)
     }
 
     # Criando agendamento
