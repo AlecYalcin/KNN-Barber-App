@@ -1,6 +1,7 @@
 from uuid import uuid4
 from dataclasses import dataclass, field
 from datetime import time, datetime, timedelta
+import re
 
 from .value_objects import *
 from .exceptions import *
@@ -16,13 +17,43 @@ class Usuario:
     eh_barbeiro: bool = False
     telefone: str | None = None
 
+    @staticmethod
+    def validar_cpf(cpf: str) -> bool:
+        # Remove caracteres não numéricos
+        cpf = re.sub(r'[^0-9]', '', cpf)
+
+        # CPF precisa ter 11 dígitos
+        if len(cpf) != 11:
+            return False
+
+        # Validação do primeiro dígito
+        soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
+        digito1 = (soma * 10 % 11) % 10
+
+        # Validação do segundo dígito
+        soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
+        digito2 = (soma * 10 % 11) % 10
+
+        # Verifica se os dígitos calculados batem com os informados
+        if not cpf[-2:] == f"{digito1}{digito2}":
+            return False
+        
+        return True
+
+    @staticmethod
+    def validar_email(email: str) -> bool:
+        padrao = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        if not re.match(padrao, email):
+            return False
+        return True
+
     def __eq__(self, other: any):
         if not isinstance(other, Usuario):
             return False
-        return self.cpf == other.cpf
+        return self.cpf == other.cpf and self.email == other.email
     
     def __hash__(self):
-        return hash(self.cpf)
+        return hash(self.cpf, self.email)
 
 @dataclass
 class Servico:

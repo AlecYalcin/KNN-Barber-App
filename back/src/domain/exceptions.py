@@ -18,3 +18,15 @@ class HorarioOcupado(Exception):
 
 class HorarioInsuficiente(Exception):
     pass
+
+class CPFInvalido(Exception):
+    pass
+
+class CPFEmUso(Exception):
+    pass
+
+class EmailInvalido(Exception):
+    pass
+
+class EmailEmUso(Exception):
+    pass

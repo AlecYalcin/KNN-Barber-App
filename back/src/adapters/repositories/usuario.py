@@ -16,6 +16,10 @@ class AbstractUsuarioRepository():
         raise NotImplementedError
 
     @abc.abstractmethod
+    def consultar_por_email(self, email: str) -> Usuario | None:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def listar_clientes(self) -> list[Usuario]:
         raise NotImplementedError
 
@@ -33,6 +37,10 @@ class UsuarioRepository(AbstractUsuarioRepository, AbstractSQLAlchemyRepository)
 
     def consultar(self, cpf: str) -> Usuario | None:
         usuario = self.session.query(Usuario).filter(Usuario.cpf == cpf).first()
+        return usuario
+
+    def consultar_por_email(self, email: str) -> Usuario | None:
+        usuario = self.session.query(Usuario).filter(Usuario.email == email).first()
         return usuario
 
     def listar_clientes(self) -> list[Usuario]:
