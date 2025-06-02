@@ -2,6 +2,8 @@ import pytest
 from src.domain.models import Usuario
 from src.domain.exceptions import *
 from src.service import *
+from src.adapters.repositories import UsuarioRepository
+from tests.mock import *
 
 def test_criar_usuario_service(session_maker):
     usuario = Usuario(
@@ -66,3 +68,27 @@ def test_criar_usuario_service(session_maker):
             email=usuario.email,
             senha=usuario.senha,
         )
+
+def test_consultar_usuario_service(session_maker, mock_usuario_teste):
+    usuario = mock_usuario_teste
+
+    # Criando usuário através do repositório
+    with UnidadeDeTrabalho(session_maker) as uow:
+        uow.usuarios.adicionar(usuario)
+        uow.commit()
+
+    # Pesquisando por CPF
+    usuario_encontrado = consultar_usuario(uow=UnidadeDeTrabalho(session_maker), cpf=usuario.cpf)
+    assert usuario_encontrado == usuario.to_dict()
+    
+    # Pesquisando por Nome
+    usuario_encontrado = consultar_usuario(uow=UnidadeDeTrabalho(session_maker), email=usuario.email)
+    assert usuario_encontrado == usuario.to_dict()
+
+    # Pesquisando por um CPF inexistente
+    usuario_inexistente = consultar_usuario(uow=UnidadeDeTrabalho(session_maker), cpf="111.222.333.444-55")
+    assert usuario_inexistente == {}
+
+    # Pesquisando por um Email inexistente
+    usuario_inexistente = consultar_usuario(uow=UnidadeDeTrabalho(session_maker), email="email@inexistente.com")
+    assert usuario_inexistente == {}
