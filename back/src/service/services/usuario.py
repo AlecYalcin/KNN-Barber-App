@@ -22,6 +22,14 @@ def criar_usuario(
     """
     Serviço de criação de novos usuários no sistema.
 
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
+        cpf(str): CPF do cliente novo
+        nome(str): Nome do cliente novo
+        email(str): Email do cliente novo
+        senha(str): Senha do cliente novo 
+        telefone(str|None): Telefone do cliente novo
+        eh_barbeiro(bool): Designação de barbeiro ou cliente
     Raises:
         CPFInvalido: O CPF informado não é válido.
         EmailInvalido: O Email informado não é válido.
@@ -59,6 +67,10 @@ def consultar_usuario(
     """
     Serviço de consulta de usuários existentes no sistema.
 
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
+        cpf(str): CPF para consulta, priorizado
+        email(str): Email para consulta, caso não haja CPF
     Returns:
         dict: dicionário de dados com as informações do usuário para o endpoint.
         Caso não exista usuário, será enviado um dicionário vazio.
@@ -76,11 +88,14 @@ def consultar_usuario(
 
 def remover_usuario(
     uow: AbstractUnidadeDeTrabalho,
-    cpf: str | None,
+    cpf: str,
 ) -> None:
     """
     Serviço de deletar usuários existentes no sistema.
-
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
+        cpf(str): CPF do cliente a ser removio
     Raises:
         UsuarioNaoEncontrado: Usuário não foi encontrado para a remoção.
     """
