@@ -2,6 +2,11 @@ import pytest
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from src.adapters.orm import start_mappers, metadata
+from infrastructure.database.connection import engine as postgres_engine, session_maker as postgres_maker
+
+# ==================
+# FIXTURES DE SQLITE
+# ==================
 
 @pytest.fixture
 def in_memory_db():
@@ -37,6 +42,37 @@ def session_maker(in_memory_db):
 def session(session_maker):
     # Criando sessão
     session = session_maker()
+
+    # Disponibilizando sessão
+    yield session
+
+    # Fechando sessão
+    session.close()
+
+# ====================
+# FIXTURES DE POSTGRES
+# ====================
+
+@pytest.fixture
+def postgres_db():
+    # Criando tabelas do banco de dados
+    metadata.create_all(postgres_engine)
+
+@pytest.fixture
+def postgres_session_maker(postgres_db):
+    # Iniciando o mapemaento de ORM 
+    start_mappers()
+
+    # Introduzindo a sessionmaker
+    yield postgres_maker
+    
+    # Limpando mapeamento de ORM
+    clear_mappers()
+
+@pytest.fixture
+def postgres_session(postgres_session_maker):
+    # Criando sessão
+    session = postgres_session_maker()
 
     # Disponibilizando sessão
     yield session

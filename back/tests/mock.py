@@ -106,10 +106,12 @@ def mock_servicos_teste():
 def mock_criar_usuario(session):
     session.execute(
         text(
-            "INSERT INTO usuario (cpf, nome, senha, email) VALUES"
-            '("123.456.789-00","Usuário 01","123","usuario1@teste.com"),'
-            '("987.654.321-00","Usuário 02","123","usuario2@teste.com"),'
-            '("111.222.333-00","Usuário 03","123","usuario3@teste.com")'
+            """
+            INSERT INTO usuario (cpf, nome, senha, email) VALUES
+            ('123.456.789-00','Usuário 01','123','usuario1@teste.com'),
+            ('987.654.321-00','Usuário 02','123','usuario2@teste.com'),
+            ('111.222.333-00','Usuário 03','123','usuario3@teste.com')
+            """
         )
     )
     session.commit()
@@ -121,9 +123,9 @@ def mock_criar_servico(session):
             text(
                 """
                 INSERT INTO servico (id, nome, descricao, preco, duracao) VALUES
-                (:id0,"Serviço 01","Serviço de Cavanhaque",20.00,15),
-                (:id1,"Serviço 02","Serviço de Cabelo",10.00,30),
-                (:id2,"Serviço 03","Serviço de Barba",15.00,45)
+                (:id0,'Serviço 01','Serviço de Cavanhaque',20.00,15),
+                (:id1,'Serviço 02','Serviço de Cabelo',10.00,30),
+                (:id2,'Serviço 03','Serviço de Barba',15.00,45)
                 """
             ),
             params=ids
