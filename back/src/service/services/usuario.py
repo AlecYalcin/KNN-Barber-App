@@ -53,6 +53,13 @@ def consultar_usuario(
     cpf: str | None = None,
     email: str | None = None,
 ) -> dict:
+    """
+    Serviço de consulta de usuários existentes no sistema.
+
+    Returns:
+        dict: dicionário de dados com as informações do usuário para o endpoint.
+        Caso não exista usuário, será enviado um dicionário vazio.
+    """
     
     usuario = None
     with uow:
@@ -64,9 +71,10 @@ def consultar_usuario(
             return {}
         return usuario.to_dict()
 
+def deletar_usuario():
+    """"""
+
 def atualizar_usuario():
     """"""
 
-def deletar_usuario():
-    """"""
 
