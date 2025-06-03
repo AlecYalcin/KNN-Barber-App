@@ -2,9 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from back.infrastructure.database.connection import engine, session_maker
-from back.src.adapters.orm import start_mappers, metadata
+from infrastructure.database.connection import engine
+from src.adapters.orm import start_mappers, metadata
 from sqlalchemy.orm import clear_mappers
+
+from .routes.usuario_routes import router as usuario_router
+
 
 # Configurar banco de dados
 @asynccontextmanager
@@ -31,7 +34,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Incluir rotas
-@app.get("/")
-def teste_mensagem():
-    return {"message": "KNN Barber API"} 
+# Adicionando rotas
+app.include_router(usuario_router)
