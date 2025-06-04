@@ -1,23 +1,17 @@
+import os
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from back.infrastructure.database.mappings import configure_mappers, metadata
+from sqlalchemy.orm import sessionmaker
+from src.service.unit_of_work import UnidadeDeTrabalho
 
 # Configuração do banco de dados
-DATABASE_URL = "postgresql://postgres:mysecretpassword@localhost:5432/knn_barber"
+LOCAL_URL = "postgresql://admin:admin@localhost:5432/knn_barber_app_db"
+DATABASE_URL = os.getenv("DATABASE_URL") or LOCAL_URL
 
 # Criar engine
 engine = create_engine(DATABASE_URL)
 
 # Criar fábrica de sessões
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+session_maker = sessionmaker(bind=engine, expire_on_commit=False)
 
-def get_db() -> Session:
-    """
-    Dependency para injetar a sessão do banco nas rotas.
-    Garante que a sessão é fechada após o uso.
-    """
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close() 
+def get_uow():
+    return UnidadeDeTrabalho(session_maker)
