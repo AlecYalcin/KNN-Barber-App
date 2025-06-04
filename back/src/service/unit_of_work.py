@@ -1,6 +1,5 @@
 from src.adapters.repositories import *
 from sqlalchemy.orm import sessionmaker
-from infrastructure.database.connection import session_maker as postgres_session_maker
 import abc
 
 class AbstractUnidadeDeTrabalho(abc.ABC):
@@ -27,11 +26,8 @@ class AbstractUnidadeDeTrabalho(abc.ABC):
         raise NotImplementedError
     
 class UnidadeDeTrabalho(AbstractUnidadeDeTrabalho):
-    def __init__(self, session_maker: sessionmaker|None = None):
-        if session_maker:
-            self.session_maker = session_maker
-        else:
-            self.session_maker = postgres_session_maker
+    def __init__(self, session_maker: sessionmaker):
+        self.session_maker = session_maker
 
     def __enter__(self):
         self.session = self.session_maker()
