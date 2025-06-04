@@ -1,39 +1,42 @@
+class DomainError(Exception):
+    pass
+
 # Agendamento
 
-class HorarioIndisponivelParaBarbeiro(Exception):
+class HorarioIndisponivelParaBarbeiro(DomainError):
     pass
 
-class HorarioIndisponivelParaCliente(Exception):
+class HorarioIndisponivelParaCliente(DomainError):
     pass
 
-class HorarioInvalido(Exception):
+class HorarioInvalido(DomainError):
     pass
 
-class HorarioForaDaJornada(Exception):
+class HorarioForaDaJornada(DomainError):
     pass
 
-class HorarioIndisponivelException(Exception):
+class HorarioIndisponivelException(DomainError):
     pass
 
-class HorarioOcupado(Exception):
+class HorarioOcupado(DomainError):
     pass
 
-class HorarioInsuficiente(Exception):
+class HorarioInsuficiente(DomainError):
     pass
 
 # Usuario
 
-class CPFInvalido(Exception):
+class CPFInvalido(DomainError):
     pass
 
-class CPFEmUso(Exception):
+class CPFEmUso(DomainError):
     pass
 
-class EmailInvalido(Exception):
+class EmailInvalido(DomainError):
     pass
 
-class EmailEmUso(Exception):
+class EmailEmUso(DomainError):
     pass
 
-class UsuarioNaoEncontrado(Exception):
+class UsuarioNaoEncontrado(DomainError):
     pass

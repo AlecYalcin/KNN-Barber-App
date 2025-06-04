@@ -6,11 +6,11 @@ from sqlalchemy import text
 @pytest.fixture
 def mock_usuario_teste():
     usuario = Usuario(
-        cpf="123.456.789-00",
+        cpf="92470179041",
         nome="Usuário Teste",
         email="usuario@teste.com",
         senha="senha_segura123",
-        telefone="(84) 91234-5678",
+        telefone="84912345678",
         eh_barbeiro=False,
     )
     yield usuario
@@ -108,9 +108,9 @@ def mock_criar_usuario(session):
         text(
             """
             INSERT INTO usuario (cpf, nome, senha, email) VALUES
-            ('123.456.789-00','Usuário 01','123','usuario1@teste.com'),
-            ('987.654.321-00','Usuário 02','123','usuario2@teste.com'),
-            ('111.222.333-00','Usuário 03','123','usuario3@teste.com')
+            ('05705608020','Usuário 01','123','usuario1@teste.com'),
+            ('56198304035','Usuário 02','123','usuario2@teste.com'),
+            ('80990188000','Usuário 03','123','usuario3@teste.com')
             """
         )
     )

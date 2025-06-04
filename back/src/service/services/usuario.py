@@ -97,7 +97,7 @@ def remover_usuario(
         uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
         cpf(str): CPF do cliente a ser removio
     Raises:
-        UsuarioNaoEncontrado: Usuário não foi encontrado para a remoção.
+        UsuarioNaoEncontrado: O cpf informado não foi encontrado na base de dados.
     """
 
     with uow:

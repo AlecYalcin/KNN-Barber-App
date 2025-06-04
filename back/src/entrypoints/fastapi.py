@@ -1,7 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
+from fastapi.responses import JSONResponse
+
+from infrastructure.error_map import ERROR_MAP
+from src.domain.exceptions import DomainError
 from infrastructure.database.connection import engine
 from src.adapters.orm import start_mappers, metadata
 from sqlalchemy.orm import clear_mappers
@@ -36,3 +40,21 @@ app.add_middleware(
 
 # Adicionando rotas
 app.include_router(usuario_router)
+
+# Error Handling
+@app.exception_handler(DomainError)
+async def value_error_handler(request: Request, exc: DomainError):
+    error_mapped = ERROR_MAP.get(exc.__class__.__name__, {
+        "error":"Erro não encontrado.",
+        "message":"Erro não mapeado.",
+    })
+
+    mensagem = str(exc)
+    if not mensagem:
+        mensagem = error_mapped['message']
+
+
+    return JSONResponse(
+        status_code=error_mapped['status_code'],
+        content={"error": exc.__class__.__name__, "mensagem": mensagem},
+    )

@@ -14,8 +14,8 @@ class Usuario:
     nome: str
     email: str
     senha: str
-    eh_barbeiro: bool = False
     telefone: str | None = None
+    eh_barbeiro: bool = False
 
     @staticmethod
     def validar_cpf(cpf: str) -> bool:

@@ -1,8 +1,9 @@
 import pytest
-from sqlalchemy import create_engine, event
+from sqlalchemy import StaticPool, create_engine, event
 from sqlalchemy.orm import sessionmaker, clear_mappers
+from src.service.unit_of_work import UnidadeDeTrabalho
 from src.adapters.orm import start_mappers, metadata
-from infrastructure.database.connection import engine as postgres_engine, session_maker as postgres_maker
+from infrastructure.database.connection import engine as postgres_engine, get_uow, session_maker as postgres_maker
 
 # ==================
 # FIXTURES DE SQLITE
@@ -11,7 +12,11 @@ from infrastructure.database.connection import engine as postgres_engine, sessio
 @pytest.fixture
 def in_memory_db():
     # Engine criada
-    engine = create_engine("sqlite:///:memory:")
+    engine = create_engine(
+        "sqlite:///:memory:",
+        connect_args={"check_same_thread": False}, 
+        poolclass=StaticPool,
+    )
 
     # Habilita foreign keys para SQLite
     def enable_foreign_keys(dbapi_connection, connection_record):
@@ -25,7 +30,10 @@ def in_memory_db():
     metadata.create_all(engine)
     
     # Generator a engine para ficar em lazy memory
-    return engine
+    yield engine
+
+    # Encerrando engine
+    engine.dispose()
 
 @pytest.fixture
 def session_maker(in_memory_db):
@@ -79,3 +87,15 @@ def postgres_session(postgres_session_maker):
 
     # Fechando sessão
     session.close()
+
+# =============
+# FIXURE DE API
+# =============
+
+from src.entrypoints.fastapi import app
+from fastapi.testclient import TestClient
+
+@pytest.fixture
+def client(session_maker):
+    app.dependency_overrides[get_uow] = lambda: UnidadeDeTrabalho(session_maker)
+    yield TestClient(app)

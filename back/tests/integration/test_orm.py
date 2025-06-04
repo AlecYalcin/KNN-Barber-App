@@ -5,9 +5,9 @@ from tests.mock import *
 
 def test_adicionando_usuario(mock_criar_usuario, session):
     esperado = [
-        Usuario(cpf="123.456.789-00",nome="Usuário 01",senha="123",email="usuario1@teste.com",eh_barbeiro=False),
-        Usuario(cpf="987.654.321-00",nome="Usuário 02",senha="123",email="usuario2@teste.com",eh_barbeiro=False),
-        Usuario(cpf="111.222.333-00",nome="Usuário 03",senha="123",email="usuario3@teste.com",eh_barbeiro=False),
+        Usuario(cpf="05705608020",nome="Usuário 01",senha="123",email="usuario1@teste.com",eh_barbeiro=False),
+        Usuario(cpf="56198304035",nome="Usuário 02",senha="123",email="usuario2@teste.com",eh_barbeiro=False),
+        Usuario(cpf="80990188000",nome="Usuário 03",senha="123",email="usuario3@teste.com",eh_barbeiro=False),
     ]
 
     assert session.query(Usuario).all() == esperado
