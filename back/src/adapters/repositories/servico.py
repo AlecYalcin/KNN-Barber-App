@@ -12,6 +12,10 @@ class AbstractServicoRepository():
         raise NotImplementedError
 
     @abc.abstractmethod
+    def alterar(self, id: str, novo_servico: Servico):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def consultar(self, id: str) -> Servico | None:
         raise NotImplementedError
 
@@ -30,6 +34,13 @@ class ServicoRepository(AbstractServicoRepository, AbstractSQLAlchemyRepository)
     def remover(self, id: str):
         servico = self.consultar(id)
         self.session.delete(servico)
+
+    def alterar(self, id: str, novo_servico: Servico):
+        servico = self.consultar(id)
+        servico.nome = novo_servico.nome or servico.nome
+        servico.descricao = novo_servico.descricao or servico.descricao
+        servico.preco = novo_servico.preco or servico.preco
+        servico.duracao = novo_servico.duracao or servico.duracao
 
     def consultar(self, id: str) -> Servico | None:
         servico = self.session.query(Servico).filter(Servico.id == id).first()

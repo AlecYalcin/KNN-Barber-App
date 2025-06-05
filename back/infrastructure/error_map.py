@@ -49,4 +49,16 @@ ERROR_MAP = {
         "status_code": 404,
         "message": "Usuário não encontrado.",
     },
+    "DuracaoInvalida": {
+        "status_code": 400,
+        "message": "Duração do serviço precisa estar entre 5min e 120min",
+    },
+    "ServicoNaoEncontrado": {
+        "status_code": 404,
+        "message": "Serviço não encontrado.",
+    },
+    "PrecoInvalido":{
+        "status_code": 400,
+        "message": "O preço do serviço precisa ser maior que zero."
+    }
 }

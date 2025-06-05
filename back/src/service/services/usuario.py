@@ -104,7 +104,7 @@ def remover_usuario(
         try:
             uow.usuarios.remover(cpf=cpf)
             uow.commit()
-        except UnmappedInstanceError as e:
+        except UnmappedInstanceError:
             raise UsuarioNaoEncontrado("O cpf informado não foi encontrado na base de dados.")
 
 def atualizar_usuario(

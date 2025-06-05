@@ -12,14 +12,14 @@ def test_adicionando_usuario(mock_criar_usuario, session):
 
     assert session.query(Usuario).all() == esperado
 
-def test_adicionando_servico(mock_criar_servico, session):
+def test_adicionando_servico(mock_criar_servicos, session):
     ids = {
         "id0": str(uuid4()),
         "id1": str(uuid4()),
         "id2": str(uuid4()),
     }
 
-    mock_criar_servico(ids)
+    mock_criar_servicos(ids)
 
     esperado = [
         Servico(id=f"{ids['id0']}",nome="Serviço 01",descricao="Serviço de Cavanhaque",preco=20,duracao=15),
