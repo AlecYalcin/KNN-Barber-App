@@ -117,8 +117,15 @@ def mock_criar_usuario(session):
     session.commit()
 
 @pytest.fixture
-def mock_criar_servico(session):
-    def create_services_with_ids(ids: dict):
+def mock_criar_servicos(session):
+    def create_services_with_ids(ids: dict | None = None):
+        if not ids:
+            ids = {
+                "id0": str(uuid4()),
+                "id1": str(uuid4()),
+                "id2": str(uuid4()),
+            }
+
         session.execute(
             text(
                 """
