@@ -48,7 +48,7 @@ servicos = Table(
     metadata,
     Column('id', String, primary_key=True),
     Column('nome', String, nullable=False),
-    Column('descricao', String),
+    Column('descricao', String, nullable=True),
     Column('preco', Float, nullable=False),
     Column('duracao', Integer, nullable=False, default=30),
     Column('created_at', DateTime, default=func.now(), nullable=True),

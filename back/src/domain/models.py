@@ -72,6 +72,15 @@ class Servico:
     duracao: int
     id: str = field(default_factory=lambda: str(uuid4()))
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "descricao": self.descricao,
+            "preco": self.preco,
+            "duracao": self.duracao,
+        }
+
     def __eq__(self, other: any):
         if not isinstance(other, Servico):
             return False

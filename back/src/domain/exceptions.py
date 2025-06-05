@@ -40,3 +40,14 @@ class EmailEmUso(DomainError):
 
 class UsuarioNaoEncontrado(DomainError):
     pass
+
+# Serviço
+
+class DuracaoInvalida(DomainError):
+    pass
+
+class PrecoInvalido(DomainError):
+    pass
+
+class ServicoNaoEncontrado(DomainError):
+    pass
