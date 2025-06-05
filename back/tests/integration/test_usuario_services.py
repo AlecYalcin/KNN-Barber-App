@@ -1,8 +1,8 @@
 import pytest
 from src.domain.models import Usuario
 from src.domain.exceptions import *
-from src.service import *
-from src.adapters.repositories import UsuarioRepository
+from src.service.services.usuario import *
+from src.service.unit_of_work import UnidadeDeTrabalho
 from tests.mock import *
 
 def test_criar_usuario_service(session_maker):
