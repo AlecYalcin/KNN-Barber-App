@@ -73,7 +73,7 @@ def test_consultar_servico_service(session_maker, mock_servicos_teste):
         uow=UnidadeDeTrabalho(session_maker),
         id="12345667783ç4dfsdsad"
     )
-    assert servico_encontrado == None
+    assert servico_encontrado == {}
 
 def test_listar_servicos_service(session_maker, mock_servicos_teste):
     # Adicionando serviços
