@@ -10,7 +10,7 @@ from infrastructure.database.connection import engine
 from src.adapters.orm import start_mappers, metadata
 from sqlalchemy.orm import clear_mappers
 
-from .routes.usuario_routes import router as usuario_router
+from .routes import usuario_router, servico_router
 
 
 # Configurar banco de dados
@@ -40,6 +40,7 @@ app.add_middleware(
 
 # Adicionando rotas
 app.include_router(usuario_router)
+app.include_router(servico_router)
 
 # Error Handling
 @app.exception_handler(DomainError)

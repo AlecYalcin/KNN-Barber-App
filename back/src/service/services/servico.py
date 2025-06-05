@@ -61,7 +61,7 @@ def consultar_servico(
         if id:
             servico = uow.servicos.consultar(id)
         if not servico:
-            return servico
+            return {}
         return servico.to_dict()
 
 def listar_servicos(
