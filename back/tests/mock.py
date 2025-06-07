@@ -117,6 +117,20 @@ def mock_criar_usuario(session):
     session.commit()
 
 @pytest.fixture
+def mock_criar_barbeiro(session):
+    session.execute(
+        text(
+            """
+            INSERT INTO usuario (cpf, nome, senha, email, eh_barbeiro) VALUES
+            ('25811756054','Barbeiro 01','123','barbeiro1@teste.com', TRUE),
+            ('36311464004','Barbeiro 02','123','barbeiro2@teste.com', TRUE),
+            ('09357654097','Barbeiro 03','123','barbeiro3@teste.com', TRUE)
+            """
+        )
+    )
+    session.commit()
+
+@pytest.fixture
 def mock_criar_servicos(session):
     def create_services_with_ids(ids: dict | None = None):
         if not ids:
@@ -139,3 +153,35 @@ def mock_criar_servicos(session):
         )    
         session.commit()
     yield create_services_with_ids
+
+@pytest.fixture
+def mock_criar_jornada_de_trabalho(session, mock_criar_barbeiro):
+    session.execute(
+        text(
+            """
+            INSERT into jornada (id, ativa, horario_inicio, horario_fim, horario_pausa, horario_retorno, dia_da_semana, barbeiro_cpf) VALUES
+            ('jornada-001', TRUE, '08:00', '12:00', NULL    , NULL      , 'SEGUNDA' , '25811756054'),
+            ('jornada-004', TRUE, '08:00', '12:00', NULL    , NULL      , 'TERCA'   , '25811756054'),
+            ('jornada-007', TRUE, '08:00', '12:00', NULL    , NULL      , 'QUARTA'  , '25811756054'),
+            ('jornada-010', TRUE, '08:00', '12:00', NULL    , NULL      , 'QUINTA'  , '25811756054'),
+            ('jornada-013', TRUE, '08:00', '12:00', NULL    , NULL      , 'SEXTA'   , '25811756054'),
+            ('jornada-016', TRUE, '09:00', '14:00', NULL    , NULL      , 'SABADO'  , '25811756054'),
+            ('jornada-021', TRUE, '09:00', '13:00', NULL    , NULL      , 'DOMINGO' , '25811756054'),
+            ('jornada-002', TRUE, '13:00', '17:00', NULL    , NULL      , 'SEGUNDA' , '36311464004'),
+            ('jornada-005', TRUE, '13:00', '17:00', NULL    , NULL      , 'TERCA'   , '36311464004'),
+            ('jornada-008', TRUE, '13:00', '17:00', NULL    , NULL      , 'QUARTA'  , '36311464004'),
+            ('jornada-011', TRUE, '13:00', '17:00', NULL    , NULL      , 'QUINTA'  , '36311464004'),
+            ('jornada-014', TRUE, '13:00', '17:00', NULL    , NULL      , 'SEXTA'   , '36311464004'),
+            ('jornada-017', TRUE, '14:00', '19:00', NULL    , NULL      , 'SABADO'  , '36311464004'),
+            ('jornada-020', TRUE, '11:00', '15:00', NULL    , NULL      , 'DOMINGO' , '36311464004'),
+            ('jornada-003', TRUE, '09:00', '18:00', '12:00' , '13:00'   , 'SEGUNDA' , '09357654097'),
+            ('jornada-006', TRUE, '09:00', '18:00', '12:00' , '13:00'   , 'TERCA'   , '09357654097'),
+            ('jornada-009', TRUE, '09:00', '18:00', '12:00' , '13:00'   , 'QUARTA'  , '09357654097'),
+            ('jornada-012', TRUE, '09:00', '18:00', '12:00' , '13:00'   , 'QUINTA'  , '09357654097'),
+            ('jornada-015', TRUE, '09:00', '18:00', '12:00' , '13:00'   , 'SEXTA'   , '09357654097'),
+            ('jornada-018', TRUE, '10:00', '16:00', '12:30' , '13:00'   , 'SABADO'  , '09357654097'),
+            ('jornada-019', TRUE, '10:00', '14:00', NULL    , NULL      , 'DOMINGO' , '09357654097');
+            """
+        )
+    )
+    session.commit()
