@@ -51,3 +51,27 @@ class PrecoInvalido(DomainError):
 
 class ServicoNaoEncontrado(DomainError):
     pass
+
+# Jornada
+
+class JornadaNaoEncontrada(DomainError):
+    pass
+
+class JornadaJaExistenteNoMesmoDia(DomainError):
+    pass
+
+class HorarioDaJornadaInvalido(DomainError):
+    pass
+
+class DiaDaSemanaInvalido(DomainError):
+    pass
+
+# Horário Indisponível
+
+class HorarioNaoEncontrado(DomainError):
+    pass
+
+# Barbeiro
+
+class BarbeiroNaoEncontrado(DomainError):
+    pass

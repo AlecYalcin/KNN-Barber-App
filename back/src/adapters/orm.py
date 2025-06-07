@@ -56,7 +56,7 @@ servicos = Table(
 )
 
 jornadas = Table(
-    'jornada_de_trabalho',
+    'jornada',
     metadata,
     Column('id', String, primary_key=True),
     Column('ativa', Boolean, default=True),
