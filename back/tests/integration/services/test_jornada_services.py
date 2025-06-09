@@ -1,7 +1,7 @@
 import pytest
-from src.domain.models import Barbeiro, Jornada
+from src.domain.models import Jornada
 from src.domain.exceptions import *
-from src.service.services.barbeiro import (
+from src.service.services.jornada import (
     criar_jornada,
     consultar_jornada,
     consultar_jornada_de_trabalho,

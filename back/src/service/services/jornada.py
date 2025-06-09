@@ -183,32 +183,3 @@ def excluir_jornada(
             uow.commit()
         except UnmappedInstanceError:
             raise JornadaNaoEncontrada("A jornada especificada não foi encontrada.")
-
-# Serviços de Horário Indisponível
-
-def criar_horario_indisponivel(
-    uow: AbstractUnidadeDeTrabalho,
-):
-    """Cria um dia indisponivel"""
-
-def consultar_horario_indisponivel(
-    uow: AbstractUnidadeDeTrabalho,
-):
-    """Pega um dia indisponivel"""
-
-def consultar_horario_indisponivel_por_horario(
-    uow: AbstractUnidadeDeTrabalho,
-):
-    """Pega uma lista de dias indisponiveis em uma faixa de horarios/dias"""
-
-def editar_horario_indisponivel(
-    uow: AbstractUnidadeDeTrabalho,
-):
-    """Altera um dia indisponivel"""
-
-def excluir_horario_indisponivel(
-    uow: AbstractUnidadeDeTrabalho,
-):
-    """Tira um dia indisponivel"""
-
-# Serviços de Barbeiro
