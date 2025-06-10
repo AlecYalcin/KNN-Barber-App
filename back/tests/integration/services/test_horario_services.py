@@ -5,7 +5,7 @@ from src.service.services.horario_indisponivel import (
     criar_horario_indisponivel,
     consultar_horario_indisponivel,
     consultar_horario_indisponivel_por_horario,
-    editar_horario_indisponivel,
+    alterar_horario_indisponivel,
     excluir_horario_indisponivel,
 )
 from src.service.unit_of_work import UnidadeDeTrabalho
@@ -67,8 +67,8 @@ def test_consultar_horario_indisponivel_service(
     horario_1 = (datetime(2025, 6, 10), datetime(2025, 6, 11))
     assert horario_indisponivel == {
         'id':'horario-001',
-        'horario_inicio': horario_1[0],
-        'horario_fim': horario_1[1],
+        'horario_inicio': horario_1[0].isoformat(),
+        'horario_fim': horario_1[1].isoformat(),
         'justificativa':'Indisponível hoje',
         'barbeiro':{
             'cpf':'25811756054',
@@ -103,8 +103,8 @@ def test_consultar_horario_indisponivel_por_horario_service(
     assert len(horarios_indisponiveis) == 3
     assert horarios_indisponiveis[0] == {
         'id':'horario-001',
-        'horario_inicio': horario_1[0],
-        'horario_fim': horario_1[1],
+        'horario_inicio': horario_1[0].isoformat(),
+        'horario_fim': horario_1[1].isoformat(),
         'justificativa':'Indisponível hoje',
         'barbeiro':{
             'cpf':'25811756054',
@@ -129,7 +129,7 @@ def test_editar_horario_indisponivel_service(
     mock_criar_horarios_indisponiveis,
 ):
     # Alterar horário indisponível com sucesso
-    editar_horario_indisponivel(
+    alterar_horario_indisponivel(
         uow=UnidadeDeTrabalho(session_maker),
         id='horario-001',
         horario_inicio=datetime(2025, 6, 9),
@@ -146,7 +146,7 @@ def test_editar_horario_indisponivel_service(
 
     # HorarioIndisponivelInvalido: O horário de inicio tem que ser menor que o horário de fim.
     with pytest.raises(HorarioIndisponivelInvalido):
-        editar_horario_indisponivel(
+        alterar_horario_indisponivel(
             uow=UnidadeDeTrabalho(session_maker),
             id='horario-001',
             horario_inicio=datetime(2025, 6, 9),
@@ -156,7 +156,7 @@ def test_editar_horario_indisponivel_service(
 
     # HorarioIndisponivelNaoEncontrado: O horario indisponivel especificado não foi encontrado.
     with pytest.raises(HorarioIndisponivelNaoEncontrado):
-        editar_horario_indisponivel(
+        alterar_horario_indisponivel(
             uow=UnidadeDeTrabalho(session_maker),
             id='horario-999',
             horario_inicio=datetime(2025, 6, 10),

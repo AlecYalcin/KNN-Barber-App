@@ -174,8 +174,8 @@ def test_consultar_jornada_service(
             'eh_barbeiro':True,
         },
         'dia_da_semana':"Segunda",
-        'horario_inicio':time(hour=8),
-        'horario_fim':time(hour=12),
+        'horario_inicio':time(hour=8).isoformat(),
+        'horario_fim':time(hour=12).isoformat(),
         'horario_pausa':None,
         'horario_retorno':None,
     }
@@ -209,8 +209,8 @@ def test_consultar_jornada_de_trabalho_service(
             'eh_barbeiro':True,
         },
         'dia_da_semana':"Segunda",
-        'horario_inicio':time(hour=8),
-        'horario_fim':time(hour=12),
+        'horario_inicio':time(hour=8).isoformat(),
+        'horario_fim':time(hour=12).isoformat(),
         'horario_pausa':None,
         'horario_retorno':None,
     }
