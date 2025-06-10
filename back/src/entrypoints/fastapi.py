@@ -10,8 +10,7 @@ from infrastructure.database.connection import engine
 from src.adapters.orm import start_mappers, metadata
 from sqlalchemy.orm import clear_mappers
 
-from .routes import usuario_router, servico_router
-
+from .routes import *
 
 # Configurar banco de dados
 @asynccontextmanager
@@ -41,6 +40,7 @@ app.add_middleware(
 # Adicionando rotas
 app.include_router(usuario_router)
 app.include_router(servico_router)
+app.include_router(horario_router)
 
 # Error Handling
 @app.exception_handler(DomainError)

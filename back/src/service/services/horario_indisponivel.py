@@ -94,8 +94,7 @@ def consultar_horario_indisponivel_por_horario(
             horarios_indisponiveis.extend([horario.to_dict()])
         return horarios_indisponiveis
 
-
-def editar_horario_indisponivel(
+def alterar_horario_indisponivel(
     uow: AbstractUnidadeDeTrabalho,
     id: str,
     horario_inicio: datetime | None = None,

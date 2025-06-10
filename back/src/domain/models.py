@@ -128,15 +128,22 @@ class Jornada:
         return True
 
     def to_dict(self):
+        horario_retorno = self.horario_retorno
+        horario_pausa = self.horario_pausa
+        if isinstance(self.horario_retorno, time):
+            horario_retorno = self.horario_retorno.isoformat()
+        if isinstance(self.horario_pausa, time):
+            horario_pausa = self.horario_pausa.isoformat()
+
         return {
             "id": self.id,
             "ativa":self.ativa,
             "barbeiro": self.barbeiro.to_dict(),
             "dia_da_semana": self.dia_da_semana.value,
-            "horario_inicio": self.horario_inicio,
-            "horario_pausa": self.horario_pausa,
-            "horario_retorno": self.horario_retorno,
-            "horario_fim": self.horario_fim,
+            "horario_inicio": self.horario_inicio.isoformat(),
+            "horario_pausa": horario_pausa,
+            "horario_retorno": horario_retorno,
+            "horario_fim": self.horario_fim.isoformat(),
         }
 
     def __eq__(self, other: any):
@@ -166,8 +173,8 @@ class HorarioIndisponivel:
     def to_dict(self):
         return {
             "id": self.id,
-            "horario_inicio": self.horario_inicio,
-            "horario_fim": self.horario_fim,
+            "horario_inicio": self.horario_inicio.isoformat(),
+            "horario_fim": self.horario_fim.isoformat(),
             "justificativa": self.justificativa,
             "barbeiro": self.barbeiro.to_dict(),
         }
