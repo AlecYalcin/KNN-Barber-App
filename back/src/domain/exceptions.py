@@ -68,7 +68,10 @@ class DiaDaSemanaInvalido(DomainError):
 
 # Horário Indisponível
 
-class HorarioNaoEncontrado(DomainError):
+class HorarioIndisponivelNaoEncontrado(DomainError):
+    pass
+
+class HorarioIndisponivelInvalido(DomainError):
     pass
 
 # Barbeiro

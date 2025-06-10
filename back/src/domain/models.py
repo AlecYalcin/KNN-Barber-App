@@ -163,6 +163,15 @@ class HorarioIndisponivel:
             return False
         return True
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "horario_inicio": self.horario_inicio,
+            "horario_fim": self.horario_fim,
+            "justificativa": self.justificativa,
+            "barbeiro": self.barbeiro.to_dict(),
+        }
+
     def __eq__(self, other: any):
         if not isinstance(other, HorarioIndisponivel):
             return False
