@@ -185,3 +185,35 @@ def mock_criar_jornada_de_trabalho(session, mock_criar_barbeiro):
         )
     )
     session.commit()
+
+
+@pytest.fixture
+def mock_criar_horarios_indisponiveis(session, mock_criar_barbeiro):
+    cpf = '25811756054'
+    horario_1 = (datetime(2025, 6, 10), datetime(2025, 6, 11))
+    horario_2 = (datetime(2025, 7, 10), datetime(2025, 7, 15))
+    horario_3 = (datetime(2025, 8, 1), datetime(2025, 8, 30))
+
+    session.execute(
+        text(
+            """
+            INSERT INTO horario_indisponivel(id, horario_inicio, horario_fim, justificativa, barbeiro_cpf) VALUES
+            ('horario-001', :inicio1, :fim1, :just1, :cpf),
+            ('horario-002', :inicio2, :fim2, :just2, :cpf),
+            ('horario-003', :inicio3, :fim3, :just3, :cpf)
+            """
+        ),
+        {
+            "inicio1": horario_1[0],
+            "fim1": horario_1[1],
+            "just1": "Indisponível hoje",
+            "inicio2": horario_2[0],
+            "fim2": horario_2[1],
+            "just2": "Indisponível amanhã",
+            "inicio3": horario_3[0],
+            "fim3": horario_3[1],
+            "just3": "Férias",
+            "cpf": cpf,
+        }
+    )
+    session.commit()
