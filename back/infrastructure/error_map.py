@@ -72,5 +72,21 @@ ERROR_MAP = {
     "HorarioIndisponivelInvalido": {
         "status_code": 400,
         "message":"O horário cadastrado possui o seu início maior do que o seu fim.",
-    }
+    },
+    "JornadaNaoEncontrada": {
+        "status_code": 404,
+        "message":"Jornada não encontrada."
+    },
+    "JornadaJaExistenteNoMesmoDia": {
+        "status_code": 400,
+        "message":"Jornada já existente nesse mesmo dia para esse barbeiro."
+    },
+    "HorarioDaJornadaInvalido": {
+        "status_code": 400,
+        "message":"o horário da jornada está inválido."
+    },
+    "DiaDaSemanaInvalido": {
+        "status_code": 400,
+        "message":"O dia da semana da jornada está inválido."
+    },
 }

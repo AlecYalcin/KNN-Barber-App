@@ -68,7 +68,7 @@ def criar_jornada(
     try:
         dia_enum = DiaDaSemana(dia_da_semana)
     except ValueError:
-        raise DiaDaSemanaInvalido("O dia da semana fornecido não condiz com nenhum valor salvo. Tente:" \
+        raise DiaDaSemanaInvalido("O dia da semana fornecido não condiz com nenhum valor salvo. Tente: " \
         "Segunda, Terça, Quarta, Quinta, Sexta, Sábado ou Domingo.")
 
     with uow:
@@ -146,7 +146,7 @@ def alterar_ativacao_de_jornada(
         uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho
         id(str): Jornada que vai ser ativada/desativa
     Raises:
-        JornadaJaExistenteNoMesmoDia: Se essa jornada for ativada, existirão duas jornadas no mesmo dia. Jornada: {jornada_id}
+        JornadaJaExistenteNoMesmoDia: Se essa jornada for ativada, existirão duas jornadas no mesmo dia. Desative a jornada: {jornada_id}
         JornadaNaoEncontrada: A jornada especificada não foi encontrada
     """
 
