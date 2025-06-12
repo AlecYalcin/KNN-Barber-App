@@ -91,13 +91,13 @@ class Servico:
 
 @dataclass
 class Jornada:
-    ativa: bool
-    dia_da_semana: DiaDaSemana
     barbeiro: Usuario
+    dia_da_semana: DiaDaSemana
     horario_inicio: time
     horario_fim: time
     horario_retorno: time | None = None
     horario_pausa: time | None = None
+    ativa: bool = True
     id: str = field(default_factory=lambda: str(uuid4()))
 
     def verificar_se_horario_esta_na_jornada(self, horarios: tuple[datetime]) -> bool:
@@ -127,6 +127,25 @@ class Jornada:
 
         return True
 
+    def to_dict(self):
+        horario_retorno = self.horario_retorno
+        horario_pausa = self.horario_pausa
+        if isinstance(self.horario_retorno, time):
+            horario_retorno = self.horario_retorno.isoformat()
+        if isinstance(self.horario_pausa, time):
+            horario_pausa = self.horario_pausa.isoformat()
+
+        return {
+            "id": self.id,
+            "ativa":self.ativa,
+            "barbeiro": self.barbeiro.to_dict(),
+            "dia_da_semana": self.dia_da_semana.value,
+            "horario_inicio": self.horario_inicio.isoformat(),
+            "horario_pausa": horario_pausa,
+            "horario_retorno": horario_retorno,
+            "horario_fim": self.horario_fim.isoformat(),
+        }
+
     def __eq__(self, other: any):
         if not isinstance(other, Jornada):
             return False
@@ -150,6 +169,15 @@ class HorarioIndisponivel:
         if horario_1 <= self.horario_fim and horario_2 >= self.horario_inicio:
             return False
         return True
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "horario_inicio": self.horario_inicio.isoformat(),
+            "horario_fim": self.horario_fim.isoformat(),
+            "justificativa": self.justificativa,
+            "barbeiro": self.barbeiro.to_dict(),
+        }
 
     def __eq__(self, other: any):
         if not isinstance(other, HorarioIndisponivel):
