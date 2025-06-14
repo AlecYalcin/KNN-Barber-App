@@ -6,6 +6,7 @@ import BarbeiroLogin from "../pages/auth/BarbeiroLogin";
 import BarbeiroCadastro from "../pages/auth/BarbeiroCadastro";
 import ClientePerfil from "../pages/auth/ClientePerfil";
 import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
+import ClienteHome from "../pages/auth/ClienteHome";
 
 export default function AppRoutes() {
   return (
@@ -13,6 +14,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/cliente/login" element={<ClienteLogin />} />\
         <Route path="/cliente/cadastro" element={<ClienteCadastro />} />\
+        <Route path="/cliente/home" element={<ClienteHome />} />\
         <Route path="/cliente/perfil" element={<ClientePerfil />} />\
         <Route path="/barbeiro/login" element={<BarbeiroLogin />} />\
         <Route path="/barbeiro/cadastro" element={<BarbeiroCadastro />} />\
