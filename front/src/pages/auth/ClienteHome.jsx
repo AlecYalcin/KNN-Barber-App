@@ -1,3 +1,5 @@
+import BottomNav from "../../components/BottomNav";
+
 const ClienteHome = () => {
   return (
     <div className="mt-15 ml-10 mr-10">
@@ -37,6 +39,9 @@ const ClienteHome = () => {
           <h3 className="text-xl font-semibold">Bigode</h3>
         </article>
       </section>
+
+      <BottomNav />
+      
     </div>
   );
 };
