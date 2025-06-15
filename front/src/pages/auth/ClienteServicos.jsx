@@ -1,3 +1,5 @@
+import BottomNav from "../../components/BottomNav";
+
 const services = [
   { id: 1, name: "Corte de Cabelo", price: "R$ 30,00" },
   { id: 2, name: "Barba", price: "R$ 20,00" },
@@ -40,7 +42,7 @@ export default function ClienteServicos() {
               className="flex justify-between items-center bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition"
             >
               <div className="grid">
-               <span className="text-lg font-medium text-gray-700">
+                <span className="text-lg font-medium text-gray-700">
                   {service.name}
                 </span>
                 <span className="text-gray-500">{service.price}</span>
@@ -55,10 +57,10 @@ export default function ClienteServicos() {
         </div>
 
         <div className="mt-6 grid justify-end items-center">
-          <h2 className="text-xl font-semibold text-gray-800">
-            Total
-          </h2>
-          <span className="bg-white p-4 rounded-lg shadow text-gray-700">R$ 0,00</span>
+          <h2 className="text-xl font-semibold text-gray-800">Total</h2>
+          <span className="bg-white p-4 rounded-lg shadow text-gray-700">
+            R$ 0,00
+          </span>
         </div>
         <div className="mt-6 mb-4">
           <button
@@ -68,6 +70,8 @@ export default function ClienteServicos() {
             Próximo
           </button>
         </div>
+
+        <BottomNav />
       </div>
     </div>
   );
