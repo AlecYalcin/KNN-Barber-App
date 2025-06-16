@@ -16,7 +16,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test_db
+          POSTGRES_DB: knn_db
         ports:
           - 5432:5432
         options: >-
@@ -37,11 +37,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest-cov
 
-    - name: Run Alembic migrations
-      run: alembic upgrade head
-      working-directory: back
+    # - name: Run Alembic migrations
+    #   run: alembic upgrade head
+    #   working-directory: back
 
     - name: Run tests with coverage
       run: pytest --cov=back --cov-report=xml back/tests
