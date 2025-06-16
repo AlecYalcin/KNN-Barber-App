@@ -1,3 +1,5 @@
+import BottomNav from "../../components/BottomNav";
+
 const ClienteAgendamento = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
@@ -76,6 +78,8 @@ const ClienteAgendamento = () => {
             Confirmar
           </button>
         </div>
+
+        <BottomNav />
       </div>
     </div>
   );
