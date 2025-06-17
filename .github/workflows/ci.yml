@@ -26,30 +26,27 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r back/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r back/requirements.txt
 
-    # - name: Run Alembic migrations
-    #   run: alembic upgrade head
-    #   working-directory: back
+      - name: Run tests and generate coverage.xml
+        run: |
+          coverage run -m pytest back/tests
+          coverage xml -o coverage.xml
 
-    - name: Run tests with coverage
-      run: pytest --cov=back --cov-report=xml back/tests
-
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v2.0.2
-      with:
-        projectBaseDir: .
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: http://labens.dct.ufrn.br/sonarqube
-
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2.0.2
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: http://labens.dct.ufrn.br/sonarqube
