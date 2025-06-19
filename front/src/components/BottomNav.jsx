@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function BottomNav() {
   return (
-    <div className="bg-white border-t border-gray-200 p-3 fixed bottom-0 left-0 right-0">
+    <div className="lg:hidden bg-white border-t border-gray-200 p-3 fixed bottom-0 left-0 right-0">
       <nav className="flex justify-around" aria-label="Menu de navegação inferior">
         
         <Link
