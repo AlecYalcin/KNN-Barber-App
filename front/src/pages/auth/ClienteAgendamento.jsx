@@ -27,7 +27,7 @@ const ClienteAgendamento = () => {
 
       <Sidebar />
 
-      <div className="bg-amer-200 lg:w-full lg:ml-70 lg:flex lg:justify-center lg:items-start lg:h-screen lg:gap-10">
+      <div className="bg-amer-200 lg:w-full lg:ml-70 2xl:ml-100 lg:flex lg:items-start lg:h-screen lg:gap-3">
         <div className="grid items-center px-5 py-5 rounded-xl mt-10 bg-blue-500 lg:justify-center lg:mt-15">
           <h1 className="text-2xl font-bold flex justify-center text-gray-800">
             Agendamento de Serviços
@@ -43,7 +43,7 @@ const ClienteAgendamento = () => {
                     value={dia}
                     className="hidden peer"
                   />
-                  <div className="peer-checked:bg-white h-10 w-10 lg:h-15 lg:w-15 lg:rounded-3xl lg:text-3xl rounded-2xl border flex items-center justify-center text-2xl font-bold text-gray-800 hover:bg-white hover:text-blue-500 transition">
+                  <div className="peer-checked:bg-white h-10 w-10 lg:h-12 lg:w-12 lg:rounded-2xl lg:text-3xl 2xl:text-4xl 2xl:h-15 2xl:w-15 2xl:rounded-3xl rounded-2xl border flex items-center justify-center text-2xl font-bold text-gray-800 hover:bg-white hover:text-blue-500 transition">
                     {dia}
                   </div>
                 </label>
@@ -63,14 +63,14 @@ const ClienteAgendamento = () => {
                 (hora) => (
                   <label
                     key={hora}
-                    className=" text-xl rounded-2xl border bg-white h-12 w-15 text-gray-800 font-bold cursor-pointer peer-checked:bg-white peer-checked:text-blue-500"
+                    className=" text-xl rounded-2xl border bg-white h-12 w-15 2xl:h-17 2xl:w-20 2xl:text-2xl text-gray-800 font-bold cursor-pointer peer-checked:bg-white peer-checked:text-blue-500"
                   >
                     <input
                       type="checkbox"
                       className="hidden peer"
                       aria-label={`Selecionar horário ${hora}`}
                     />
-                    <span className="peer-checked:bg-blue-500 peer-checked:text-gray-800 h-full w-full flex items-center justify-center rounded-2xl transition">
+                    <span className="peer-checked:bg-blue-500 peer-checked:text-gray-800 h-full w-full flex items-center justify-center rounded-2xl transition lg:">
                       {hora}
                     </span>
                   </label>
