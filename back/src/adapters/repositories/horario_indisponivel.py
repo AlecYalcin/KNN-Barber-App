@@ -52,7 +52,7 @@ class HorarioIndisponivelRepository(AbstractHorarioIndisponivelRepository, Abstr
     
     def consultar_por_horario(self, horarios: tuple[datetime,datetime]) -> list[HorarioIndisponivel]:
         horarios_indisponiveis = self.session.query(HorarioIndisponivel).filter(
-            horarios[1] > HorarioIndisponivel.horario_inicio,
-            horarios[0] < HorarioIndisponivel.horario_fim  
+            horarios[1] >= HorarioIndisponivel.horario_inicio,
+            horarios[0] <= HorarioIndisponivel.horario_fim  
         ).all()
         return horarios_indisponiveis
