@@ -1,4 +1,5 @@
 import BottomNav from "../../components/BottomNav";
+import Sidebar from "../../components/SidebarClient";
 
 const services = [
   { id: 1, name: "Corte de Cabelo", price: "R$ 30,00" },
@@ -9,7 +10,7 @@ const services = [
 
 export default function ClienteServicos() {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
+    <div className="min-h-screen bg-gray-100 py-10 flex">
       <button
         className="absolute top-8 left-4 flex items-center text-blue-600 hover:text-blue-800 transition focus:outline-none"
         onClick={() => window.history.back()}
@@ -31,11 +32,13 @@ export default function ClienteServicos() {
         Voltar
       </button>
 
-      <div className="container px-4 py-8 mt-4">
+      <Sidebar />
+
+      <div className="container py-8 mt-4 grid ml-5 mr-5 ">
         <h1 className="text-2xl font-bold mb-10 flex justify-center text-gray-800">
           Serviços Disponíveis
         </h1>
-        <div className="w-full max-w-md space-y-4">
+        <div className="w-full space-y-4 bg-amber-30">
           {services.map((service) => (
             <div
               key={service.id}
@@ -54,21 +57,20 @@ export default function ClienteServicos() {
               />
             </div>
           ))}
-        </div>
 
-        <div className="mt-6 grid justify-end items-center">
-          <h2 className="text-xl font-semibold text-gray-800">Total</h2>
-          <span className="bg-white p-4 rounded-lg shadow text-gray-700">
-            R$ 0,00
-          </span>
-        </div>
-        <div className="mt-6 mb-4">
-          <button
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-            // onClick={() => alert("Serviços selecionados!")}
-          >
-            Próximo
-          </button>
+          <div className="mt-6 grid justify-end items-center">
+            <h2 className="text-xl font-semibold text-gray-800">Total</h2>
+            <span className="bg-white p-4 rounded-lg shadow text-gray-700">
+              R$ 0,00
+            </span>
+
+            <button
+              className="w-50 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition mt-6 mb-4"
+              // onClick={() => alert("Serviços selecionados!")}
+            >
+              Próximo
+            </button>
+          </div>
         </div>
 
         <BottomNav />
