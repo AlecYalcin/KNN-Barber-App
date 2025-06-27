@@ -3,9 +3,9 @@ import Sidebar from "../../components/SidebarClient";
 
 const ClienteAgendamento = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center py-10 lg:flex-row mr-5 ml-5">
+    <div className="min-h-screen bg-gray-100">
       <button
-        className="fixed top-8 left-4 z-50 flex items-center text-blue-600 hover:text-blue-800 transition focus:outline-none"
+        className="fixed top-8 left-4 z-50 flex items-center text-blue-600 hover:text-blue-800 transition focus:outline-none lg:hidden"
         onClick={() => window.history.back()}
         aria-label="Voltar"
       >
@@ -25,15 +25,19 @@ const ClienteAgendamento = () => {
         Voltar
       </button> 
 
+      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
+        <h1 className="text-3xl font-bold ml-2">Agendamentos</h1>
+        <button className="mr-4">Sair</button>
+      </header>
+
       <Sidebar />
 
-      <div className="bg-amer-200 lg:w-full lg:ml-70 2xl:ml-100 lg:flex lg:items-start lg:h-screen lg:gap-3">
-        <div className="grid items-center px-5 py-5 rounded-xl mt-10 bg-blue-500 lg:justify-center lg:mt-15">
-          <h1 className="text-2xl font-bold flex justify-center text-gray-800">
-            Agendamento de Serviços
-          </h1>
-
-          <div className="grid grid-cols-7 mt-6 bg-ambr-600 gap-2">
+      <main className="container flex w-full md:items-center flex-col items-center lg:mt-10 p-6 overflow-auto h-[calc(100vh-70px)] lg:h-screen lg:ml-[calc(12%)]">
+        <h1 className="text-2xl font-bold mt-20 flex justify-center text-gray-800">
+          Selecione o Dia
+        </h1>
+        <div className="grid mt-5">
+          <div className="grid grid-cols-7 rounded-2xl p-3 w-full h-full bg-blue-500 gap-2 lg:gap-4 shadow-lg">
             {Array.from({ length: 31 }, (_, i) => (i + 1).toString()).map(
               (dia) => (
                 <label key={dia} className="cursor-pointer">
@@ -43,7 +47,7 @@ const ClienteAgendamento = () => {
                     value={dia}
                     className="hidden peer"
                   />
-                  <div className="peer-checked:bg-white h-10 w-10 lg:h-12 lg:w-12 lg:rounded-2xl lg:text-3xl 2xl:text-4xl 2xl:h-15 2xl:w-15 2xl:rounded-3xl rounded-2xl border flex items-center justify-center text-2xl font-bold text-gray-800 hover:bg-white hover:text-blue-500 transition">
+                  <div className="peer-checked:bg-white h-10 w-10 lg:h-12 lg:w-12 lg:rounded-2xl lg:text-3x lg:text-4xl 2xl:h-15 2xl:w-15 2xl:rounded-3xl rounded-2xl border flex items-center justify-center text-2xl font-bold text-gray-800 hover:bg-white hover:text-blue-500 transition">
                     {dia}
                   </div>
                 </label>
@@ -52,13 +56,13 @@ const ClienteAgendamento = () => {
           </div>
         </div>
 
-        <div className="lg:ml-5 lg:mt-15 bg-amber700">
+        <div className="lg:mt-10">
           <h1 className="text-2xl font-bold mb-2 flex justify-center text-gray-800 mt-10 lg:mt-0">
             Horários Disponíveis
           </h1>
 
-          <div className="w-full bg-ambr-300 lg:grid justify-center">
-            <ul className="grid grid-cols-5 lg:grid-cols-4 gap-2 p-4 rounded-lg">
+          <div className="w-full bg-gray-300 justify-center items-center rounded-lg shadow-lg">
+            <ul className="grid grid-cols-5 gap-3 p-2 rounded-lg">
               {["08:00", "09:00", "10:00", "11:00", "12:00", "13:00","14:00","15:00"].map(
                 (hora) => (
                   <label
@@ -80,15 +84,14 @@ const ClienteAgendamento = () => {
             <div />
           </div>
 
-          <div className="mt-6 mb-4 lg:grid">
+          <div className="mt-6 mb-10">
             <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
               Confirmar
             </button>
           </div>
-
-          <BottomNav />
         </div>
-      </div>
+      </main>
+      <BottomNav />
     </div>
   );
 };
