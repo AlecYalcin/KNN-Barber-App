@@ -39,11 +39,11 @@ export default function ClienteServicos() {
 
       <Sidebar />
 
-      <div className="container py-8 mt-4 grid ml-5 mr-5 ">
-        <h1 className="text-2xl lg:hidden font-bold mb-10 flex justify-center text-gray-800">
+      <div className="w-full lg:pl-[22px] py-8 mt-4 grid ml-5 mr-5 lg:ml-64">
+        <h1 className="text-2xl lg:hidden font-bold mb-5 flex justify-center text-gray-800">
           Serviços Disponíveis
         </h1>
-        <div className="w-full space-y-4 bg-amber-30">
+        <div className="w-full space-y-4">
           {services.map((service) => (
             <div
               key={service.id}
@@ -77,9 +77,8 @@ export default function ClienteServicos() {
             </button>
           </div>
         </div>
-
-        <BottomNav />
       </div>
+      <BottomNav />
     </div>
   );
 }
