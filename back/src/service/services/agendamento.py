@@ -1,10 +1,11 @@
 from src.service.unit_of_work import AbstractUnidadeDeTrabalho
-from src.domain.models import Agendamento, Usuario, Servico, criar_agendamento as model_criar_agendamento
+from src.domain.models import Agendamento, Usuario, Servico, normalizar_horarios,criar_agendamento as model_criar_agendamento
 
 from src.domain.exceptions import(
     BarbeiroNaoEncontrado,
     UsuarioNaoEncontrado,
-    ServicoNaoEncontrado
+    ServicoNaoEncontrado,
+    HorarioIndisponivelParaBarbeiro
     
 )
 
@@ -18,6 +19,25 @@ def criar_agendamento(
     cliente_cpf: str,  
     servicos_id: list[str]            
 ) -> None:
+    """
+    Cria um agendamento único para um barbeiro e um cliente. Verificando se já
+    existe um agendamento que crie conflito de horários para aquele mesmo barbeiro.
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho
+        horario_inicio(datetime): Horário de inicio do agendamento
+        horario_fim(datetime): Horário do fim do agendamendo
+        barbeiro_cpf(str): CPF do Barbeiro do agendamento
+        cliente_cpf(str): CPF do Cliente do agendamento
+        serviços_id(list[[str]]): Lista que contém todos os identificadores dos serviços solicitados no agendamento
+        
+    Raises:
+        BarbeiroNaoEncontrado: O barbeiro não foi encontrado
+        UsuarioNaoEncontrado: O cliente não foi encontrado
+        ServicoNaoEncontrado: Serviço não foi encontrado
+        HorarioIndisponivelParaBarbeiro: O horário de agendamento entra em conflito com algum horário de agendamento já existente.
+    """
+    
     with uow:
         
         cliente = uow.usuarios.consultar(cpf=cliente_cpf)
@@ -32,5 +52,13 @@ def criar_agendamento(
         if None in servicos:
             raise ServicoNaoEncontrado("Um dos identificadores não representa um serviço.")
         
-        agendamento = model_criar_agendamento(cliente, barbeiro, servicos, (horario_inicio,horario_fim))
+        horarios = (horario_inicio, horario_fim)
+        agendamentos_horario_barbeiro = [uow.agendamentos.listar_por_horario(horarios)]
+        
+        for agendamento_barbeiro in agendamentos_horario_barbeiro:
+            if (horarios[1]>agendamento_barbeiro.horario_inicio and horarios[0] <= agendamento_barbeiro.horario_fim) and agendamento_barbeiro.barbeiro == barbeiro:
+                raise HorarioIndisponivelParaBarbeiro("O horário selecionado encontra-se indisponível para o barbeiro.")
+        
+        agendamento = model_criar_agendamento(cliente, barbeiro, servicos, horarios)
+
         
