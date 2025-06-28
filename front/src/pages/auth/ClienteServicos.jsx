@@ -32,10 +32,15 @@ export default function ClienteServicos() {
         Voltar
       </button>
 
+      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
+        <h1 className="text-3xl font-bold ml-2">Serviços Disponíveis</h1>
+        <button className="mr-4">Sair</button>
+      </header>
+
       <Sidebar />
 
       <div className="container py-8 mt-4 grid ml-5 mr-5 ">
-        <h1 className="text-2xl font-bold mb-10 flex justify-center text-gray-800">
+        <h1 className="text-2xl lg:hidden font-bold mb-10 flex justify-center text-gray-800">
           Serviços Disponíveis
         </h1>
         <div className="w-full space-y-4 bg-amber-30">
