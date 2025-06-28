@@ -1,6 +1,6 @@
 const Sidebar = () => {
   return (
-    <div className="hidden lg:flex lg:w-64 lg:flex-col p-6 bg-amer-300 fixed top-8 z-50 lg:h-full shadow-lg rounded-lg">
+    <div className="hidden lg:flex lg:w-64 lg:flex-col p-6 fixed top-17 z-50 lg:h-full shadow-lg">
       <div className="flex flex-col items-center mb-8 mt-10">
         {/* Foto do perfil */}
         <div className="w-32 h-32 rounded-full bg-gray-200 mb-4 overflow-hidden border-4 border-blue-100">
