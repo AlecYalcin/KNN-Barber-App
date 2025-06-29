@@ -1,14 +1,14 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
-from fastapi.responses import JSONResponse
-
-from back.database.error_map import ERROR_MAP
-from src.domain.exceptions import DomainError
-from database.connection import engine
-from src.adapters.orm import start_mappers, metadata
 from sqlalchemy.orm import clear_mappers
+
+from database.error_map import ERROR_MAP
+from database.connection import engine
+from src.domain.exceptions import DomainError
+from src.adapters.orm import start_mappers, metadata
 
 from .routes import *
 
