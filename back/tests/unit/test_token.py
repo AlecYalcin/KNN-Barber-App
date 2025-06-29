@@ -38,3 +38,21 @@ def test_validade_de_token():
 
     with pytest.raises(TokenInvalido):
         assert isinstance(jwt_token.token_extraido, str) 
+
+import pytest
+
+def test_extracao_de_token():
+    # Token inválido
+    token_falso = "2144k21b1k5b215kj21b5"
+
+    # Cria token válido com id numérico
+    jwt_token = JWTToken({"id": 1234})
+    token_verdadeiro = jwt_token.token
+
+    # Testa falha ao decodificar token falso
+    with pytest.raises(TokenInvalido):
+        JWTToken.extrair_token(token_falso)
+
+    # Testa sucesso ao decodificar token verdadeiro
+    valores = JWTToken.extrair_token(token_verdadeiro)
+    assert valores == {"id": 1234}

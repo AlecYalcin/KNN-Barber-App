@@ -18,7 +18,7 @@ def criar_usuario(
     senha: str,
     telefone: str | None = None,
     eh_barbeiro: bool = False,
-) -> None:
+) -> dict:
     """
     Serviço de criação de novos usuários no sistema.
 
@@ -58,6 +58,7 @@ def criar_usuario(
         usuario = Usuario(cpf, nome, email, senha, telefone, eh_barbeiro)
         uow.usuarios.adicionar(usuario)
         uow.commit()
+    return usuario.to_dict()
 
 def consultar_usuario(
     uow: AbstractUnidadeDeTrabalho,
