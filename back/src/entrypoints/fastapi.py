@@ -4,9 +4,9 @@ from contextlib import asynccontextmanager
 
 from fastapi.responses import JSONResponse
 
-from infrastructure.error_map import ERROR_MAP
+from back.database.error_map import ERROR_MAP
 from src.domain.exceptions import DomainError
-from infrastructure.database.connection import engine
+from database.connection import engine
 from src.adapters.orm import start_mappers, metadata
 from sqlalchemy.orm import clear_mappers
 

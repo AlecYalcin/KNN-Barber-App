@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import clear_mappers
-from infrastructure.database import connection as conn
+from database import connection as conn
 from src.adapters.orm import metadata, start_mappers
 
 def test_conexao_com_postgre_via_docker():
