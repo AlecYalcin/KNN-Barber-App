@@ -1,6 +1,10 @@
 # Arquivo de mapeamento das mensagens de erro
 
 ERROR_MAP = {
+    "TokenInvalido":{
+        "status_code":401,
+        "message":"O token está ausente, expirado ou malformado.",
+    },
     "HorarioIndisponivelParaBarbeiro": {
         "status_code": 400,
         "message": "O horário escolhido não está disponível para o barbeiro.",
