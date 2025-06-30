@@ -81,3 +81,20 @@ def consultar_agendamento(
             return {}
         return agendamento.to_dict()
     
+def consultar_agendamentos_por_barbeiro(
+    uow: AbstractUnidadeDeTrabalho,
+    barbeiro_cpf: str,
+) -> list[dict]:
+    """
+    Consulta todos os agendamentos existentes do barbeiro.
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho abstrata
+        barbeiro_cpf(str): CPF do Barbeiro escolhido
+    Returns:
+        list[dict]: Lista de todos os agendamentos do barbeiro
+    """
+    
+    with uow:
+        agendamentos = uow.agendamentos.listar_por_barbeiro(barbeiro_cpf)
+        return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
