@@ -57,3 +57,34 @@ def criar_agendamento_route(
             status_code=400,
             content={"erro": str(e)}
         )
+
+@router.get("/{id}")
+def consultar_agendamento_route(
+    id: str,
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+):
+    """
+    Consulta um agendamento pelo ID.
+    
+    Args:
+        id(str): ID do agendamento a ser consultado
+        uow(UnidadeDeTrabalho): Unidade de Trabalho abstrata
+    Returns:
+        JSONResponse: Detalhes do agendamento ou mensagem de erro
+    """
+    try:
+        agendamento = consultar_agendamento(uow=uow, id=id)
+        if not agendamento:
+            return JSONResponse(
+                status_code=404,
+                content={"erro": "Agendamento não encontrado"}
+            )
+        return JSONResponse(
+            status_code=200,
+            content=agendamento.to_dict()
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"erro": str(e)}
+        )
