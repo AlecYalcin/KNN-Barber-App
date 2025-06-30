@@ -114,3 +114,33 @@ def consultar_agendamentos_por_barbeiro_route(
             status_code=400,
             content={"erro": str(e)}
         )
+
+@router.get("/horario")
+def consultar_agendamentos_por_horario_route(
+    horario_inicio: time,
+    horario_fim: time,
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+):
+    """
+    Consulta todos os agendamentos em um determinado horário.
+    
+    Args:
+        horario_inicio(time): Horário de início do agendamento
+        horario_fim(time): Horário de fim do agendamento
+        uow(UnidadeDeTrabalho): Unidade de Trabalho abstrata
+    Returns:
+        JSONResponse: Lista de agendamentos ou mensagem de erro
+    """
+    try:
+        horarios = (horario_inicio, horario_fim)
+        agendamentos = consultar_agendamentos_por_horario(uow=uow, horarios=horarios)
+        return JSONResponse(
+            status_code=200,
+            content=agendamentos
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"erro": str(e)}
+        )
+
