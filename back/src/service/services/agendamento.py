@@ -5,11 +5,12 @@ from src.domain.exceptions import(
     BarbeiroNaoEncontrado,
     UsuarioNaoEncontrado,
     ServicoNaoEncontrado,
-    HorarioIndisponivelParaBarbeiro
-    
+    HorarioIndisponivelParaBarbeiro,
+    AgendamentoNaoEncontrado,    
 )
 
 from datetime import datetime
+from sqlalchemy.orm.exc import UnmappedInstanceError
 
 def criar_agendamento(
     uow: AbstractUnidadeDeTrabalho,
@@ -133,3 +134,24 @@ def listar_agendamentos(
     with uow:
         agendamentos = uow.agendamentos.listar()
         return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
+    
+def remover_agendamento(
+    uow: AbstractUnidadeDeTrabalho,
+    id: str,
+) -> None:
+    """
+    Remove um agendamento existente pelo identificador.
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho abstrata
+        id(str): identificador do agendamento a ser removido
+    Raises:
+        AgendamentoNaoEncontrado: O identificador informado não foi encontrado na base de dados.
+    """
+    
+    with uow:
+        try:
+            uow.agendamentos.remover(id)
+            uow.commit()
+        except UnmappedInstanceError:
+            raise AgendamentoNaoEncontrado("O identificador informado não foi encontrado na base de dados.")
