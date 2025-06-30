@@ -6,6 +6,7 @@ from src.domain.exceptions import (
     EmailInvalido, 
     EmailEmUso,
     UsuarioNaoEncontrado,
+    PermissaoNegada,
 )
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
@@ -64,6 +65,7 @@ def consultar_usuario(
     uow: AbstractUnidadeDeTrabalho,
     cpf: str | None = None,
     email: str | None = None,
+    solicitante: dict | None = None,
 ) -> dict:
     """
     Serviço de consulta de usuários existentes no sistema.
@@ -72,11 +74,22 @@ def consultar_usuario(
         uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
         cpf(str): CPF para consulta, priorizado
         email(str): Email para consulta, caso não haja CPF
+        solicitante(dict): Usuário que está solicitando a operação
     Returns:
         dict: dicionário de dados com as informações do usuário para o endpoint.
         Caso não exista usuário, será enviado um dicionário vazio.
+    Raises:
+        PermissaoNegada: O usuário não possui permissões para realizar essa operação.
     """
     
+    # Verificando permissão de usuário
+    if ( 
+        solicitante 
+        and solicitante['cpf'] != cpf 
+        and solicitante['eh_barbeiro'] == False
+    ):
+        raise PermissaoNegada()
+
     usuario = None
     with uow:
         if cpf:
@@ -90,6 +103,7 @@ def consultar_usuario(
 def remover_usuario(
     uow: AbstractUnidadeDeTrabalho,
     cpf: str,
+    solicitante: dict | None = None,
 ) -> None:
     """
     Serviço de deletar usuários existentes no sistema.
@@ -99,7 +113,17 @@ def remover_usuario(
         cpf(str): CPF do cliente a ser removio
     Raises:
         UsuarioNaoEncontrado: O cpf informado não foi encontrado na base de dados.
+    Raises:
+        PermissaoNegada: O usuário não possui permissões para realizar essa operação.
     """
+    
+    # Verificando permissão de usuário
+    if ( 
+        solicitante 
+        and solicitante['cpf'] != cpf 
+        and solicitante['eh_barbeiro'] == False
+    ):
+        raise PermissaoNegada()
 
     with uow:
         try:
@@ -115,6 +139,7 @@ def atualizar_usuario(
     novo_email: str | None = None,
     novo_telefone: str | None = None,
     nova_senha: str | None = None,
+    solicitante: dict | None = None,
 ) -> None:
     """
     Serviço para alterar usuários existentes no sistema.
@@ -129,7 +154,17 @@ def atualizar_usuario(
         EmailInvalido: O Email informado não é válido.
         UsuarioNaoEncontrado: Usuário não foi encontrado para a alteração.
         EmailEmUso: O Email escolhido já está cadastrado em outro usuário.
+    Raises:
+        PermissaoNegada: O usuário não possui permissões para realizar essa operação.
     """
+    
+    # Verificando permissão de usuário
+    if ( 
+        solicitante 
+        and solicitante['cpf'] != cpf 
+        and solicitante['eh_barbeiro'] == False
+    ):
+        raise PermissaoNegada()
 
     # Verificar se Email é válido
     if not Usuario.validar_email(novo_email):

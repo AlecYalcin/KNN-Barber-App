@@ -24,7 +24,7 @@ def usuario_base():
     yield _usuario_base
 
 @pytest.fixture
-def criar_usuario(
+def criador_de_usuario(
     session, 
 ):
     def _criar_usuario(
