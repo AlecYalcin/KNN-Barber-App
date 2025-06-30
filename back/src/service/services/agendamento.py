@@ -61,6 +61,7 @@ def criar_agendamento(
                 raise HorarioIndisponivelParaBarbeiro("O horário selecionado encontra-se indisponível para o barbeiro.")
         
         agendamentos_existentes = uow.agendamentos.listar_por_barbeiro(barbeiro_cpf)
+        # Verificando se o horário de início ou fim já está marcado para o barbeiro
         for agendamento in agendamentos_existentes:
             if (
                 horario_inicio == agendamento.horario_inicio
