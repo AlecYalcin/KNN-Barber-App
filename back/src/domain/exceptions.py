@@ -6,6 +6,9 @@ class DomainError(Exception):
 class TokenInvalido(DomainError):
     pass
 
+class PermissaoNegada(DomainError):
+    pass
+
 # Agendamento
 
 class HorarioIndisponivelParaBarbeiro(DomainError):

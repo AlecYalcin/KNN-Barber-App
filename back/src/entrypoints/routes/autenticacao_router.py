@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from database.connection import get_uow
@@ -6,6 +6,7 @@ from src.service.unit_of_work import UnidadeDeTrabalho
 from src.service.services import (
     autenticar,
     registrar,
+    retornar_usuario,
 )
 
 class AutenticacaoModel(BaseModel):
@@ -58,3 +59,18 @@ def registrando_usuario(
         status_code=200,
         content={"token":token},
     )
+
+def obter_usuario_atual(
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+    token: str | None = Header(None, alias="Authorization"),
+) -> dict:
+    if token is None or not token.startswith("Bearer "):
+        raise HTTPException(
+            status_code=401,
+            detail="Token ausente ou malformado",
+        )
+
+    token = token.removeprefix("Bearer ").strip()
+    usuario = retornar_usuario(uow=uow, token=token)
+    
+    return usuario
