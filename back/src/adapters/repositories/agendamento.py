@@ -23,6 +23,10 @@ class AbstractAgendamentoRepository():
     @abc.abstractmethod
     def listar_por_horario(self, horarios: tuple[datetime,datetime]) -> list[Agendamento]:
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def listar_por_barbeiro(self, barbeiro_id: str) -> list[Agendamento]:
+        raise NotImplementedError
 
 class AgendamentoRepository(AbstractAgendamentoRepository, AbstractSQLAlchemyRepository):
     def adicionar(self, agendamento: Agendamento):
@@ -45,4 +49,8 @@ class AgendamentoRepository(AbstractAgendamentoRepository, AbstractSQLAlchemyRep
             horarios[1] > Agendamento.horario_inicio,
             horarios[0] < Agendamento.horario_fim  
         ).all()
+        return agendamentos
+    
+    def listar_por_barbeiro(self, barbeiro_id: str) -> list[Agendamento]:
+        agendamentos = self.session.query(Agendamento).filter(Agendamento.barbeiro_id == barbeiro_id).all()
         return agendamentos
