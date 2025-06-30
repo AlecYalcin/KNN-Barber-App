@@ -167,3 +167,29 @@ def listar_agendamentos_route(
             status_code=400,
             content={"erro": str(e)}
         )
+
+@router.delete("/{id}")
+def remover_agendamento_route(
+    id: str,
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+):
+    """
+    Remove um agendamento pelo ID.
+    
+    Args:
+        id(str): ID do agendamento a ser removido
+        uow(UnidadeDeTrabalho): Unidade de Trabalho abstrata
+    Returns:
+        JSONResponse: Mensagem de sucesso ou erro
+    """
+    try:
+        remover_agendamento(uow=uow, id=id)
+        return JSONResponse(
+            status_code=200,
+            content={"mensagem": "Agendamento removido com sucesso!"}
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"erro": str(e)}
+        )
