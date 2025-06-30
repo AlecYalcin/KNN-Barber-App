@@ -3,7 +3,7 @@ from sqlalchemy import StaticPool, create_engine, event
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from src.service.unit_of_work import UnidadeDeTrabalho
 from src.adapters.orm import start_mappers, metadata
-from infrastructure.database.connection import engine as postgres_engine, get_uow, session_maker as postgres_maker
+from database.connection import engine as postgres_engine, get_uow, session_maker as postgres_maker
 
 # ==================
 # FIXTURES DE SQLITE

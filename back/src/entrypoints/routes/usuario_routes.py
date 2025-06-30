@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from infrastructure.database.connection import get_uow
+from database.connection import get_uow
 from src.service.unit_of_work import UnidadeDeTrabalho
 from src.service.services.usuario import (
     criar_usuario,

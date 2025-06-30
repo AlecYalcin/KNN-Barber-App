@@ -75,7 +75,8 @@ def test_consultando_horario_indisponivel_por_faixa_de_horarios_api(
     assert response.json() == []
 
     # Consultando horários padrão
-    response = client.get('/horario-indisponivel/pesquisar-horarios')
+    response = client.get(
+        f'/horario-indisponivel/pesquisar-horarios?horario_inicio={datetime(2025, 6, 1)}&horario_fim={datetime(2025, 6, 30)}')
     assert response.status_code == 200
     assert len(response.json()) == 1
 
