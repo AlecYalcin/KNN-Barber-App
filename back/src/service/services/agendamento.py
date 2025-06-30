@@ -116,3 +116,20 @@ def consultar_agendamentos_por_horario(
     with uow:
         agendamentos = uow.agendamentos.listar_por_horario(horarios)
         return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
+    
+
+def listar_agendamentos(
+    uow: AbstractUnidadeDeTrabalho,
+) -> list[dict]:
+    """
+    Lista todos os agendamentos existentes no sistema.
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho abstrata
+    Returns:
+        list[dict]: Lista de todos os agendamentos
+    """
+    
+    with uow:
+        agendamentos = uow.agendamentos.listar()
+        return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
