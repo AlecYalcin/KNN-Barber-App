@@ -61,4 +61,23 @@ def criar_agendamento(
         
         agendamento = model_criar_agendamento(cliente, barbeiro, servicos, horarios)
 
-        
+def consultar_agendamento(
+    uow: AbstractUnidadeDeTrabalho,
+    id: str,
+):
+    """
+    Consulta um agendamento existente pelo identificador.
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho abstrata
+        id(str): identificador do agendamento
+    Returns:
+        dict: Dicionário com os dados retornados da consulta
+    """
+    
+    with uow:
+        agendamento = uow.agendamentos.consultar(id)
+        if not agendamento:
+            return {}
+        return agendamento.to_dict()
+    
