@@ -144,3 +144,26 @@ def consultar_agendamentos_por_horario_route(
             content={"erro": str(e)}
         )
 
+@router.get("/listar")
+def listar_agendamentos_route(
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+):
+    """
+    Lista todos os agendamentos existentes no sistema.
+    
+    Args:
+        uow(UnidadeDeTrabalho): Unidade de Trabalho abstrata
+    Returns:
+        JSONResponse: Lista de agendamentos ou mensagem de erro
+    """
+    try:
+        agendamentos = listar_agendamentos(uow=uow)
+        return JSONResponse(
+            status_code=200,
+            content=agendamentos
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"erro": str(e)}
+        )
