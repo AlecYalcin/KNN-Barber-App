@@ -60,6 +60,16 @@ def criar_agendamento(
             if (horarios[1]>agendamento_barbeiro.horario_inicio and horarios[0] <= agendamento_barbeiro.horario_fim) and agendamento_barbeiro.barbeiro == barbeiro:
                 raise HorarioIndisponivelParaBarbeiro("O horário selecionado encontra-se indisponível para o barbeiro.")
         
+        agendamentos_existentes = uow.agendamentos.listar_por_barbeiro(barbeiro_cpf)
+        for agendamento in agendamentos_existentes:
+            if (
+                horario_inicio == agendamento.horario_inicio
+                or horario_inicio == agendamento.horario_fim
+                or horario_fim == agendamento.horario_inicio
+                or horario_fim == agendamento.horario_fim
+            ):
+                raise HorarioIndisponivelParaBarbeiro("O horário de início ou fim já está marcado para o barbeiro.")
+        
         agendamento = model_criar_agendamento(cliente, barbeiro, servicos, horarios)
 
 def consultar_agendamento(
