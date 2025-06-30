@@ -4,6 +4,62 @@ from src.domain.models import *
 from sqlalchemy import text
 
 @pytest.fixture
+def usuario_base():
+    def _usuario_base(
+        cpf="92470179041",
+        nome="Usuário Teste",
+        email="usuario@teste.com",
+        senha="senha_segura123",
+        telefone="84912345678",
+        eh_barbeiro=False,
+    ) -> Usuario:
+        return Usuario(
+            cpf=cpf,
+            nome=nome,
+            email=email,
+            senha=senha,
+            telefone=telefone,
+            eh_barbeiro=eh_barbeiro,
+        )
+    yield _usuario_base
+
+@pytest.fixture
+def criar_usuario(
+    session, 
+):
+    def _criar_usuario(
+        cpf="92470179041",
+        nome="Usuário Teste",
+        email="usuario@teste.com",
+        senha="senha_segura123",
+        telefone="84912345678",
+        eh_barbeiro=False,  
+    ) -> Usuario:
+        session.execute(
+            text(
+                """
+                INSERT INTO usuario
+                (cpf, nome, email, senha, telefone, eh_barbeiro)
+                VALUES
+                (:cpf, :nome, :email, :senha, :telefone, :eh_barbeiro)
+                """
+            ),
+            params={
+                "cpf": cpf,
+                "nome": nome,
+                "email": email,
+                "senha": senha,
+                "telefone": telefone,
+                "eh_barbeiro": eh_barbeiro,
+            }
+        )
+        session.commit()
+
+        usuario = Usuario(cpf, nome, email, senha, telefone, eh_barbeiro)
+        return session.merge(usuario)
+    yield _criar_usuario
+
+@pytest.fixture
 def mock_usuario_teste():
     usuario = Usuario(
         cpf="92470179041",
