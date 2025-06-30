@@ -88,3 +88,29 @@ def consultar_agendamento_route(
             status_code=400,
             content={"erro": str(e)}
         )
+
+@router.get("/barbeiro/{barbeiro_cpf}")
+def consultar_agendamentos_por_barbeiro_route(
+    barbeiro_cpf: str,
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+):
+    """
+    Consulta todos os agendamentos de um barbeiro específico.
+    
+    Args:
+        barbeiro_cpf(str): CPF do barbeiro
+        uow(UnidadeDeTrabalho): Unidade de Trabalho abstrata
+    Returns:
+        JSONResponse: Lista de agendamentos ou mensagem de erro
+    """
+    try:
+        agendamentos = consultar_agendamentos_por_barbeiro(uow=uow, barbeiro_cpf=barbeiro_cpf)
+        return JSONResponse(
+            status_code=200,
+            content=agendamentos
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"erro": str(e)}
+        )
