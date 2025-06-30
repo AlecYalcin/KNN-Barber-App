@@ -98,3 +98,21 @@ def consultar_agendamentos_por_barbeiro(
     with uow:
         agendamentos = uow.agendamentos.listar_por_barbeiro(barbeiro_cpf)
         return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
+    
+def consultar_agendamentos_por_horario(
+    uow: AbstractUnidadeDeTrabalho,
+    horarios: tuple[datetime, datetime],
+) -> list[dict]:
+    """
+    Consulta todos os agendamentos existentes em um determinado horário.
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho abstrata
+        horarios(tuple[datetime, datetime]): Horários de início e fim do agendamento
+    Returns:
+        list[dict]: Lista de todos os agendamentos no horário
+    """
+    
+    with uow:
+        agendamentos = uow.agendamentos.listar_por_horario(horarios)
+        return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
