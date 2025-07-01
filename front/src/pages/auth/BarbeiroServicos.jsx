@@ -1,4 +1,5 @@
 import BottomNav from "../../components/BottomNav";
+import Sidebar from "../../components/SidebarClient";
 
 const BarbeiroServicos = () => {
   return (
@@ -29,7 +30,9 @@ const BarbeiroServicos = () => {
         <button className="mr-4">Sair</button>
       </header>
 
-      <main className="flex w-full flex-col items-center p-6">
+      <Sidebar/>
+
+      <main className="flex w-full flex-col items-center p-6 lg:pl-[22px] lg:ml-64">
         <h1 className="text-2xl font-bold mt-10 flex justify-center text-gray-800 lg:hidden">
           Serviços Disponíveis
         </h1>
