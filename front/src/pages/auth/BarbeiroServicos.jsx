@@ -71,9 +71,14 @@ const BarbeiroServicos = () => {
               </div>
             </li>
           </ul>
+          <div className="mt-6 flex justify-end">
+            <button className="mt-6 bg-blue-600 flex justify-center items-center text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+              Adicionar Serviço
+            </button>
+          </div>
         </div>
       </main>
-      <BottomNav/>
+      <BottomNav />
     </div>
   );
 };
