@@ -1,4 +1,4 @@
-import Sidebar from "../../components/SidebarClient";
+import BottomNav from "../../components/BottomNav";
 
 const BarbeiroServicos = () => {
   return (
@@ -73,6 +73,7 @@ const BarbeiroServicos = () => {
           </ul>
         </div>
       </main>
+      <BottomNav/>
     </div>
   );
 };
