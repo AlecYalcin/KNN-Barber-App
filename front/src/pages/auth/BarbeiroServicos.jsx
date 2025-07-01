@@ -24,8 +24,13 @@ const BarbeiroServicos = () => {
         Voltar
       </button>
 
-      <main className="container flex w-full flex-col items-center p-6">
-        <h1 className="text-2xl font-bold mt-10 flex justify-center text-gray-800">
+      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
+        <h1 className="text-3xl font-bold ml-2">Serviços Disponíveis</h1>
+        <button className="mr-4">Sair</button>
+      </header>
+
+      <main className="flex w-full flex-col items-center p-6">
+        <h1 className="text-2xl font-bold mt-10 flex justify-center text-gray-800 lg:hidden">
           Serviços Disponíveis
         </h1>
         <div className="w-full py-8 mt-4 grid ml-5 mr-5">
