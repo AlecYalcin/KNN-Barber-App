@@ -1,0 +1,62 @@
+CREATE TABLE USUARIO (
+    email VARCHAR PRIMARY KEY,
+    nome VARCHAR NOT NULL,
+    senha VARCHAR NOT NULL,
+    telefone VARCHAR,
+    eh_barbeiro BOOLEAN NOT NULL
+);
+
+CREATE TABLE JORNADA_DE_TRABALHO (
+    id UUID PRIMARY KEY,
+    ativa BOOLEAN NOT NULL,
+    horario_inicio TIMESTAMP NOT NULL,
+    horario_pausa TIMESTAMP,
+    horario_retorno TIMESTAMP,
+    horario_fim TIMESTAMP,
+    usuario_email VARCHAR REFERENCES USUARIO(email)
+);
+
+CREATE TABLE DIA_DA_SEMANA (
+    id UUID PRIMARY KEY,
+    dia VARCHAR NOT NULL,
+    jornada_id UUID REFERENCES JORNADA_DE_TRABALHO(id)
+);
+
+CREATE TABLE HORARIO_INDISPONIVEL (
+    id UUID PRIMARY KEY,
+    horario_inicio TIMESTAMP NOT NULL,
+    horario_fim TIMESTAMP NOT NULL,
+    justificativa VARCHAR,
+    usuario_email VARCHAR REFERENCES USUARIO(email)
+);
+
+CREATE TABLE SERVICO (
+    id UUID PRIMARY KEY,
+    nome VARCHAR NOT NULL,
+    descricao TEXT,
+    preco NUMERIC(10,2) NOT NULL,
+    duracao INTERVAL NOT NULL
+);
+
+CREATE TABLE AGENDAMENTO (
+    id SERIAL PRIMARY KEY,
+    horario_inicio TIMESTAMP NOT NULL,
+    horario_fim TIMESTAMP NOT NULL,
+    cliente_email VARCHAR REFERENCES USUARIO(email),
+    barbeiro_email VARCHAR REFERENCES USUARIO(email),
+    servico_id UUID REFERENCES SERVICO(id)
+);
+
+CREATE TABLE METODO_DE_PAGAMENTO (
+    id SERIAL PRIMARY KEY,
+    metodo VARCHAR NOT NULL
+);
+
+CREATE TABLE PAGAMENTO (
+    id SERIAL PRIMARY KEY,
+    valor NUMERIC(10,2) NOT NULL,
+    data TIMESTAMP NOT NULL,
+    metodo_id INTEGER REFERENCES METODO_DE_PAGAMENTO(id),
+    agendamento_id INTEGER REFERENCES AGENDAMENTO(id)
+);
+
