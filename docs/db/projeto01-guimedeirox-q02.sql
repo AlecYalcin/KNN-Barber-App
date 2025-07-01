@@ -6,7 +6,8 @@ WITH indisponiveis_proximas AS (
     SELECT
         usuario_email,
         horario_inicio,
-        horario_fim
+        horario_fim,
+        justificativa
     FROM HORARIO_INDISPONIVEL
     WHERE horario_inicio BETWEEN NOW() AND NOW() + INTERVAL '24 hours'
 )
