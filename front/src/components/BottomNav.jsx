@@ -6,7 +6,7 @@ export default function BottomNav() {
       <nav className="flex justify-around" aria-label="Menu de navegação inferior">
         
         <Link
-          to="/home"
+          to="/cliente/home"
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Página inicial"
         >
@@ -22,7 +22,7 @@ export default function BottomNav() {
         </Link>
 
         <Link
-          to="/agendar"
+          to="/cliente/agendamento"
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Agendar horário"
         >
@@ -74,6 +74,3 @@ export default function BottomNav() {
   );
 }
 
-// Para funcionar, seu projeto precisa ter o React Router instalado. Se não tiver, rode:
-
-// npm install react-router-dom
