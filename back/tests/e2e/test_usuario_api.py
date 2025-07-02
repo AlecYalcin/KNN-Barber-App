@@ -1,5 +1,5 @@
 from tests.mock import criador_de_usuario, usuario_base
-from .mock_api import retrieve_token
+from .mock_api import criar_usuario_e_token
 
 def test_usuario_criar_api(    
     client,
@@ -70,12 +70,10 @@ def test_usuario_criar_api(
 
 def test_usuario_recuperar_api(
     client,
-    criador_de_usuario,
-    retrieve_token,
+    criar_usuario_e_token,
 ):
     # Criando usuário e token
-    usuario = criador_de_usuario(cpf="qualquer-cpf", email="qualquer-email")
-    token = retrieve_token(usuario.email, usuario.senha)
+    usuario, token = criar_usuario_e_token(cpf="qualquer-cpf", email="qualquer-email")
 
     # PermissaoNegada: O usuário não possui permissões para realizar essa operação.
     response = client.get(f"usuario/70056454481", headers={
@@ -86,8 +84,7 @@ def test_usuario_recuperar_api(
     assert response.json() == {"error":"PermissaoNegada","mensagem":"O usuário não possui permissões para realizar essa operação."}
 
     # Criando usuário e token de barbeiros
-    usuario = criador_de_usuario(eh_barbeiro=True)
-    token = retrieve_token(usuario.email, usuario.senha)
+    usuario, token = criar_usuario_e_token(eh_barbeiro=True)
 
     # Consultar Usuário Inexistente
     response = client.get(f"usuario/70056454481", headers={
@@ -107,23 +104,21 @@ def test_usuario_recuperar_api(
 
 def test_usuario_alterar_api(
     client,
+    criar_usuario_e_token,
     criador_de_usuario,
-    retrieve_token,
 ):
-    usuario = criador_de_usuario(cpf="cpf-qualquer", email="email-qualquer")
-    token = retrieve_token(usuario.email, usuario.senha)
+    usuario, token = criar_usuario_e_token(cpf="cpf-qualquer", email="email-qualquer")
 
     # PermissaoNegada: O usuário não possui permissões para realizar essa operação.
-
     response = client.patch(f"usuario/70056454481", json=usuario.to_dict(), headers={
         'Authorization': f'Bearer {token}',
     })
+
     assert response.status_code == 401
     assert response.json() == {"error":"PermissaoNegada","mensagem":"O usuário não possui permissões para realizar essa operação."}
 
     # Criando usuário e token de barbeiros
-    usuario = criador_de_usuario(eh_barbeiro=True)
-    token = retrieve_token(usuario.email, usuario.senha)
+    usuario, token = criar_usuario_e_token(eh_barbeiro=True)
 
     # EmailInvalido: O Email informado não é válido.
     usuario.email = "email_invalido"
@@ -131,27 +126,28 @@ def test_usuario_alterar_api(
     response = client.patch(f"usuario/{usuario.cpf}", json=usuario.to_dict(), headers={
         'Authorization': f'Bearer {token}',
     })
+
     assert response.status_code == 400
     assert response.json() == {"error": "EmailInvalido", "mensagem": "O Email informado não é válido."}
 
     # EmailEmUso: O Email escolhido já está cadastrado em outro usuário.
-
     criador_de_usuario(cpf="70056454481",email="usuario1@teste.com")
     usuario.email = "usuario1@teste.com"
 
     response = client.patch(f"usuario/{usuario.cpf}", json=usuario.to_dict(), headers={
         'Authorization': f'Bearer {token}',
     })
+
     assert response.status_code == 400
     assert response.json() == {"error": "EmailEmUso", "mensagem": "O Email escolhido já está cadastrado em outro usuário."}
 
     # UsuarioNaoEncontrado: Usuário não foi encontrado para a alteração.
-
     usuario.email = "usuario@teste.com"
 
     response = client.patch("usuario/12345678900", json=usuario.to_dict(), headers={
         'Authorization': f'Bearer {token}',
     })
+
     assert response.status_code == 404
     assert response.json() == {"error": "UsuarioNaoEncontrado", "mensagem": "Usuário não foi encontrado para a alteração."}
 
@@ -172,6 +168,7 @@ def test_usuario_alterar_api(
     response = client.get("usuario/92470179041", headers={
         'Authorization': f'Bearer {token}',
     })
+
     assert response.json() == {
         "cpf":"92470179041",
         "nome":"Alec Yalçin",
@@ -184,14 +181,12 @@ def test_usuario_alterar_api(
 
 def test_usuario_deletar_api(
     client,
+    criar_usuario_e_token,
     criador_de_usuario,
-    retrieve_token,
 ):    
-    usuario = criador_de_usuario(cpf="cpf-qualquer", email="email-qualquer")
-    token = retrieve_token(usuario.email, usuario.senha)
+    usuario, token = criar_usuario_e_token(cpf="cpf-qualquer", email="email-qualquer")
 
     # PermissaoNegada: O usuário não possui permissões para realizar essa operação.
-
     response = client.delete(f"usuario/70056454481", headers={
         'Authorization': f'Bearer {token}',
     })
@@ -200,8 +195,7 @@ def test_usuario_deletar_api(
     assert response.json() == {"error":"PermissaoNegada","mensagem":"O usuário não possui permissões para realizar essa operação."}
 
     # Criando usuário e token de barbeiros
-    usuario = criador_de_usuario(eh_barbeiro=True)
-    token = retrieve_token(usuario.email, usuario.senha)
+    usuario, token = criar_usuario_e_token(eh_barbeiro=True)
 
     # UsuarioNaoEncontrado: Usuário não foi encontrado para a remoção.
     response = client.delete("usuario/12345678900", headers={
