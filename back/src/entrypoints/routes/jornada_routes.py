@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from back.src.entrypoints.routes.autenticacao_router import obter_usuario_atual
 from database.connection import get_uow
 from src.service.unit_of_work import UnidadeDeTrabalho
 from src.service.services import (
@@ -36,6 +37,7 @@ router = APIRouter(
 def criando_jornada(
     jornada: JornadaCreateModel,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     criar_jornada(
         uow=uow,
@@ -45,6 +47,7 @@ def criando_jornada(
         horario_fim=jornada.horario_fim,
         horario_pausa=jornada.horario_pausa,
         horario_retorno=jornada.horario_retorno,
+        solicitante=usuario,
     )
     
     return JSONResponse(
@@ -86,10 +89,12 @@ def consultando_jornada(
 def alterando_jornada(
     id: str,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     alterar_ativacao_de_jornada(
         uow=uow,
         id=id,
+        solicitante=usuario,
     )
 
     return JSONResponse(
@@ -101,10 +106,12 @@ def alterando_jornada(
 def excluindo_jornada(
     id: str,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     excluir_jornada(
         uow=uow,
         id=id,
+        solicitante=usuario,
     )
 
     return JSONResponse(
