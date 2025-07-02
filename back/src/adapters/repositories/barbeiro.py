@@ -34,7 +34,7 @@ class BarbeiroRepository(AbstractBarbeiroRepository):
         )
 
     def consultar(self, cpf: str) -> Barbeiro | None:
-        usuario = self.usuario_repo.consultar(cpf)
+        usuario = self.usuario_repo.consultar_barbeiro(cpf)
         jornada_de_trabalho = self.jornada_repo.listar_jornada_de_barbeiro(cpf)
         horarios_indisponivies = self.horario_indisponivel_repo.consultar_por_barbeiro(cpf) 
 
