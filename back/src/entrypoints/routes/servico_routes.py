@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from back.src.entrypoints.routes.autenticacao_router import obter_usuario_atual
 from database.connection import get_uow
 from src.service.unit_of_work import UnidadeDeTrabalho
 from src.service.services.servico import (
@@ -11,6 +10,7 @@ from src.service.services.servico import (
     atualizar_servico,
     remover_servico,
 )
+from .autenticacao_router import obter_usuario_atual
 
 class ServicoCreate(BaseModel):
     nome: str

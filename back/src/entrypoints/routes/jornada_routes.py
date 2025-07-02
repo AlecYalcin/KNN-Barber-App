@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from back.src.entrypoints.routes.autenticacao_router import obter_usuario_atual
 from database.connection import get_uow
 from src.service.unit_of_work import UnidadeDeTrabalho
 from src.service.services import (
@@ -12,6 +11,7 @@ from src.service.services import (
     excluir_jornada,
 )
 from datetime import time
+from .autenticacao_router import obter_usuario_atual
 
 class JornadaCreateModel(BaseModel):
     barbeiro_cpf: str
