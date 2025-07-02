@@ -32,7 +32,7 @@ const ClienteAgendamento = () => {
 
       <Sidebar />
 
-      <main className="container flex w-full md:items-center flex-col items-center lg:mt-10 p-6 overflow-auto h-[calc(100vh-70px)] lg:h-screen lg:ml-[calc(12%)]">
+      <main className="flex w-full  flex-col items-center p-6">
         <h1 className="text-2xl font-bold mt-20 flex justify-center text-gray-800">
           Selecione o Dia
         </h1>
