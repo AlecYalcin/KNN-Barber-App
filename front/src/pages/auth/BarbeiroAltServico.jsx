@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ButtonBack from "../../components/ButtonBack";
 import BottomNav from "../../components/BottomNav";
+import Sidebar from "../../components/SidebarClient";
 
 const BarbeiroAltServico = () => {
   const [nome, setNome] = useState("");
@@ -35,8 +36,17 @@ const BarbeiroAltServico = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
+
       <ButtonBack />
-      <main className="flex w-full flex-col items-center p-6">
+
+      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
+        <h1 className="text-3xl font-bold ml-2">Serviços</h1>
+        <button className="mr-4">Sair</button>
+      </header>
+
+      <Sidebar />
+
+      <main className="flex w-full flex-col items-center p-6 lg:mt-10 lg:pl-69">
         <h2 className="text-center text-2xl font-bold mb-6 mt-10 lg:hidden">
           Cadastrar Serviço
         </h2>
@@ -122,12 +132,12 @@ const BarbeiroAltServico = () => {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex lg:justify-end gap-2 w-full">
             {!isEditing && (
               <button
                 type="button"
                 onClick={handleEdit}
-                className="flex-1 py-3 bg-blue-600 text-white rounded-md font-bold text-lg hover:bg-blue-700 transition-colors"
+                className="w-full py-3 bg-blue-600 text-white rounded-md font-bold text-lg hover:bg-blue-700 transition-colors lg:flex lg:justify-center lg:w-30"
               >
                 Editar
               </button>
@@ -135,7 +145,7 @@ const BarbeiroAltServico = () => {
             {isEditing && (
               <button
                 type="submit"
-                className="flex-1 py-3 bg-green-600 text-white rounded-md font-bold text-lg hover:bg-green-700 transition-colors"
+                className="w-full py-3 bg-green-600 text-white rounded-md font-bold text-lg hover:bg-green-700 transition-colors lg:flex lg:justify-center lg:w-30"
               >
                 Salvar
               </button>
@@ -143,7 +153,7 @@ const BarbeiroAltServico = () => {
             <button
               type="button"
               onClick={handleDelete}
-              className="flex-1 py-3 bg-red-600 text-white rounded-md font-bold text-lg hover:bg-red-700 transition-colors"
+              className="w-full py-3 bg-red-600 text-white rounded-md font-bold text-lg hover:bg-red-700 transition-colors lg:flex lg:justify-center lg:w-30"
             >
               Excluir
             </button>
