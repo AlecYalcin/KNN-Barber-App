@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from back.src.entrypoints.routes.autenticacao_router import obter_usuario_atual
 from database.connection import get_uow
 from src.service.unit_of_work import UnidadeDeTrabalho
 from src.service.services.servico import (
@@ -32,6 +33,7 @@ router = APIRouter(
 def criacao_de_servico(
     servico: ServicoCreate,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     criar_servico(
         uow=uow,
@@ -39,6 +41,7 @@ def criacao_de_servico(
         descricao=servico.descricao,
         preco=servico.preco,
         duracao=servico.duracao,
+        solicitante=usuario,
     )
 
     return JSONResponse(
@@ -82,6 +85,7 @@ def atualizando_servico(
     id: str,
     novo_servico: ServicoUpdate,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     atualizar_servico(
         uow=uow,
@@ -90,6 +94,7 @@ def atualizando_servico(
         nova_descricao=novo_servico.descricao,
         novo_preco=novo_servico.preco,
         nova_duracao=novo_servico.duracao,
+        solicitante=usuario,
     )    
 
     return JSONResponse(
@@ -101,10 +106,12 @@ def atualizando_servico(
 def excluindo_servico(
     id: str,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     remover_servico(
         uow=uow,
         id=id,
+        solicitante=usuario,
     )
 
     return JSONResponse(

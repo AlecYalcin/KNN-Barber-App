@@ -2,6 +2,7 @@ from src.service.unit_of_work import AbstractUnidadeDeTrabalho
 from src.domain.models import Servico
 from src.domain.exceptions import (
     DuracaoInvalida,
+    PermissaoNegada,
     PrecoInvalido,
     ServicoNaoEncontrado,
 )
@@ -13,6 +14,7 @@ def criar_servico(
     descricao: str,
     preco: float,
     duracao: int,
+    solicitante: dict | None = None,
 ) -> None:
     """
     Serviço de criação de novos serviços da barbearia
@@ -23,10 +25,19 @@ def criar_servico(
         descricao(str): Descrição do serviço
         preco(float): Preço do serviço
         duracao(int): Duração do serviço em minutos
+        solicitante(dict): Usuário que está solicitando a operação
     Raises:
+        PermissaoNegada: O usuário não possui permissões para realizar essa operação.
         DuracaoInvalida: A duração do serviço não está entre 5min ou 120min
         PrecoInvalido: O preço do serviço precisa ser maior que zero.
     """
+
+    # Verificando permissão de usuário
+    if ( 
+        solicitante 
+        and solicitante['eh_barbeiro'] == False
+    ):
+        raise PermissaoNegada()
 
     # Verificando validade de duração
     if not (5 <= duracao <= 120):
@@ -86,7 +97,6 @@ def listar_servicos(
             servicos.extend([servico.to_dict() for servico in servicos_encontrados])
         return servicos
 
-
 def atualizar_servico(
     uow: AbstractUnidadeDeTrabalho,
     id: str,
@@ -94,7 +104,7 @@ def atualizar_servico(
     nova_descricao: str | None = None,
     novo_preco: float | None = None,
     nova_duracao: int | None = None,
-
+    solicitante: dict | None = None,
 ) -> None:
     """
     Serviço de criação de novos serviços da barbearia
@@ -106,11 +116,20 @@ def atualizar_servico(
         nova_descricao(str): Nova descrição do serviço
         novo_preco(float): Novo preço do serviço
         nova_duracao(int): Nova duração do serviço em minutos
+        solicitante(dict): Usuário que está solicitando a operação
     Raises:
+        PermissaoNegada: O usuário não possui permissões para realizar essa operação.
         DuracaoInvalida: A duração do serviço não está entre 5min ou 120min
         PrecoInvalido: O preço do serviço precisa ser maior que zero.
         ServicoNaoEncontrado: Serviço não foi encontrado para a alteração
     """
+
+    # Verificando permissão de usuário
+    if ( 
+        solicitante 
+        and solicitante['eh_barbeiro'] == False
+    ):
+        raise PermissaoNegada()
 
     # Verificando validade de duração
     if nova_duracao and not (5 <= nova_duracao <= 120):
@@ -141,6 +160,7 @@ def atualizar_servico(
 def remover_servico(
     uow: AbstractUnidadeDeTrabalho,
     id: str,
+    solicitante: dict | None = None,
 ) -> None:
     """
     Serviço de exclusão de serviços existentes no sistema.
@@ -148,9 +168,18 @@ def remover_servico(
     Args:
         uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
         id(str): Identificador do serviço a ser deletado
+        solicitante(dict): Usuário que está solicitando a operação
     Raises:
+        PermissaoNegada: O usuário não possui permissões para realizar essa operação.
         ServicoNaoEncontrado: Serviço não foi encontrado para exclusão
     """
+
+    # Verificando permissão de usuário
+    if ( 
+        solicitante 
+        and solicitante['eh_barbeiro'] == False
+    ):
+        raise PermissaoNegada()
 
     with uow:
         try:

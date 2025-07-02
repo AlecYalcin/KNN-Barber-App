@@ -111,6 +111,7 @@ def remover_usuario(
     Args:
         uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
         cpf(str): CPF do cliente a ser removio
+        solicitante(dict): Usuário que está solicitando a operação
     Raises:
         UsuarioNaoEncontrado: O cpf informado não foi encontrado na base de dados.
     Raises:
@@ -150,6 +151,7 @@ def atualizar_usuario(
         novo_email(str): Novo email para o usuário
         novo_telefone(str): Novo telefone para o usuário
         nova_senha(str): Nova senha para o usuário
+        solicitante(dict): Usuário que está solicitando a operação
     Raises:
         EmailInvalido: O Email informado não é válido.
         UsuarioNaoEncontrado: Usuário não foi encontrado para a alteração.
