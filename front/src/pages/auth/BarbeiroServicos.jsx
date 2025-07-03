@@ -1,29 +1,12 @@
 import BottomNav from "../../components/BottomNav";
+import ButtonBack from "../../components/ButtonBack";
 import Sidebar from "../../components/SidebarClient";
 
 const BarbeiroServicos = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
-      <button
-        className="absolute top-8 left-4 flex items-center text-blue-600 hover:text-blue-800 transition focus:outline-none"
-        onClick={() => window.history.back()}
-        aria-label="Voltar"
-      >
-        <svg
-          className="w-6 h-6 mr-1"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-        Voltar
-      </button>
+      
+      <ButtonBack/>
 
       <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
         <h1 className="text-3xl font-bold ml-2">Serviços Disponíveis</h1>
