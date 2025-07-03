@@ -1,14 +1,35 @@
+import { useState } from "react";
 import BottomNav from "../../components/BottomNav";
 import Sidebar from "../../components/SidebarClient";
 
 const services = [
-  { id: 1, name: "Corte de Cabelo", price: "R$ 30,00" },
-  { id: 2, name: "Barba", price: "R$ 20,00" },
-  { id: 3, name: "Sobrancelha", price: "R$ 15,00" },
-  { id: 4, name: "Hidratação", price: "R$ 25,00" },
+  { id: 1, name: "Corte de Cabelo", price: "R$ 30,00", value: 30 },
+  { id: 2, name: "Barba", price: "R$ 20,00", value: 20 },
+  { id: 3, name: "Sobrancelha", price: "R$ 15,00", value: 15 },
+  { id: 4, name: "Hidratação", price: "R$ 25,00", value: 25 },
 ];
 
 export default function ClienteServicos() {
+  const [selected, setSelected] = useState([]);
+
+  const handleSelect = (id) => {
+    setSelected((prevSelected) => {
+      const isAlreadySelected = prevSelected.includes(id);
+
+      if (isAlreadySelected) {
+        // Remove o id
+        return prevSelected.filter((selectedId) => selectedId !== id);
+      } else {
+        // Adiciona o id
+        return [...prevSelected, id];
+      }
+    });
+  };
+
+  const selectedServices = services.filter((s) => selected.includes(s.id));
+  const total = selectedServices.reduce((sum, s) => sum + s.value, 0);
+
+
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
       <button
@@ -59,6 +80,8 @@ export default function ClienteServicos() {
                 type="checkbox"
                 className="ml-4 w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
                 aria-label={`Selecionar ${service.name}`}
+                checked={selected.includes(service.id)}
+                onChange={() => handleSelect(service.id)}
               />
             </div>
           ))}
@@ -66,12 +89,14 @@ export default function ClienteServicos() {
           <div className="mt-6 grid justify-end items-center">
             <h2 className="text-xl font-semibold text-gray-800">Total</h2>
             <span className="bg-white p-4 rounded-lg shadow text-gray-700">
-              R$ 0,00
+              R$ {total.toFixed(2).replace(".", ",")}
             </span>
 
             <button
-              className="w-50 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition mt-6 mb-4"
-              // onClick={() => alert("Serviços selecionados!")}
+              className={`w-50 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition mt-6 mb-4 ${
+                selected.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={selected.length === 0}
             >
               Próximo
             </button>
