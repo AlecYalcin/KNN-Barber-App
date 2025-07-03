@@ -260,14 +260,14 @@ def mock_criar_horarios_indisponiveis(session, mock_criar_barbeiro):
             """
         ),
         {
-            "inicio1": horario_1[0],
-            "fim1": horario_1[1],
+            "inicio1": horario_1[0].isoformat(sep=' '),
+            "fim1": horario_1[1].isoformat(sep=' '),
             "just1": "Indisponível hoje",
-            "inicio2": horario_2[0],
-            "fim2": horario_2[1],
+            "inicio2": horario_2[0].isoformat(sep=' '),
+            "fim2": horario_2[1].isoformat(sep=' '),
             "just2": "Indisponível amanhã",
-            "inicio3": horario_3[0],
-            "fim3": horario_3[1],
+            "inicio3": horario_3[0].isoformat(sep=' '),
+            "fim3": horario_3[1].isoformat(sep=' '),
             "just3": "Férias",
             "cpf": cpf,
         }
