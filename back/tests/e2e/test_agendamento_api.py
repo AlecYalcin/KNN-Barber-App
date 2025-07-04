@@ -31,3 +31,36 @@ def test_criar_agendamento_api(
     response = client.post("/agendamento/criar", json=payload)
     assert response.status_code == 400
     assert "erro" in response.json()
+
+def test_listar_e_consultar_agendamento_api(
+    client,
+    mock_criar_usuario,
+    mock_criar_servicos,
+    mock_criar_jornada_de_trabalho,
+    mock_criar_agendamento_service
+):
+    # Arrange
+    ids = mock_criar_agendamento_service()
+    print(ids)
+    agendamento_id = ids["id_agendamento"]
+
+    # Act - Listar todos os agendamentos
+    response_listar = client.get("/agendamento/listar")
+    print("Erro:", response_listar.json())
+    assert response_listar.status_code == 200
+    agendamentos = response_listar.json()
+    
+    # Verifica se o agendamento recém-criado está na lista
+    assert any(a["id"] == agendamento_id for a in agendamentos)
+
+    # Act - Consultar agendamento específico por ID
+    response_consultar = client.get(f"/agendamento/{agendamento_id}")
+    assert response_consultar.status_code == 200
+    agendamento = response_consultar.json()
+
+    # Assert - Verificar os campos esperados
+    assert agendamento["id"] == agendamento_id
+    assert agendamento["cliente_cpf"] == "05705608020"
+    assert agendamento["barbeiro_cpf"] == "25811756054"
+    assert agendamento["servico_id"] == ids["servico"]
+    
