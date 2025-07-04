@@ -32,17 +32,23 @@ const AddBarbeiro = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 py-10">
       <ButtonBack/>
+
+      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
+        <h1 className="text-3xl font-bold ml-2">Adicionar Barbeiro</h1>
+        <button className="mr-4">Sair</button>
+      </header>
+
       <main className="w-full max-w-md p-5 mt-10">
         <h2 className="text-2xl font-bold mb-8 text-center text-gray-800">Adicionar Barbeiro</h2>
         <form onSubmit={handleSave} className="w-full">
-          <div className="mb-6">
+          <div className="mb-4">
             <label className="block text-gray-700 font-semibold mb-2">Nome:</label>
             <input
               type="text"
               name="nome"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               placeholder="Digite o nome"
               disabled={!isEditing}
             />
@@ -54,19 +60,19 @@ const AddBarbeiro = () => {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               placeholder="Digite o email"
               disabled={!isEditing}
             />
           </div>
-          <div className="mb-8">
+          <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Telefone:</label>
             <input
               type="tel"
               name="telefone"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               placeholder="Digite o telefone"
               disabled={!isEditing}
             />
