@@ -10,9 +10,10 @@ import ClienteHome from "../pages/auth/ClienteHome";
 import ClienteServicos from "../pages/auth/ClienteServicos";
 import ClienteAgendamento from "../pages/auth/ClienteAgendamento";
 import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
+import BarbeiroAltServico from "../pages/auth/BarbeiroAltServico";
 
 export default function AppRoutes() {
-  return (
+  return (  
     <Router>
       <Routes>
         <Route path="/cliente/login" element={<ClienteLogin />} />\
@@ -23,7 +24,8 @@ export default function AppRoutes() {
         <Route path="/cliente/perfil" element={<ClientePerfil />} />\
         <Route path="/barbeiro/login" element={<BarbeiroLogin />} />\
         <Route path="/barbeiro/cadastro" element={<BarbeiroCadastro />} />\
-        <Route path="/barbeiro/servicos" element={<BarbeiroServicos />} />
+        <Route path="/barbeiro/servicos" element={<BarbeiroServicos />} />\
+        <Route path="/barbeiro/alterarservico" element={<BarbeiroAltServico />} />\
         <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />\
       </Routes>
     </Router>
