@@ -47,7 +47,7 @@ class Usuario:
             return False
         return True
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "cpf": self.cpf,
             "nome": self.nome,
@@ -56,6 +56,13 @@ class Usuario:
             "telefone": self.telefone,
             "eh_barbeiro": self.eh_barbeiro,
         }
+    
+    def to_token(self) -> dict:
+        return {
+            "cpf": self.cpf,
+            "eh_barbeiro": self.eh_barbeiro,
+        }
+
     def __eq__(self, other: any):
         if not isinstance(other, Usuario):
             return False

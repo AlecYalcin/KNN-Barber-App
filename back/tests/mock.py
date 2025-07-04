@@ -4,6 +4,62 @@ from src.domain.models import *
 from sqlalchemy import text
 
 @pytest.fixture
+def usuario_base():
+    def _usuario_base(
+        cpf="92470179041",
+        nome="Usuário Teste",
+        email="usuario@teste.com",
+        senha="senha_segura123",
+        telefone="84912345678",
+        eh_barbeiro=False,
+    ) -> Usuario:
+        return Usuario(
+            cpf=cpf,
+            nome=nome,
+            email=email,
+            senha=senha,
+            telefone=telefone,
+            eh_barbeiro=eh_barbeiro,
+        )
+    yield _usuario_base
+
+@pytest.fixture
+def criador_de_usuario(
+    session, 
+):
+    def _criar_usuario(
+        cpf="92470179041",
+        nome="Usuário Teste",
+        email="usuario@teste.com",
+        senha="senha_segura123",
+        telefone="84912345678",
+        eh_barbeiro=False,  
+    ) -> Usuario:
+        session.execute(
+            text(
+                """
+                INSERT INTO usuario
+                (cpf, nome, email, senha, telefone, eh_barbeiro)
+                VALUES
+                (:cpf, :nome, :email, :senha, :telefone, :eh_barbeiro)
+                """
+            ),
+            params={
+                "cpf": cpf,
+                "nome": nome,
+                "email": email,
+                "senha": senha,
+                "telefone": telefone,
+                "eh_barbeiro": eh_barbeiro,
+            }
+        )
+        session.commit()
+
+        usuario = Usuario(cpf, nome, email, senha, telefone, eh_barbeiro)
+        return session.merge(usuario)
+    yield _criar_usuario
+
+@pytest.fixture
 def mock_usuario_teste():
     usuario = Usuario(
         cpf="92470179041",
@@ -204,14 +260,14 @@ def mock_criar_horarios_indisponiveis(session, mock_criar_barbeiro):
             """
         ),
         {
-            "inicio1": horario_1[0],
-            "fim1": horario_1[1],
+            "inicio1": horario_1[0].isoformat(sep=' '),
+            "fim1": horario_1[1].isoformat(sep=' '),
             "just1": "Indisponível hoje",
-            "inicio2": horario_2[0],
-            "fim2": horario_2[1],
+            "inicio2": horario_2[0].isoformat(sep=' '),
+            "fim2": horario_2[1].isoformat(sep=' '),
             "just2": "Indisponível amanhã",
-            "inicio3": horario_3[0],
-            "fim3": horario_3[1],
+            "inicio3": horario_3[0].isoformat(sep=' '),
+            "fim3": horario_3[1].isoformat(sep=' '),
             "just3": "Férias",
             "cpf": cpf,
         }

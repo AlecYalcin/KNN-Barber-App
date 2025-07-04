@@ -1,5 +1,10 @@
+from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+from .exceptions import TokenInvalido
+
+import os
+import jwt
 
 class StatusServico(Enum):
     AGENDADO = 'Agendado'
@@ -42,4 +47,34 @@ class DiaDaSemana(Enum):
                 return DiaDaSemana.SABADO
             case 6:
                 return DiaDaSemana.DOMINGO
-            
+
+class JWTToken():
+    secret_key_padrao: str = os.getenv("SECRET_KEY") or "alecdennerguilhermesteniojulio"
+
+    def __init__(self, info: dict, secret_key: str | None = None):
+        self.secret_key = secret_key or self.secret_key_padrao
+        self.token = jwt.encode(info, self.secret_key, algorithm="HS256")
+
+    @property
+    def token_extraido(self) -> dict:
+        """ Função para extrair informações de um TokenJWT """
+        try: 
+            return jwt.decode(
+                self.token, 
+                self.secret_key, 
+                algorithms=["HS256"],
+            )
+        except jwt.exceptions.InvalidTokenError:
+            raise TokenInvalido("O token colocado não foi reconhecido.")
+        
+    @classmethod
+    def extrair_token(cls, token: str, secret_key: str | None = None) -> dict:
+        """ Função para extrair informações de um token """
+        try: 
+            return jwt.decode(
+                token, 
+                secret_key or cls.secret_key_padrao, 
+                algorithms=["HS256"],
+            )
+        except jwt.exceptions.InvalidTokenError:
+            raise TokenInvalido("O token colocado não foi reconhecido.")
