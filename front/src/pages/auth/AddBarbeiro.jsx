@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ButtonBack from '../../components/ButtonBack';
 import BottomNav from '../../components/BottomNav';
+import Sidebar from '../../components/SidebarClient';
 
 
 const AddBarbeiro = () => {
@@ -30,7 +31,7 @@ const AddBarbeiro = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 py-10">
+    <div className="min-h-screen bg-gray-100 py-10 flex">
       <ButtonBack/>
 
       <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
@@ -38,7 +39,9 @@ const AddBarbeiro = () => {
         <button className="mr-4">Sair</button>
       </header>
 
-      <main className="w-full max-w-md p-5 mt-10">
+      <Sidebar/>
+
+      <main className="w-full p-5 mt-10 lg:pl-69">
         <h2 className="text-2xl font-bold mb-8 text-center text-gray-800">Adicionar Barbeiro</h2>
         <form onSubmit={handleSave} className="w-full">
           <div className="mb-4">
