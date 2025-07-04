@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import ButtonBack from '../../components/ButtonBack';
 import BottomNav from '../../components/BottomNav';
+import Sidebar from '../../components/SidebarClient';
 
 // Exemplo de dados de barbeiros
 const barbeiros = [
@@ -13,8 +14,16 @@ const ListBarbeiro = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
       <ButtonBack/>
+
+      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
+        <h1 className="text-3xl font-bold ml-2">Barbeiros</h1>
+        <button className="mr-4">Sair</button>
+      </header>
+
+      <Sidebar />
+
       <main className='w-full p-5 mt-10 lg:pl-69'>
-        <h2 className="text-2xl font-bold mb-6 text-center">Barbeiros Cadastrados</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center lg:hidden">Barbeiros Cadastrados</h2>
         <ul className="divide-y divide-gray-200">
           {barbeiros.map((barbeiro) => (
             <li key={barbeiro.id} className="flex items-center py-4">
