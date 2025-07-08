@@ -51,6 +51,6 @@ class AgendamentoRepository(AbstractAgendamentoRepository, AbstractSQLAlchemyRep
         ).all()
         return agendamentos
     
-    def listar_por_barbeiro(self, barbeiro_id: str) -> list[Agendamento]:
-        agendamentos = self.session.query(Agendamento).filter(Agendamento.barbeiro_id == barbeiro_id).all()
+    def listar_por_barbeiro(self, barbeiro_cpf: str) -> list[Agendamento]:
+        agendamentos = self.session.query(Agendamento).filter(Agendamento.barbeiro_cpf == barbeiro_cpf).all()
         return agendamentos

@@ -24,6 +24,9 @@ class HorarioOcupado(DomainError):
 class HorarioInsuficiente(DomainError):
     pass
 
+class AgendamentoNaoEncontrado(DomainError):
+    pass
+
 # Usuario
 
 class CPFInvalido(DomainError):

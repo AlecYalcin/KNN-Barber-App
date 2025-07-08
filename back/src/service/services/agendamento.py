@@ -42,7 +42,7 @@ def criar_agendamento(
     with uow:
         
         cliente = uow.usuarios.consultar(cpf=cliente_cpf)
-        if not cliente.usuario:
+        if not cliente:
             raise UsuarioNaoEncontrado("Não foi encontrado nenhum usuário com esse identificador.")
         
         barbeiro = uow.barbeiros.consultar(cpf=barbeiro_cpf)
@@ -54,7 +54,7 @@ def criar_agendamento(
             raise ServicoNaoEncontrado("Um dos identificadores não representa um serviço.")
         
         horarios = (horario_inicio, horario_fim)
-        agendamentos_horario_barbeiro = [uow.agendamentos.listar_por_horario(horarios)]
+        agendamentos_horario_barbeiro = uow.agendamentos.listar_por_horario(horarios)
         
         for agendamento_barbeiro in agendamentos_horario_barbeiro:
             if (horarios[1]>agendamento_barbeiro.horario_inicio and horarios[0] <= agendamento_barbeiro.horario_fim) and agendamento_barbeiro.barbeiro == barbeiro:
@@ -62,16 +62,20 @@ def criar_agendamento(
         
         agendamentos_existentes = uow.agendamentos.listar_por_barbeiro(barbeiro_cpf)
         # Verificando se o horário de início ou fim já está marcado para o barbeiro
-        for agendamento in agendamentos_existentes:
+
+        for agendamento_barbeiro in agendamentos_existentes:
             if (
-                horario_inicio == agendamento.horario_inicio
-                or horario_inicio == agendamento.horario_fim
-                or horario_fim == agendamento.horario_inicio
-                or horario_fim == agendamento.horario_fim
+                horarios[1] > agendamento_barbeiro.horario_inicio and
+                horarios[0] <= agendamento_barbeiro.horario_fim and
+                agendamento_barbeiro.barbeiro.cpf == barbeiro.usuario.cpf
             ):
-                raise HorarioIndisponivelParaBarbeiro("O horário de início ou fim já está marcado para o barbeiro.")
+                raise HorarioIndisponivelParaBarbeiro("O horário selecionado encontra-se indisponível para o barbeiro.")
+
         
         agendamento = model_criar_agendamento(cliente, barbeiro, servicos, horarios)
+        
+        uow.agendamentos.adicionar(agendamento)
+        uow.commit()
 
 def consultar_agendamento(
     uow: AbstractUnidadeDeTrabalho,
