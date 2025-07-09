@@ -1,5 +1,5 @@
 from tests.mock import *
-from src.service import UnidadeDeTrabalho
+from src.service.unit_of_work import UnidadeDeTrabalho
 import pytest
 
 def test_uow_usuario(session_maker):

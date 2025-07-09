@@ -11,6 +11,7 @@ from src.service.services import (
     excluir_horario_indisponivel,
 )
 from datetime import datetime, timedelta
+from .autenticacao_router import obter_usuario_atual
 
 class HorarioIndisponivelCreateModel(BaseModel):
     barbeiro_cpf: str
@@ -32,6 +33,7 @@ router = APIRouter(
 def criando_horario_indisponivel(
     horario_indisponivel: HorarioIndisponivelCreateModel,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     criar_horario_indisponivel(
         uow=uow,
@@ -39,6 +41,7 @@ def criando_horario_indisponivel(
         horario_inicio=horario_indisponivel.horario_inicio,
         horario_fim=horario_indisponivel.horario_fim,
         justificativa=horario_indisponivel.justificativa,
+        solicitante=usuario,
     )
 
     return JSONResponse(
@@ -91,13 +94,15 @@ def atualizando_horario_indisponivel(
     id: str,
     novo_horario_indisponivel: HorarioIndisponivelUpdateModel,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     alterar_horario_indisponivel(
         uow=uow,
         id=id,
         horario_inicio=novo_horario_indisponivel.horario_inicio,
         horario_fim=novo_horario_indisponivel.horario_fim,
-        justificativa=novo_horario_indisponivel.justificativa
+        justificativa=novo_horario_indisponivel.justificativa,
+        solicitante=usuario,
     )
 
     return JSONResponse(
@@ -109,10 +114,12 @@ def atualizando_horario_indisponivel(
 def excluindo_horario_indisponivel(
     id: str,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     excluir_horario_indisponivel(
         uow=uow,
         id=id,
+        solicitante=usuario,
     )
 
     return JSONResponse(

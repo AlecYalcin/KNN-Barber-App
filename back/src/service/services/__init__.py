@@ -28,3 +28,9 @@ from .horario_indisponivel import (
     alterar_horario_indisponivel, 
     excluir_horario_indisponivel
 )
+
+from .autorizacao import (
+    autenticar,
+    registrar,
+    retornar_usuario
+)

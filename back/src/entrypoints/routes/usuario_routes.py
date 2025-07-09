@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from database.connection import get_uow
@@ -9,6 +9,7 @@ from src.service.services.usuario import (
     atualizar_usuario,
     remover_usuario,
 )
+from .autenticacao_router import obter_usuario_atual
 
 class UsuarioCreate(BaseModel):
     cpf: str
@@ -29,7 +30,7 @@ router = APIRouter(
     tags=["Usuarios"],
 )
 
-@router.post("/criar")
+@router.post("/criar", deprecated=True)
 def criacao_de_usuario(
     usuario: UsuarioCreate,
     uow: UnidadeDeTrabalho = Depends(get_uow),
@@ -53,10 +54,12 @@ def criacao_de_usuario(
 def recuperando_usuario(
     cpf: str,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     usuario = consultar_usuario(
         uow=uow,
         cpf=cpf,
+        solicitante=usuario,
     )
 
     return JSONResponse(
@@ -69,6 +72,7 @@ def atualizando_usuario(
     cpf: str,
     novo_usuario: UsuarioUpdate,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     atualizar_usuario(
         uow=uow,
@@ -77,6 +81,7 @@ def atualizando_usuario(
         novo_email=novo_usuario.email,
         novo_telefone=novo_usuario.telefone,
         nova_senha=novo_usuario.senha,
+        solicitante=usuario,
     )
 
     return JSONResponse(
@@ -88,10 +93,12 @@ def atualizando_usuario(
 def removendo_usuario(
     cpf: str,
     uow: UnidadeDeTrabalho = Depends(get_uow),
+    usuario: dict = Depends(obter_usuario_atual),
 ):
     remover_usuario(
         uow=uow,
-        cpf=cpf
+        cpf=cpf,
+        solicitante=usuario,
     )
 
     return JSONResponse(

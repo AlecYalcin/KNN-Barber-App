@@ -3,8 +3,8 @@ import React from "react";
 const ClientePerfil = () => {
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <div className="flex justify-between hidden md:flex bg-blue-600 p-4 text-white">
+      {/* Header hidden */}
+      <div className="hidden justify-between md:flex bg-blue-600 p-4 text-white">
         <h1 className="text-3xl font-bold ml-2">Perfil</h1>
         <button className="mr-4">Sair</button>
       </div>

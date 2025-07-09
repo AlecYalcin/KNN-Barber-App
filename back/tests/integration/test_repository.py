@@ -14,7 +14,8 @@ def test_usuario_repository(session):
         cpf="987.654.321-00",
         nome="Usuário 02",
         senha="321",
-        email="usuario2@teste.com"
+        email="usuario2@teste.com",
+        eh_barbeiro=True,
     )
 
     # Criando usuário no banco de dados
@@ -23,12 +24,23 @@ def test_usuario_repository(session):
     usuario_repo.adicionar(usuario2)
 
     # Procurando e assegurando que são iguais
-    usuario_deletado = usuario_repo.consultar(cpf=usuario1.cpf)
-    assert usuario1 == usuario_deletado
+    usuario_encontrado = usuario_repo.consultar(cpf=usuario1.cpf)
+    assert usuario1 == usuario_encontrado
+
+    # Procurando por barbeiros e assegurando se são iguais ou diferentes
+    usuario_nao_barbeiro = usuario_repo.consultar_barbeiro(cpf=usuario1.cpf)
+    assert usuario_nao_barbeiro == None
+
+    usuario_barbeiro = usuario_repo.consultar_barbeiro(cpf=usuario2.cpf)
+    assert usuario_barbeiro == usuario2
 
     # Procurando todos os clientes
     usuarios_encontrados = usuario_repo.listar_clientes()
-    assert usuarios_encontrados == [usuario1, usuario2]
+    assert usuarios_encontrados == [usuario1]
+
+    # Procurando todos os barbeiros
+    usuarios_encontrados = usuario_repo.listar_barbeiros()
+    assert usuarios_encontrados == [usuario2]
 
     # Alterando usuario 
     usuario_repo.alterar(usuario1.cpf, novo_usuario=Usuario(
@@ -44,8 +56,8 @@ def test_usuario_repository(session):
 
     # Removendo usuário no banco de dados
     usuario_repo.remover(usuario1.cpf)
-    usuario_deletado = usuario_repo.consultar(cpf=usuario1.cpf)
-    assert usuario_deletado == None
+    usuario_encontrado = usuario_repo.consultar(cpf=usuario1.cpf)
+    assert usuario_encontrado == None
 
 def test_servico_repository(session):
     # Criando serviços

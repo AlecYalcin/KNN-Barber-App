@@ -13,14 +13,19 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  api:
+    build:
+      context: ./back
+    container_name: fastapi_app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://admin:admin@db:5432/knn_barber_app_db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./back:/app
+    command: uvicorn src.entrypoints.fastapi:app --host 0.0.0.0 --port 8000 --reload
 
-  # api:
-  #   build: .
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     DATABASE_URL: postgresql://admin:admin@db:5432/knn_barber_app_db
-  #   ports:
-  #     - "8000:8000"
 volumes:
   postgres_data:

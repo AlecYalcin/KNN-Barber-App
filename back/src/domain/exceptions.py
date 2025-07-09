@@ -1,6 +1,14 @@
 class DomainError(Exception):
     pass
 
+# Autorização
+
+class TokenInvalido(DomainError):
+    pass
+
+class PermissaoNegada(DomainError):
+    pass
+
 # Agendamento
 
 class HorarioIndisponivelParaBarbeiro(DomainError):
