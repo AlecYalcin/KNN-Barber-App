@@ -26,6 +26,18 @@ services:
     volumes:
       - ./back:/app
     command: uvicorn src.entrypoints.fastapi:app --host 0.0.0.0 --port 8000 --reload
+  frontend:
+    build: 
+      context: ./front
+    container_name: knn_front
+    depends_on:
+      - api
+    ports:
+      - "5173:5173"
+    volumes:
+    - ./front:/app
+    - /app/node_modules
+    command: npm run dev --host
 
 volumes:
   postgres_data:
