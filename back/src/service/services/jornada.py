@@ -33,7 +33,6 @@ def criar_jornada(
     se já existe uma jornada nesse mesmo dia da semana.
 
     Args:
-        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho
         barbeiro_cpf(str): CPF do barbeiro da jornada
         dia_da_semana(str): Dia da semana
         horario_inicio(time): Horário de início da jornada

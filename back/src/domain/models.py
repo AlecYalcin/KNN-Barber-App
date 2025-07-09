@@ -1,10 +1,10 @@
-from uuid import uuid4
-from dataclasses import dataclass, field
-from datetime import time, datetime, timedelta
 import re
+from dataclasses import dataclass, field
+from datetime import datetime, time, timedelta
+from uuid import uuid4
 
-from .value_objects import *
 from .exceptions import *
+from .value_objects import *
 
 # Models
 
@@ -210,6 +210,16 @@ class Agendamento:
     
     def __hash__(self):
         return hash((self.id, self.barbeiro.cpf, self.cliente.cpf))
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "horario_inicio": self.horario_inicio.isoformat(),
+            "horario_fim": self.horario_fim.isoformat(),
+            "barbeiro": self.barbeiro.to_dict(),
+            "cliente": self.cliente.to_dict(),
+            "servicos": [servico.to_dict() for servico in self.servicos],
+        }
 
 @dataclass
 class Pagamento:

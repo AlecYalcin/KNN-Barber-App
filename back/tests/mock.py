@@ -2,6 +2,9 @@ import pytest
 from datetime import datetime, date, time, timedelta
 from src.domain.models import *
 from sqlalchemy import text
+from uuid import uuid4
+import json
+
 
 @pytest.fixture
 def usuario_base():
@@ -273,3 +276,55 @@ def mock_criar_horarios_indisponiveis(session, mock_criar_barbeiro):
         }
     )
     session.commit()
+
+@pytest.fixture
+def mock_criar_agendamento(
+    session,
+    mock_criar_servicos,
+    mock_criar_barbeiro,
+    mock_criar_usuario,
+    mock_criar_jornada_de_trabalho,
+):
+    # Cria serviços e obtém os IDs
+    ids_servicos = {
+        "id0": "servico-001",
+        "id1": "servico-002",
+        "id2": "servico-003",
+    }
+    mock_criar_servicos(ids=ids_servicos)
+
+    # Cria agendamentos
+    session.execute(
+        text(
+            """
+            INSERT INTO agendamento (id, horario_inicio, horario_fim, cliente_cpf, barbeiro_cpf) VALUES
+            ('agendamento-001', '2025-06-10 10:00:00', '2025-06-10 11:00:00', '05705608020', '25811756054'),
+            ('agendamento-002', '2025-06-11 14:00:00', '2025-06-11 15:00:00', '56198304035', '36311464004'),
+            ('agendamento-003', '2025-06-12 09:30:00', '2025-06-12 10:30:00', '80990188000', '09357654097')
+            """
+        )
+    )
+
+    # Relaciona serviços aos agendamentos na tabela intermediária
+    session.execute(
+        text(
+            """
+            INSERT INTO servicos_do_agendamento (agendamento, servico) VALUES
+            ('agendamento-001', :servico1),
+            ('agendamento-001', :servico2),
+            ('agendamento-002', :servico3)
+            """
+        ),
+        {
+            "servico1": ids_servicos["id0"],
+            "servico2": ids_servicos["id1"],
+            "servico3": ids_servicos["id2"],
+        }
+    )
+
+    session.commit()
+    return {
+        "id_agendamento": "agendamento-001",
+        "servicos": [ids_servicos["id0"], ids_servicos["id1"]],
+    }
+
