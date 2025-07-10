@@ -2,6 +2,8 @@ import ButtonBack from "../../components/ButtonBack";
 import BottomNav from "../../components/BottomNav";
 import PhotoPerfil from "../../components/PhotoPerfil";
 import { useState } from "react";
+import Sidebar from "../../components/SidebarClient";
+import Header from "../../components/Header";
 
 const ClientePerfil = () => {
   const [nome, setNome] = useState("");
@@ -29,7 +31,8 @@ const ClientePerfil = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-15 flex">
       <ButtonBack />
-
+      <Header title={"Perfil"}/>
+      <Sidebar/>
       <main className="flex w-full flex-col items-center p-6 lg:mt-10 lg:pl-69">
         <PhotoPerfil />
 
