@@ -1,9 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ClienteLogin from "../pages/auth/ClienteLogin";
-import ClienteCadastro from "../pages/auth/ClienteCadastro";
-import BarbeiroLogin from "../pages/auth/BarbeiroLogin";
-import BarbeiroCadastro from "../pages/auth/BarbeiroCadastro";
 import ClientePerfil from "../pages/auth/ClientePerfil";
 import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
 import ClienteHome from "../pages/auth/ClienteHome";
@@ -13,19 +9,21 @@ import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
 import BarbeiroAltServico from "../pages/auth/BarbeiroAltServico";
 import AddBarbeiro from "../pages/auth/AddBarbeiro";
 import ListBarbeiro from "../pages/auth/ListBarbeiro";
+import Cadastro from "../pages/auth/Cadastro";
+import Login from "../pages/auth/Login";
 
 export default function AppRoutes() {
   return (  
     <Router>
       <Routes>
-        <Route path="/cliente/login" element={<ClienteLogin />} />\
-        <Route path="/cliente/cadastro" element={<ClienteCadastro />} />\
+        <Route path="/cliente/login" element={<Login />} />\
+        <Route path="/cliente/cadastro" element={<Cadastro />} />\
         <Route path="/cliente/home" element={<ClienteHome />} />\
         <Route path="/cliente/servicos" element={<ClienteServicos />} />\
         <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />\
         <Route path="/cliente/perfil" element={<ClientePerfil />} />\
-        <Route path="/barbeiro/login" element={<BarbeiroLogin />} />\
-        <Route path="/barbeiro/cadastro" element={<BarbeiroCadastro />} />\
+        <Route path="/barbeiro/login" element={<Login />} />\
+        <Route path="/barbeiro/cadastro" element={<Cadastro />} />\
         <Route path="/barbeiro/servicos" element={<BarbeiroServicos />} />\
         <Route path="/barbeiro/alterarservico" element={<BarbeiroAltServico />} />\
         <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />\
