@@ -89,3 +89,16 @@ class HorarioIndisponivelInvalido(DomainError):
 
 class BarbeiroNaoEncontrado(DomainError):
     pass
+
+# Pagamento
+
+class PagamentoNaoEncontrado(DomainError):
+    pass
+
+class ValorInvalido(DomainError):
+    pass
+
+# Agendamento
+
+class AgendamentoNaoEncontrado(DomainError):
+    pass
