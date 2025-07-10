@@ -229,6 +229,15 @@ class Pagamento:
     agendamento: Agendamento
     id: str = field(default_factory=lambda: str(uuid4()))
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "valor": self.valor,
+            "data": self.data.isoformat(),
+            "metodo": self.metodo.value,
+            "agendamento_id": self.agendamento.id,
+        }
+
     def __eq__(self, other: any):
         if not isinstance(other, Pagamento):
             return False
