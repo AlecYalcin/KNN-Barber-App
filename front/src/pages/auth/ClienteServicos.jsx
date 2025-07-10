@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BottomNav from "../../components/BottomNav";
 import Sidebar from "../../components/SidebarClient";
+import Header from "../../components/Header";
 
 const services = [
   { id: 1, name: "Corte de Cabelo", price: "R$ 30,00", value: 30 },
@@ -53,10 +54,7 @@ export default function ClienteServicos() {
         Voltar
       </button>
 
-      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
-        <h1 className="text-3xl font-bold ml-2">Serviços Disponíveis</h1>
-        <button className="mr-4">Sair</button>
-      </header>
+      <Header title="Serviços Disponíveis" />
 
       <Sidebar />
 
