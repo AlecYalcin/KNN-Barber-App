@@ -1,9 +1,13 @@
 import React from "react";
+import ButtonBack from "../../components/ButtonBack";
 import BottomNav from "../../components/BottomNav";
 
 const ClientePerfil = () => {
   return (
     <div className="min-h-screen bg-gray-100">
+
+      <ButtonBack />
+      
       <div className="md:hidden flex flex-col min-h-screen">
         <div className="flex-1 p-4 bg-white">
           {/* foto e informacoes */}
