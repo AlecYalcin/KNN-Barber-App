@@ -1,4 +1,5 @@
 import React from "react";
+import BottomNav from "../../components/BottomNav";
 
 const ClientePerfil = () => {
   return (
@@ -71,7 +72,7 @@ const ClientePerfil = () => {
           </div>
         </div>
 
-        
+        <BottomNav  />
       </div>
     </div>
   );
