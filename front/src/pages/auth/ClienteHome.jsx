@@ -1,4 +1,5 @@
 import BottomNav from "../../components/BottomNav";
+import Header from "../../components/Header";
 import ServicosHorarios from "../../components/ScrollHome";
 import Sidebar from "../../components/SidebarClient";
 
@@ -18,10 +19,7 @@ const ClienteHome = () => {
         </h1>
       </div>
 
-      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
-        <h1 className="text-3xl font-bold ml-2">KNN BARBER APP</h1>
-        <button className="mr-4">Sair</button>
-      </header>
+      <Header title="KNN Barber" />
 
       <Sidebar />
 

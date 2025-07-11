@@ -1,6 +1,6 @@
 import React from "react";
 
-const BarbeiroLogin = () => {
+const Login = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Parte esquerda */}
@@ -69,7 +69,7 @@ const BarbeiroLogin = () => {
 
             {/* Link registrar */}
             <div className="flex justify-center my-6 text-sm">
-              <a href="/barbeiro/cadastro" className="font-bold">
+              <a href="/cliente/cadastro" className="font-bold">
                 Não possui uma conta ?{" "}
                 <span className="text-blue-500 "> Registre-se </span>
               </a>
@@ -88,4 +88,4 @@ const BarbeiroLogin = () => {
   );
 };
 
-export default BarbeiroLogin;
+export default Login;

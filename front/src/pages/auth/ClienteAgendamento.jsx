@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BottomNav from "../../components/BottomNav";
 import Sidebar from "../../components/SidebarClient";
+import Header from "../../components/Header";
 
 const DIAS = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
 const HORARIOS = [
@@ -38,7 +39,7 @@ const ClienteAgendamento = () => {
         onClick={() => window.history.back()}
         aria-label="Voltar"
       >
-        <svg
+      <svg
           className="w-6 h-6 mr-1"
           fill="none"
           stroke="currentColor"
@@ -54,10 +55,7 @@ const ClienteAgendamento = () => {
         Voltar
       </button>
 
-      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
-        <h1 className="text-3xl font-bold ml-2">Agendamentos</h1>
-        <button className="mr-4">Sair</button>
-      </header>
+      <Header title="Agendamento" />
 
       <Sidebar />
 

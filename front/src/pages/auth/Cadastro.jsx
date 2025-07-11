@@ -1,6 +1,6 @@
 import React from "react";
 
-const BarbeiroCadastro = () => {
+const Cadastro = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* parte da esquerda (a imagem) - visivel apenas no desktop */}
@@ -35,7 +35,7 @@ const BarbeiroCadastro = () => {
         <div className="w-full max-w-md mx-auto h-full flex flex-col justify-center">
           {/* Texto central */}
           <div className="text-center mb-6">
-            <h1 className="text-4xl font-bold">Cadastro de Barbeiro</h1>
+            <h1 className="text-4xl font-bold">Formulário de Cadastro</h1>
           </div>
 
           {/* formulário */}
@@ -99,7 +99,7 @@ const BarbeiroCadastro = () => {
             </button>
 
             <div className="flex justify-center my-6 text-sm">
-              <a href="/barbeiro/login" className="font-bold">
+              <a href="/cliente/login" className="font-bold">
                 Já está cadastrado ?{" "}
                 <span className="text-blue-500 "> Faça Login </span>
               </a>
@@ -111,4 +111,4 @@ const BarbeiroCadastro = () => {
   );
 };
 
-export default BarbeiroCadastro;
+export default Cadastro;

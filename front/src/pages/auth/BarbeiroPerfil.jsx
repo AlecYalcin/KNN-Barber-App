@@ -1,13 +1,10 @@
-import React from "react";
+import Header from "../../components/Header";
 
 const BarbeiroPerfil = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="lg:flex justify-between hidden md:flex bg-blue-600 p-4 text-white">
-        <h1 className="text-3xl font-bold ml-2">Perfil</h1>
-        <button className="mr-4">Sair</button>
-      </div>
+      <Header title="Perfil" />
       {/* Layout Desktop (md para cima) */}
       <div className="hidden md:block min-h-screen">
         <div className="max-w mx-auto bg-white overflow-hidden">
