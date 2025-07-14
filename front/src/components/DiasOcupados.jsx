@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// API
+import { horario_ocupado, jwt_decoder } from "../api";
 
 const DiasOcupados = () => {
-  const [diasOcupados, setDiasOcupados] = useState([
-    { id: 1, data: "14/07/25", justificativa: "Consulta médica" },
-    { id: 2, data: "16/07/25", justificativa: "Viagem agendada" },
-    { id: 3, data: "20/07/25", justificativa: "Compromisso familiar" },
-  ]);
+  const [diasOcupados, setDiasOcupados] = useState([]);
+
+  // Recuperando horários ocupados
+  useEffect(() => {
+    const fetchDias = async () => {
+      // Reconhecendo usuário atual de barbeiro
+      const usuario = jwt_decoder(localStorage.getItem("usuario_token"));
+
+      // Recuperando horários ocupados desse barbeiro
+      const data = await horario_ocupado.listar_horarios_ocupados_do_barbeiro(
+        usuario.cpf
+      );
+
+      setDiasOcupados(data);
+    };
+    fetchDias();
+  }, []);
 
   return (
     <div className="mt-6">
@@ -16,7 +31,7 @@ const DiasOcupados = () => {
             className="flex justify-between items-center bg-white px-3 py-2 rounded shadow-sm border border-gray-100"
           >
             <span className="text-sm text-gray-700">
-              ({dia.data}) {dia.justificativa}
+              ({dia.horario_inicio} - {dia.horario_fim}) {dia.justificativa}
             </span>
             <div className="flex gap-2">
               <button className="text-blue-600 text-sm hover:underline">

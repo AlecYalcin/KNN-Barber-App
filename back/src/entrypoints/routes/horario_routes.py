@@ -53,6 +53,7 @@ def criando_horario_indisponivel(
 def consultando_horario_indisponivel_por_faixa_de_horarios(
     horario_inicio: datetime | None = None,
     horario_fim: datetime | None = None,
+    barbeiro_cpf: str | None = None,
     uow: UnidadeDeTrabalho = Depends(get_uow),
 ):
     agora = datetime.now()
@@ -67,6 +68,7 @@ def consultando_horario_indisponivel_por_faixa_de_horarios(
         uow=uow,
         horario_inicio=horario_inicio,
         horario_fim=horario_fim,
+        barbeiro_cpf=barbeiro_cpf,
     )
     
     return JSONResponse(
