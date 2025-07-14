@@ -1,5 +1,7 @@
 import ButtonBack from "../../components/ButtonBack";
 import BottomNav from "../../components/BottomNav";
+import Header from "../../components/Header";
+import Sidebar from "../../components/SidebarClient";
 
 const InfoBarbeiro = ({ barbeiro }) => {
   const dados = barbeiro || {
@@ -11,6 +13,8 @@ const InfoBarbeiro = ({ barbeiro }) => {
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
       <ButtonBack />
+      <Header title="Dados do Barbeiro" />
+      <Sidebar />
       <main className="flex w-full flex-col items-center p-6 lg:mt-10 lg:pl-69 mt-10">
         <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-700 to-green-300 flex items-center justify-center mb-6 shadow">
           <span className="text-4xl font-bold text-white">
