@@ -51,7 +51,20 @@ export const alterar_horario_ocupado = async (
 };
 
 // Remover Horário Ocupado
-export const remover_horario_ocupado = async () => {};
+export const remover_horario_ocupado = async (horario_id) => {
+  const response = await fetch(
+    `${BASE_URL}/horario-indisponivel/${horario_id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("usuario_token")}`,
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+};
 
 // Listar Horários Ocupados
 export const listar_horarios_ocupados_do_barbeiro = async (CPF) => {

@@ -13,15 +13,17 @@ const DiasOcupados = () => {
     justificativa: "",
   });
 
+  // Função para pesquisar lista atualizada de dias
+  const fetchDias = async () => {
+    const usuario = jwt_decoder(localStorage.getItem("usuario_token"));
+    const data = await horario_ocupado.listar_horarios_ocupados_do_barbeiro(
+      usuario.cpf
+    );
+    setDiasOcupados(data);
+  };
+
   // Recuperando horários ocupados
   useEffect(() => {
-    const fetchDias = async () => {
-      const usuario = jwt_decoder(localStorage.getItem("usuario_token"));
-      const data = await horario_ocupado.listar_horarios_ocupados_do_barbeiro(
-        usuario.cpf
-      );
-      setDiasOcupados(data);
-    };
     fetchDias();
   }, []);
 
@@ -83,11 +85,21 @@ const DiasOcupados = () => {
       return;
     }
 
-    const lista = await horario_ocupado.listar_horarios_ocupados_do_barbeiro(
-      usuario.cpf
-    );
-    setDiasOcupados(lista);
+    fetchDias();
     fecharModal();
+  };
+
+  // Removendo horários ocupados
+  const handleExcluirHorario = async (horario_id) => {
+    const data = await horario_ocupado.remover_horario_ocupado(horario_id);
+
+    alert(data.mensagem);
+    if (data.error) {
+      alert(data.mensagem);
+      return;
+    }
+
+    fetchDias();
   };
 
   return (
@@ -108,7 +120,10 @@ const DiasOcupados = () => {
               >
                 Editar
               </button>
-              <button className="text-red-600 text-sm hover:underline">
+              <button
+                className="text-red-600 text-sm hover:underline"
+                onClick={() => handleExcluirHorario(dia.id)}
+              >
                 Excluir
               </button>
             </div>
