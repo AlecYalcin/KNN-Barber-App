@@ -28,7 +28,7 @@ const ListBarbeiro = () => {
           {barbeiros.map((barbeiro) => (
             <li key={barbeiro.id} className="flex items-center py-4">
               <span className="flex-1 text-base">{barbeiro.nome}</span>
-              <Link to={`/barbeiro/adicionar/${barbeiro.id}`} className="ml-2">
+              <Link to={`/barbeiro/info/${barbeiro.id}`} className="ml-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6 text-blue-600 hover:text-blue-800"
