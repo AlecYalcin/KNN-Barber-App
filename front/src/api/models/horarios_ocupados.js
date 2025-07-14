@@ -25,7 +25,30 @@ export const criar_horario_ocupado = async (
 };
 
 // Alterar Horário Ocupado
-export const alterar_horario_ocupado = async () => {};
+export const alterar_horario_ocupado = async (
+  horario_id,
+  horario_inicio,
+  horario_fim,
+  justificativa
+) => {
+  const response = await fetch(
+    `${BASE_URL}/horario-indisponivel/${horario_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("usuario_token")}`,
+      },
+      body: JSON.stringify({
+        horario_inicio,
+        horario_fim,
+        justificativa,
+      }),
+    }
+  );
+  const data = await response.json();
+  return data;
+};
 
 // Remover Horário Ocupado
 export const remover_horario_ocupado = async () => {};
