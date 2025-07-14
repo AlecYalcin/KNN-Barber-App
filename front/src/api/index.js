@@ -4,6 +4,7 @@ export const BASE_URL = "http://localhost:8000";
 // Integração de "models" como classes
 import * as usuario from "./models/usuarios";
 import * as horario_ocupado from "./models/horarios_ocupados";
+import * as jornada from "./models/jornadas";
 
 // Extraindo informação de Tokens JWT
 import { jwtDecode } from "jwt-decode";
@@ -14,4 +15,4 @@ export const jwt_decoder = (token) => {
 };
 
 // Exportando API
-export { usuario, horario_ocupado };
+export { usuario, horario_ocupado, jornada };
