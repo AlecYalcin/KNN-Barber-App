@@ -36,7 +36,7 @@ const Cadastro = () => {
 
     // Adicionando o token
     localStorage.setItem("usuario_token", data.token);
-    navigate("/cliente/home", { replace: true });
+    navigate("/home", { replace: true });
   };
 
   return (
@@ -159,7 +159,7 @@ const Cadastro = () => {
             </button>
 
             <div className="flex justify-center my-6 text-sm">
-              <a href="/cliente/login" className="font-bold">
+              <a href="/login" className="font-bold">
                 Já está cadastrado ?{" "}
                 <span className="text-blue-500 "> Faça Login </span>
               </a>

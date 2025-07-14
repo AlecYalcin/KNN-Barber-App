@@ -27,7 +27,7 @@ const Login = () => {
 
     // Adicionando o token
     localStorage.setItem("usuario_token", data.token);
-    navigate("/cliente/home", { replace: true });
+    navigate("/home", { replace: true });
   };
 
   return (
@@ -101,7 +101,7 @@ const Login = () => {
 
             {/* Link registrar */}
             <div className="flex justify-center my-6 text-sm">
-              <a href="/cliente/cadastro" className="font-bold">
+              <a href="/cadastro" className="font-bold">
                 Não possui uma conta ?{" "}
                 <span className="text-blue-500 "> Registre-se </span>
               </a>

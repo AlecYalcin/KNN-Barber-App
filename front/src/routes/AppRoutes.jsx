@@ -1,34 +1,43 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ClientePerfil from "../pages/auth/ClientePerfil";
-import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
-import ClienteHome from "../pages/auth/ClienteHome";
+import Perfil from "../pages/autenticacao/Perfil";
+import Home from "../pages/autenticacao/Home";
 import ClienteServicos from "../pages/auth/ClienteServicos";
 import ClienteAgendamento from "../pages/auth/ClienteAgendamento";
 import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
 import BarbeiroAltServico from "../pages/auth/BarbeiroAltServico";
 import AddBarbeiro from "../pages/auth/AddBarbeiro";
 import ListBarbeiro from "../pages/auth/ListBarbeiro";
-import Cadastro from "../pages/auth/Cadastro";
-import Login from "../pages/auth/Login";
+import Cadastro from "../pages/autenticacao/Cadastro";
+import Login from "../pages/autenticacao/Login";
 
 export default function AppRoutes() {
-  return (  
+  return (
     <Router>
       <Routes>
-        <Route path="/cliente/login" element={<Login />} />\
-        <Route path="/cliente/cadastro" element={<Cadastro />} />\
-        <Route path="/cliente/home" element={<ClienteHome />} />\
-        <Route path="/cliente/servicos" element={<ClienteServicos />} />\
-        <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />\
-        <Route path="/cliente/perfil" element={<ClientePerfil />} />\
-        <Route path="/barbeiro/login" element={<Login />} />\
-        <Route path="/barbeiro/cadastro" element={<Cadastro />} />\
-        <Route path="/barbeiro/servicos" element={<BarbeiroServicos />} />\
-        <Route path="/barbeiro/alterarservico" element={<BarbeiroAltServico />} />\
-        <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />\
-        <Route path="/barbeiro/listar" element={<ListBarbeiro />} />\
-        <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />\
+        {/* Autenticação */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+
+        {/* Geral */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/perfil" element={<Perfil />} />
+
+        {/* Serviços */}
+        <Route path="/servicos/cadastrar" element={<BarbeiroServicos />} />
+        <Route path="/servicos/alterar/:id:" element={<BarbeiroAltServico />} />
+        <Route path="/servicos/listar" element={<ClienteServicos />} />
+
+        {/* Jornada de Trabalho */}
+
+        {/* Horário Indisponível */}
+
+        {/* Agendamento */}
+        <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />
+        <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />
+        <Route path="/barbeiro/listar" element={<ListBarbeiro />} />
+
+        {/* Avaliação */}
       </Routes>
     </Router>
   );

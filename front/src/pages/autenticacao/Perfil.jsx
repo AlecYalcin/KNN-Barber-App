@@ -1,32 +1,70 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ButtonBack from "../../components/ButtonBack";
 import BottomNav from "../../components/BottomNav";
 import PhotoPerfil from "../../components/PhotoPerfil";
-import { useState } from "react";
 import Sidebar from "../../components/SidebarClient";
 import Header from "../../components/Header";
+
+// API
+import { jwt_decoder, usuario } from "../../api/index";
 
 const ClientePerfil = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [CPF, setCPF] = useState("");
+  const navigate = useNavigate();
+
+  // Recuperando informações de usuário
+  useEffect(() => {
+    const usuario = jwt_decoder(localStorage.getItem("usuario_token"));
+    setEmail(usuario.email);
+    setTelefone(usuario.telefone);
+    setNome(usuario.nome);
+    setCPF(usuario.cpf);
+  }, []);
 
   const handleEdit = () => {
     setIsEditing(true);
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
+
+    // Realizando alteração
+    const data = await usuario.alterar_usuario(CPF, { nome, email, telefone });
+
+    // Verificando erros
+    alert(data.mensagem);
+    if (data.error) {
+      return;
+    }
+
+    // Em caso de sucesso, é preciso substituir o token
+    localStorage.setItem("usuario_token", data.token);
+
+    // Desativar a edição
     setIsEditing(false);
-    // lógica para salvar
-    console.log({ nome, email, telefone });
   };
 
-  const handleDelete = () => {
-    // lógica para excluir
-    setEmail("");
-    setTelefone("");
+  const handleDelete = async () => {
+    // Desativando a edição logo no início
     setIsEditing(false);
+
+    // Excluindo usuário
+    const data = await usuario.remover_usuario(CPF);
+
+    // Verificando erros
+    alert(data.mensagem);
+    if (data.error) {
+      return;
+    }
+
+    // Redirecionando para a página de login
+    localStorage.removeItem("usuario_token");
+    navigate("/login", { replace: true });
   };
 
   return (

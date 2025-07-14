@@ -1,3 +1,4 @@
+from src.domain.value_objects import JWTToken
 from src.service.unit_of_work import AbstractUnidadeDeTrabalho
 from src.domain.models import Usuario
 from src.domain.exceptions import (
@@ -141,7 +142,7 @@ def atualizar_usuario(
     novo_telefone: str | None = None,
     nova_senha: str | None = None,
     solicitante: dict | None = None,
-) -> None:
+) -> str:
     """
     Serviço para alterar usuários existentes no sistema.
 
@@ -156,7 +157,6 @@ def atualizar_usuario(
         EmailInvalido: O Email informado não é válido.
         UsuarioNaoEncontrado: Usuário não foi encontrado para a alteração.
         EmailEmUso: O Email escolhido já está cadastrado em outro usuário.
-    Raises:
         PermissaoNegada: O usuário não possui permissões para realizar essa operação.
     """
     
@@ -190,3 +190,15 @@ def atualizar_usuario(
             raise UsuarioNaoEncontrado("Usuário não foi encontrado para a alteração.")
         except IntegrityError:
             raise EmailEmUso("O Email escolhido já está cadastrado em outro usuário.")
+
+    # Devolvendo token com valores atualizados
+    with uow:
+        usuario = uow.usuarios.consultar(cpf)
+        jwt_token = JWTToken({            
+            "cpf": usuario.cpf,
+            "nome": usuario.nome,
+            "email": usuario.email,
+            "telefone": usuario.telefone,
+            "eh_barbeiro": usuario.eh_barbeiro,
+        })
+        return jwt_token.token
