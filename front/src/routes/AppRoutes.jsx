@@ -11,6 +11,7 @@ import AddBarbeiro from "../pages/auth/AddBarbeiro";
 import ListBarbeiro from "../pages/auth/ListBarbeiro";
 import Cadastro from "../pages/auth/Cadastro";
 import Login from "../pages/auth/Login";
+import InfoBarbeiro from "../pages/auth/InfoBarbeiro";
 
 export default function AppRoutes() {
   return (  
@@ -28,6 +29,7 @@ export default function AppRoutes() {
         <Route path="/barbeiro/alterarservico" element={<BarbeiroAltServico />} />\
         <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />\
         <Route path="/barbeiro/listar" element={<ListBarbeiro />} />\
+        <Route path="/barbeiro/info" element={<InfoBarbeiro />} />\
         <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />\
       </Routes>
     </Router>
