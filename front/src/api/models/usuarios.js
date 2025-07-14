@@ -64,3 +64,16 @@ export const alterar_usuario = async (
   const data = await response.json();
   return data;
 };
+
+// Função de consulta de usuário do sistema
+export const consultar_usuario = async (usuario_id) => {
+  const response = await fetch(`${BASE_URL}/usuario/${usuario_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("usuario_token")}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};

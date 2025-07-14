@@ -1,20 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Perfil from "../pages/autenticacao/Perfil";
 import Home from "../pages/autenticacao/Home";
 import ClienteServicos from "../pages/auth/ClienteServicos";
 import ClienteAgendamento from "../pages/auth/ClienteAgendamento";
 import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
-import BarbeiroAltServico from "../pages/auth/BarbeiroAltServico";
+import AlterarServico from "../pages/auth/AlterarServico";
 import AddBarbeiro from "../pages/auth/AddBarbeiro";
 import ListBarbeiro from "../pages/auth/ListBarbeiro";
 import Cadastro from "../pages/autenticacao/Cadastro";
 import Login from "../pages/autenticacao/Login";
 
+// API
+import { jwt_decoder, usuario } from "../api";
+import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
+
 export default function AppRoutes() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Verificando usuário
+  useEffect(() => {
+    // Recuperando Token Salvo
+    const token = localStorage.getItem("usuario_token");
+
+    // Não tem token? Não está autenticado.
+    if (!token) {
+      setAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+
+    // O Token não é válido? Não está autenticado.
+    var usuario_recuperado = {};
+    try {
+      usuario_recuperado = jwt_decoder(token);
+    } catch {
+      localStorage.removeItem("usuario_token");
+      setAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+
+    // Verificando se esse token e usuário estão batendo
+    const fetchUsuario = async () => {
+      const data = await usuario.consultar_usuario(usuario_recuperado.cpf);
+      if (data.error) {
+        localStorage.removeItem("usuario_token");
+        setAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+    };
+
+    fetchUsuario();
+    setAuthenticated(true);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <h1>Carregando informações...</h1>;
+  }
+
   return (
     <Router>
       <Routes>
+        {/* Rota Padrão */}
+        <Route path="/" element={authenticated ? <Home /> : <Login />} />
+
         {/* Autenticação */}
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
@@ -25,7 +78,7 @@ export default function AppRoutes() {
 
         {/* Serviços */}
         <Route path="/servicos/cadastrar" element={<BarbeiroServicos />} />
-        <Route path="/servicos/alterar/:id:" element={<BarbeiroAltServico />} />
+        <Route path="/servicos/alterar/:id" element={<AlterarServico />} />
         <Route path="/servicos/listar" element={<ClienteServicos />} />
 
         {/* Jornada de Trabalho */}
@@ -36,6 +89,7 @@ export default function AppRoutes() {
         <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />
         <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />
         <Route path="/barbeiro/listar" element={<ListBarbeiro />} />
+        <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />
 
         {/* Avaliação */}
       </Routes>

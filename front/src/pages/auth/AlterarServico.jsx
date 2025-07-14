@@ -4,7 +4,7 @@ import BottomNav from "../../components/BottomNav";
 import Sidebar from "../../components/SidebarClient";
 import Header from "../../components/Header";
 
-const BarbeiroAltServico = () => {
+const AlterarServico = () => {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [valor, setValor] = useState("");
@@ -37,7 +37,6 @@ const BarbeiroAltServico = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
-
       <ButtonBack />
 
       <Header title="Info Serviços" />
@@ -91,8 +90,11 @@ const BarbeiroAltServico = () => {
               <label
                 htmlFor="imagem-upload"
                 className={`flex items-center gap-2 px-4 py-2 border rounded-md transition-colors
-                ${isEditing ? "bg-gray-100 border-gray-300 hover:bg-gray-200 cursor-pointer"
-                            : "bg-gray-200 opacity-60 cursor-not-allowed"}`}
+                ${
+                  isEditing
+                    ? "bg-gray-100 border-gray-300 hover:bg-gray-200 cursor-pointer"
+                    : "bg-gray-200 opacity-60 cursor-not-allowed"
+                }`}
                 style={{ pointerEvents: isEditing ? "auto" : "none" }}
               >
                 <svg
@@ -163,4 +165,4 @@ const BarbeiroAltServico = () => {
   );
 };
 
-export default BarbeiroAltServico;
+export default AlterarServico;

@@ -8,13 +8,16 @@ import Header from "../../components/Header";
 
 // API
 import { jwt_decoder, usuario } from "../../api/index";
+import DiasOcupados from "../../components/DiasOcupados";
+import JornadaDeTrabalho from "../../components/JornadaDeTrabalho";
 
-const ClientePerfil = () => {
+const Perfil = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
   const [CPF, setCPF] = useState("");
+  const [isBarbeiro, setIsBarbeiro] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
   // Recuperando informações de usuário
@@ -24,6 +27,7 @@ const ClientePerfil = () => {
     setTelefone(usuario.telefone);
     setNome(usuario.nome);
     setCPF(usuario.cpf);
+    setIsBarbeiro(usuario.eh_barbeiro);
   }, []);
 
   const handleEdit = () => {
@@ -112,6 +116,7 @@ const ClientePerfil = () => {
             </div>
           </form>
 
+          {/* Agendamentos */}
           <div className="mt-6">
             <h2 className="text-lg font-bold mb-3 text-gray-800">
               Agendamentos
@@ -122,6 +127,26 @@ const ClientePerfil = () => {
               </p>
             </div>
           </div>
+
+          {/* Jornada */}
+          {isBarbeiro && (
+            <div className="mt-6" disabled={!isBarbeiro}>
+              <h2 className="text-lg font-bold mb-3 text-gray-800">
+                Jornada de Trabalho
+              </h2>
+              <JornadaDeTrabalho />
+            </div>
+          )}
+
+          {/* Dias Ocupados */}
+          {isBarbeiro && (
+            <div className="mt-6" disabled={!isBarbeiro}>
+              <h2 className="text-lg font-bold mb-3 text-gray-800">
+                Dias Ocupados
+              </h2>
+              <DiasOcupados />
+            </div>
+          )}
         </div>
 
         <div className="flex lg:justify-end gap-2 w-full mt-5">
@@ -158,4 +183,4 @@ const ClientePerfil = () => {
   );
 };
 
-export default ClientePerfil;
+export default Perfil;
