@@ -54,7 +54,7 @@ export default function BottomNav() {
         </Link>
 
         <Link
-          to="/perfil"
+          to="/cliente/perfil"
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Perfil do usuário"
         >
