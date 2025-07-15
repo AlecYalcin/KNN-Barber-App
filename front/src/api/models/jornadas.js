@@ -1,5 +1,4 @@
 import { BASE_URL } from "..";
-
 // Criar ou Editar Jornada
 export const criar_ou_alterar_jornada = async (
   barbeiro_cpf,
@@ -10,7 +9,7 @@ export const criar_ou_alterar_jornada = async (
   horario_retorno,
   horario_fim
 ) => {
-  // Excluindo jornada já existente
+  // Se há jornada existente, remove ela
   if (jornada_id) {
     const response = await fetch(`${BASE_URL}/jornada/${jornada_id}`, {
       method: "DELETE",
@@ -22,22 +21,23 @@ export const criar_ou_alterar_jornada = async (
     await response.json();
   }
 
-  // Criando nova jornada
+  // Se todos os horários estão vazios, nem cria nova jornada
+  if (!horario_inicio && !horario_pausa && !horario_retorno && !horario_fim) {
+    return { mensagem: "Horário excluído com sucesso!" };
+  }
+
+  // Monta dinamicamente o corpo da requisição
   const bodyData = {
     barbeiro_cpf,
     dia_da_semana,
-    horario_inicio,
-    horario_fim,
   };
 
-  // Só adiciona se existir valor válido
-  if (horario_pausa) {
-    bodyData.horario_pausa = horario_pausa;
-  }
-  if (horario_retorno) {
-    bodyData.horario_retorno = horario_retorno;
-  }
+  if (horario_inicio) bodyData.horario_inicio = horario_inicio;
+  if (horario_fim) bodyData.horario_fim = horario_fim;
+  if (horario_pausa) bodyData.horario_pausa = horario_pausa;
+  if (horario_retorno) bodyData.horario_retorno = horario_retorno;
 
+  // Envia para o backend
   const response = await fetch(`${BASE_URL}/jornada/criar`, {
     method: "POST",
     headers: {
@@ -46,6 +46,7 @@ export const criar_ou_alterar_jornada = async (
     },
     body: JSON.stringify(bodyData),
   });
+
   const data = await response.json();
   return data;
 };

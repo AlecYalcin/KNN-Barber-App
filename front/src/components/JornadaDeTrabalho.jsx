@@ -73,6 +73,7 @@ export default function JornadaDeTrabalhoMobile() {
 
   const handleLimpar = () => {
     setFormData({
+      ...formData,
       horario_inicio: "",
       horario_pausa: "",
       horario_retorno: "",

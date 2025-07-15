@@ -80,8 +80,10 @@ const DiasOcupados = () => {
       );
     }
 
-    if (data.error) {
+    if (data.mensagem) {
       alert(data.mensagem);
+    }
+    if (data.error) {
       return;
     }
 
