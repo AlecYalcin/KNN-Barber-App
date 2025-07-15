@@ -13,7 +13,7 @@ from datetime import datetime
 def criar_pagamento(
     uow: AbstractUnidadeDeTrabalho,
     valor: float,
-    metodo: MetodoPagamento,
+    metodo: str,  # Alterado para str
     agendamento_id: str,
     solicitante: dict | None = None,
 ) -> None:
@@ -49,7 +49,7 @@ def criar_pagamento(
 
     # Verificando a validade do método de pagamento
     try:
-        MetodoPagamento(metodo)
+        metodo_pagamento = MetodoPagamento(metodo)
     except ValueError:
         raise ValueError(f"Método de pagamento inválido: {metodo}")
 
@@ -62,7 +62,7 @@ def criar_pagamento(
         pagamento = Pagamento(
             valor=valor,
             data=datetime.now(),
-            metodo=metodo,
+            metodo=metodo_pagamento,  # Usa o objeto de valor
             agendamento=agendamento
         )
         
@@ -137,7 +137,7 @@ def atualizar_pagamento(
     uow: AbstractUnidadeDeTrabalho,
     id: str,
     novo_valor: float | None = None,
-    novo_metodo: MetodoPagamento | None = None,
+    novo_metodo: str | None = None,  # Alterado para str
     solicitante: dict | None = None,
 ) -> None:
     """
@@ -170,7 +170,7 @@ def atualizar_pagamento(
     novo_pagamento = Pagamento(
         id=id,
         valor=novo_valor,
-        metodo=novo_metodo,
+        metodo=MetodoPagamento(novo_metodo) if novo_metodo is not None else None,  # Converte se fornecido
         data=datetime.now(),
         agendamento=None  # Será definido no método alterar
     )

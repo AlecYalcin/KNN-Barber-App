@@ -549,8 +549,8 @@ def mock_criar_pagamentos_cliente(session):
             """),
             {
                 "id": agendamento_id,
-                "horario_inicio": horario_inicio,
-                "horario_fim": horario_fim
+                "horario_inicio": horario_inicio.isoformat(sep=' '),
+                "horario_fim": horario_fim.isoformat(sep=' ')
             }
         )
         
