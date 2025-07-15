@@ -74,7 +74,7 @@ def atualizando_usuario(
     uow: UnidadeDeTrabalho = Depends(get_uow),
     usuario: dict = Depends(obter_usuario_atual),
 ):
-    atualizar_usuario(
+    jwt_token = atualizar_usuario(
         uow=uow,
         cpf=cpf,
         novo_nome=novo_usuario.nome,
@@ -86,7 +86,7 @@ def atualizando_usuario(
 
     return JSONResponse(
         status_code=200,
-        content={"mensagem":"Usuário atualizado com sucesso!"}
+        content={"mensagem":"Usuário atualizado com sucesso!", "token": jwt_token }
     )
 
 @router.delete("/{cpf}")

@@ -163,7 +163,7 @@ def test_usuario_alterar_api(
     })
 
     assert response.status_code == 200
-    assert response.json() == {"mensagem":"Usuário atualizado com sucesso!"}
+    assert response.json()['mensagem'] == "Usuário atualizado com sucesso!", response.json()['token']
 
     response = client.get("usuario/92470179041", headers={
         'Authorization': f'Bearer {token}',

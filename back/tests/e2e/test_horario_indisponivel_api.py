@@ -132,6 +132,20 @@ def test_consultando_horario_indisponivel_por_faixa_de_horarios_api(
     assert response.status_code == 200
     assert len(response.json()) == 3
 
+    # Consultando por barbeiro sem horário
+    response = client.get(
+        f'/horario-indisponivel/pesquisar-horarios?horario_inicio={datetime(2025, 1, 1)}&horario_fim={datetime(2025, 12, 31)}&barbeiro_cpf=1234'
+    )
+    assert response.status_code == 200
+    assert len(response.json()) == 0
+
+    # Consultando por barbeiro com horário
+    response = client.get(
+        f'/horario-indisponivel/pesquisar-horarios?barbeiro_cpf=25811756054'
+    )
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+
 def test_atualizando_horario_indisponivel_api(
     client,
     mock_criar_horarios_indisponiveis,

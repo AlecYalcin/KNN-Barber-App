@@ -1,8 +1,13 @@
 import BottomNav from "../../components/BottomNav";
+import Header from "../../components/Header";
 import ServicosHorarios from "../../components/ScrollHome";
 import Sidebar from "../../components/SidebarClient";
 
+// API
+import { jwt_decoder } from "../../api/index";
+
 const ClienteHome = () => {
+  const usuario = jwt_decoder(localStorage.getItem("usuario_token"));
   return (
     <div className="mt-15 ml-5 lg:ml-0 mr-5">
       <div className="flex items-center ml-2 mt-2 mb-2 lg:hidden">
@@ -14,19 +19,13 @@ const ClienteHome = () => {
         <h1 className="ml-6 mt-8 text-3xl text-gray-800">
           Olá,
           <br />
-          <strong>João Pedro</strong>
+          <strong>{usuario.nome}</strong>
         </h1>
       </div>
 
-      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
-        <h1 className="text-3xl font-bold ml-2">KNN BARBER APP</h1>
-        <button className="mr-4">Sair</button>
-      </header>
-
+      <Header title="KNN Barber" />
       <Sidebar />
-
       <ServicosHorarios />
-
       <BottomNav />
     </div>
   );

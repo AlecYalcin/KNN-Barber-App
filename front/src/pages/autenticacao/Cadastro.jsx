@@ -1,6 +1,44 @@
-import React from "react";
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usuario } from "../../api";
 
-const BarbeiroCadastro = () => {
+const Cadastro = () => {
+  const [cpf, setCpf] = useState("");
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    // Verificando se email e senha foram digitados
+    if (!cpf || !nome || !email || !senha || !telefone) {
+      alert("Digite todos os dados cadastrais.");
+      return;
+    }
+
+    // Realizando a requisição
+    const data = await usuario.registar_usuario({
+      cpf,
+      nome,
+      email,
+      senha,
+      telefone,
+    });
+
+    // Verificando erros
+    if (data.error) {
+      alert(data.mensagem);
+      return;
+    }
+
+    // Adicionando o token
+    localStorage.setItem("usuario_token", data.token);
+    navigate("/home", { replace: true });
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* parte da esquerda (a imagem) - visivel apenas no desktop */}
@@ -35,11 +73,25 @@ const BarbeiroCadastro = () => {
         <div className="w-full max-w-md mx-auto h-full flex flex-col justify-center">
           {/* Texto central */}
           <div className="text-center mb-6">
-            <h1 className="text-4xl font-bold">Cadastro de Barbeiro</h1>
+            <h1 className="text-4xl font-bold">Formulário de Cadastro</h1>
           </div>
 
           {/* formulário */}
-          <form className="rounded-lg p-8">
+          <form className="rounded-lg p-8" onSubmit={(e) => handleRegister(e)}>
+            {/* Campo nome */}
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                CPF
+              </label>
+              <input
+                type="name"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                placeholder="000.000.000-00"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
             {/* Campo nome */}
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -47,6 +99,8 @@ const BarbeiroCadastro = () => {
               </label>
               <input
                 type="name"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
                 placeholder="informe seu nome"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -59,6 +113,8 @@ const BarbeiroCadastro = () => {
               </label>
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="seuemail@gmail.com"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -71,6 +127,8 @@ const BarbeiroCadastro = () => {
               </label>
               <input
                 type="text"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
                 placeholder="informe seu telefone"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -84,6 +142,8 @@ const BarbeiroCadastro = () => {
               <div className="relative">
                 <input
                   type="password"
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
                   placeholder="***************"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
                 />
@@ -92,14 +152,14 @@ const BarbeiroCadastro = () => {
 
             {/* Botão Salvar */}
             <button
-              type="button"
+              type="submit"
               className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             >
               Salvar
             </button>
 
             <div className="flex justify-center my-6 text-sm">
-              <a href="/barbeiro/login" className="font-bold">
+              <a href="/login" className="font-bold">
                 Já está cadastrado ?{" "}
                 <span className="text-blue-500 "> Faça Login </span>
               </a>
@@ -111,4 +171,4 @@ const BarbeiroCadastro = () => {
   );
 };
 
-export default BarbeiroCadastro;
+export default Cadastro;

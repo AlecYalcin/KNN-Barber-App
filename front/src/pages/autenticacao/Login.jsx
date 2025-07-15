@@ -1,6 +1,35 @@
-import React from "react";
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usuario } from "../../api";
 
-const BarbeiroLogin = () => {
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    // Verificando se email e senha foram digitados
+    if (!email || !senha) {
+      alert("Digite um e-mail e senha válidos.");
+      return;
+    }
+
+    // Realizando a requisição
+    const data = await usuario.autenticar_usuario(email, senha);
+
+    // Verificando erros
+    if (data.error) {
+      alert(data.mensagem);
+      return;
+    }
+
+    // Adicionando o token
+    localStorage.setItem("usuario_token", data.token);
+    navigate("/home", { replace: true });
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Parte esquerda */}
@@ -16,7 +45,7 @@ const BarbeiroLogin = () => {
           </div>
 
           {/* Formulário */}
-          <form className="rounded-lg p-8">
+          <form className="rounded-lg p-8" onSubmit={(e) => handleLogin(e)}>
             {/* Campo Email */}
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -25,6 +54,8 @@ const BarbeiroLogin = () => {
               <input
                 type="email"
                 placeholder="seuemail@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -38,13 +69,14 @@ const BarbeiroLogin = () => {
                 <input
                   type="password"
                   placeholder="***************"
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
                 />
                 {/* Ícone de olho (opcional) */}
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
-                  onClick={() => {}}
                 ></button>
               </div>
             </div>
@@ -61,7 +93,7 @@ const BarbeiroLogin = () => {
 
             {/* Botão Entrar */}
             <button
-              type="button"
+              type="submit"
               className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             >
               Entrar
@@ -69,7 +101,7 @@ const BarbeiroLogin = () => {
 
             {/* Link registrar */}
             <div className="flex justify-center my-6 text-sm">
-              <a href="/barbeiro/cadastro" className="font-bold">
+              <a href="/cadastro" className="font-bold">
                 Não possui uma conta ?{" "}
                 <span className="text-blue-500 "> Registre-se </span>
               </a>
@@ -88,4 +120,4 @@ const BarbeiroLogin = () => {
   );
 };
 
-export default BarbeiroLogin;
+export default Login;

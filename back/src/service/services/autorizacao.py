@@ -70,7 +70,13 @@ def registrar(
     )
 
     # Gerando token
-    jwt_token = JWTToken({"cpf":usuario['cpf'],"eh_barbeiro":usuario['eh_barbeiro']})
+    jwt_token = JWTToken({            
+        "cpf": usuario['cpf'],
+        "nome": usuario['nome'],
+        "email": usuario['email'],
+        "telefone": usuario['telefone'],
+        "eh_barbeiro": usuario['eh_barbeiro']
+    })
     return jwt_token.token
 
 def retornar_usuario(

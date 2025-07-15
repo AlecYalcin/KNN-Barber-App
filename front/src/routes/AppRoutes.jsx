@@ -1,36 +1,97 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ClienteLogin from "../pages/auth/ClienteLogin";
-import ClienteCadastro from "../pages/auth/ClienteCadastro";
-import BarbeiroLogin from "../pages/auth/BarbeiroLogin";
-import BarbeiroCadastro from "../pages/auth/BarbeiroCadastro";
-import ClientePerfil from "../pages/auth/ClientePerfil";
-import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
-import ClienteHome from "../pages/auth/ClienteHome";
+import Perfil from "../pages/autenticacao/Perfil";
+import Home from "../pages/autenticacao/Home";
 import ClienteServicos from "../pages/auth/ClienteServicos";
 import ClienteAgendamento from "../pages/auth/ClienteAgendamento";
 import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
-import BarbeiroAltServico from "../pages/auth/BarbeiroAltServico";
+import AlterarServico from "../pages/auth/AlterarServico";
 import AddBarbeiro from "../pages/auth/AddBarbeiro";
 import ListBarbeiro from "../pages/auth/ListBarbeiro";
+import Cadastro from "../pages/autenticacao/Cadastro";
+import Login from "../pages/autenticacao/Login";
+
+// API
+import { jwt_decoder, usuario } from "../api";
+import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
 
 export default function AppRoutes() {
-  return (  
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Verificando usuário
+  useEffect(() => {
+    // Recuperando Token Salvo
+    const token = localStorage.getItem("usuario_token");
+
+    // Não tem token? Não está autenticado.
+    if (!token) {
+      setAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+
+    // O Token não é válido? Não está autenticado.
+    var usuario_recuperado = {};
+    try {
+      usuario_recuperado = jwt_decoder(token);
+    } catch {
+      localStorage.removeItem("usuario_token");
+      setAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+
+    // Verificando se esse token e usuário estão batendo
+    const fetchUsuario = async () => {
+      const data = await usuario.consultar_usuario(usuario_recuperado.cpf);
+      if (data.error) {
+        localStorage.removeItem("usuario_token");
+        setAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+    };
+
+    fetchUsuario();
+    setAuthenticated(true);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <h1>Carregando informações...</h1>;
+  }
+
+  return (
     <Router>
       <Routes>
-        <Route path="/cliente/login" element={<ClienteLogin />} />\
-        <Route path="/cliente/cadastro" element={<ClienteCadastro />} />\
-        <Route path="/cliente/home" element={<ClienteHome />} />\
-        <Route path="/cliente/servicos" element={<ClienteServicos />} />\
-        <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />\
-        <Route path="/cliente/perfil" element={<ClientePerfil />} />\
-        <Route path="/barbeiro/login" element={<BarbeiroLogin />} />\
-        <Route path="/barbeiro/cadastro" element={<BarbeiroCadastro />} />\
-        <Route path="/barbeiro/servicos" element={<BarbeiroServicos />} />\
-        <Route path="/barbeiro/alterarservico" element={<BarbeiroAltServico />} />\
-        <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />\
-        <Route path="/barbeiro/listar" element={<ListBarbeiro />} />\
-        <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />\
+        {/* Rota Padrão */}
+        <Route path="/" element={authenticated ? <Home /> : <Login />} />
+
+        {/* Autenticação */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+
+        {/* Geral */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/perfil" element={<Perfil />} />
+
+        {/* Serviços */}
+        <Route path="/servicos/cadastrar" element={<BarbeiroServicos />} />
+        <Route path="/servicos/alterar/:id" element={<AlterarServico />} />
+        <Route path="/servicos/listar" element={<ClienteServicos />} />
+
+        {/* Jornada de Trabalho */}
+
+        {/* Horário Indisponível */}
+
+        {/* Agendamento */}
+        <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />
+        <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />
+        <Route path="/barbeiro/listar" element={<ListBarbeiro />} />
+        <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />
+
+        {/* Avaliação */}
       </Routes>
     </Router>
   );

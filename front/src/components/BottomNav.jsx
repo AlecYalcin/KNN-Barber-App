@@ -1,16 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function BottomNav() {
   return (
     <div className="lg:hidden bg-white border-t border-gray-200 p-3 fixed bottom-0 left-0 right-0">
-      <nav className="flex justify-around" aria-label="Menu de navegação inferior">
-        
+      <nav
+        className="flex justify-around"
+        aria-label="Menu de navegação inferior"
+      >
         <Link
-          to="/cliente/home"
+          to="/home"
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Página inicial"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -22,11 +29,16 @@ export default function BottomNav() {
         </Link>
 
         <Link
-          to="/cliente/agendamento"
+          to="/agendamento"
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Agendar horário"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -42,7 +54,12 @@ export default function BottomNav() {
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Página de pagamento"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -58,7 +75,12 @@ export default function BottomNav() {
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Perfil do usuário"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -68,9 +90,7 @@ export default function BottomNav() {
           </svg>
           <span className="text-xs mt-1">Perfil</span>
         </Link>
-
       </nav>
     </div>
   );
 }
-

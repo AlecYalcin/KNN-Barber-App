@@ -1,5 +1,5 @@
 from src.adapters.repository import AbstractSQLAlchemyRepository
-from src.domain.models import HorarioIndisponivel
+from src.domain.models import HorarioIndisponivel, Usuario
 from datetime import datetime
 import abc
 
@@ -25,7 +25,7 @@ class AbstractHorarioIndisponivelRepository():
         raise NotImplementedError
 
     @abc.abstractmethod
-    def consultar_por_horario(self, horarios: tuple[datetime,datetime]) -> list[HorarioIndisponivel]:
+    def consultar_por_horario(self, horarios: tuple[datetime,datetime], barbeiro_cpf: str | None = None) -> list[HorarioIndisponivel]:
         raise NotImplementedError
 
 class HorarioIndisponivelRepository(AbstractHorarioIndisponivelRepository, AbstractSQLAlchemyRepository):
@@ -50,9 +50,13 @@ class HorarioIndisponivelRepository(AbstractHorarioIndisponivelRepository, Abstr
         horarios_indisponiveis = self.session.query(HorarioIndisponivel).filter(HorarioIndisponivel.barbeiro_cpf == cpf).all()
         return horarios_indisponiveis
     
-    def consultar_por_horario(self, horarios: tuple[datetime,datetime]) -> list[HorarioIndisponivel]:
-        horarios_indisponiveis = self.session.query(HorarioIndisponivel).filter(
+    def consultar_por_horario(self, horarios: tuple[datetime, datetime], barbeiro_cpf: str | None = None) -> list[HorarioIndisponivel]:
+        query = self.session.query(HorarioIndisponivel).filter(
             horarios[1] >= HorarioIndisponivel.horario_inicio,
-            horarios[0] <= HorarioIndisponivel.horario_fim  
-        ).all()
-        return horarios_indisponiveis
+            horarios[0] <= HorarioIndisponivel.horario_fim,
+        )
+
+        if barbeiro_cpf:
+            query = query.filter(HorarioIndisponivel.barbeiro_cpf == barbeiro_cpf)
+
+        return query.all()

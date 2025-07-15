@@ -87,6 +87,7 @@ def consultar_horario_indisponivel_por_horario(
     uow: AbstractUnidadeDeTrabalho,
     horario_inicio: datetime,
     horario_fim: datetime,
+    barbeiro_cpf: str | None = None,
 ) -> list[dict]:
     """
     Retorna todos os dias indisponíveis em uma faixa de horários.
@@ -95,6 +96,7 @@ def consultar_horario_indisponivel_por_horario(
         uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho abstrata
         horario_inicio(datetime): Data e hora do início do horário indisponível.
         horario_fim(datetime): Data e hora do fim do horário indisponível.
+        barbeiro_cpf(string): Filtrar por Barbeiro a Pesquisa
     Returns:
         list[dict]: Uma lista de dicionários dos horários encontrados na faixa.
     """
@@ -102,7 +104,7 @@ def consultar_horario_indisponivel_por_horario(
     horarios_indisponiveis = []
     with uow:
         horarios = (horario_inicio, horario_fim)
-        horarios_encontrados = uow.horarios_indisponiveis.consultar_por_horario(horarios)
+        horarios_encontrados = uow.horarios_indisponiveis.consultar_por_horario(horarios, barbeiro_cpf)
         for horario in horarios_encontrados:
             horarios_indisponiveis.extend([horario.to_dict()])
         return horarios_indisponiveis
