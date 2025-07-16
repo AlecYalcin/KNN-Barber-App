@@ -43,6 +43,8 @@ app.include_router(servico_router)
 app.include_router(horario_router)
 app.include_router(jornada_router)
 app.include_router(autenticacao_router)
+app.include_router(agendamento_router)
+app.include_router(pagamento_router)
 
 # Error Handling
 @app.exception_handler(DomainError)

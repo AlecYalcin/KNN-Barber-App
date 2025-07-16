@@ -16,7 +16,7 @@ class AbstractUsuarioRepository():
         raise NotImplementedError
 
     @abc.abstractmethod
-    def consultar(self, cpf: str) -> Usuario | None:
+    def consultar(self, cpf: str) ->Usuario | None:
         raise NotImplementedError
 
     @abc.abstractmethod

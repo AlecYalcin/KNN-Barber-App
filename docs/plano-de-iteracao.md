@@ -8,10 +8,10 @@ O plano de iteração e release, elaborado no semestre 2025.1, consiste em um do
 | -------- | ----------- | ---------- | ------------ | ------------- | ----------------------------------------------- |
 | It0      | 21/03/2025  | 27/04/2025 | --           | --            | [Iteração 00](iteracao-detalhes/iteracao_00.md) |
 | It1      | 28/03/2025  | 01/04/2025 | 15/04/2025   | Alec Yalcin   | [Iteração 00](iteracao-detalhes/iteracao_01.md) |
-| It2      | 16/04/2025  | ...        | ...          | Líder Técnico | Link para a iteracao-detalhes/iteraoca_xx.md    |
-| It3      | ...         | ...        | ...          | Líder Técnico | Link para a iteracao-detalhes/iteraoca_xx.md    |
-| It4      | ...         | ...        | ...          | Líder Técnico | Link para a iteracao-detalhes/iteraoca_xx.md    |
-| It5      | ...         | ...        | ...          | Líder Técnico | Link para a iteracao-detalhes/iteraoca_xx.md    |
+| It2      | 24/06/2025  | 09/07/2025 | 15/07/2025   | Stenio   | [Iteração 02](iteracao-detalhes/iteracao_02.md) |
+| It3      | 15/04/2025  | 31/05/2025 | 07/06/2025   | Denner   | [Iteração 03](iteracao-detalhes/iteracao_03.md) |
+| It4      | 01/06/2025  | 22/06/2025 | 29/06/2025   | Guilherme| [Iteração 04](iteracao-detalhes/iteracao_04.md) |
+| It5      | 23/06/2025  | 09/07/2025 | 16/07/2025   | Julio   | [Iteração 05](iteracao-detalhes/iteracao_05.md) |
 
 - Observação 1: Cada Iteração de ser cadastrada como Milestones no GitHub.
 - Observação 2: Use este repositório como Modelo.
