@@ -29,7 +29,7 @@ export default function BottomNav() {
         </Link>
 
         <Link
-          to="/agendamento"
+          to="/cliente/agendamento"
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Agendar horário"
         >
@@ -50,7 +50,7 @@ export default function BottomNav() {
         </Link>
 
         <Link
-          to="/pagamento"
+          to="/pagamentos"
           className="flex flex-col items-center text-gray-500 hover:text-blue-600"
           aria-label="Página de pagamento"
         >

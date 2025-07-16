@@ -10,6 +10,7 @@ import AddBarbeiro from "../pages/auth/AddBarbeiro";
 import ListBarbeiro from "../pages/auth/ListBarbeiro";
 import Cadastro from "../pages/autenticacao/Cadastro";
 import Login from "../pages/autenticacao/Login";
+import ClientePagamentos from "../pages/auth/ClientePagamentos";
 
 // API
 import { jwt_decoder, usuario } from "../api";
@@ -81,6 +82,8 @@ export default function AppRoutes() {
         <Route path="/servicos/alterar/:id" element={<AlterarServico />} />
         <Route path="/servicos/listar" element={<ClienteServicos />} />
 
+        {/* Pagamento */}
+        <Route path="/pagamentos" element={<ClientePagamentos />} />
         {/* Jornada de Trabalho */}
 
         {/* Horário Indisponível */}

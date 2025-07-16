@@ -2,22 +2,25 @@ import { useState } from "react";
 import BottomNav from "../../components/BottomNav";
 import Sidebar from "../../components/SidebarClient";
 import Header from "../../components/Header";
+import { DayPicker } from "react-day-picker";
+import { ptBR } from "date-fns/locale";
+import "react-day-picker/dist/style.css";
 
-const DIAS = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
 const HORARIOS = [
-  "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"
+  "08:00",
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
 ];
 
 const ClienteAgendamento = () => {
-  const [diaSelecionado, setDiaSelecionado] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [horarioSelecionado, setHorarioSelecionado] = useState("");
   const [confirmado, setConfirmado] = useState(false);
-
-  const handleSelecionarDia = (e) => {
-    setDiaSelecionado(e.target.value);
-    setHorarioSelecionado(""); // Limpa horário ao trocar o dia
-    setConfirmado(false);
-  };
 
   const handleSelecionarHorario = (e) => {
     setHorarioSelecionado(e.target.value);
@@ -25,10 +28,8 @@ const ClienteAgendamento = () => {
   };
 
   const handleConfirmar = () => {
-    if (diaSelecionado && horarioSelecionado) {
-      // Aqui você pode fazer uma requisição para salvar o agendamento
+    if (selectedDate && horarioSelecionado) {
       setConfirmado(true);
-      // Exemplo: await api.post('/agendamentos', { dia: diaSelecionado, horario: horarioSelecionado });
     }
   };
 
@@ -39,7 +40,7 @@ const ClienteAgendamento = () => {
         onClick={() => window.history.back()}
         aria-label="Voltar"
       >
-      <svg
+        <svg
           className="w-6 h-6 mr-1"
           fill="none"
           stroke="currentColor"
@@ -63,40 +64,61 @@ const ClienteAgendamento = () => {
         <h1 className="text-2xl font-bold mt-20 flex justify-center text-gray-800">
           Selecione o Dia
         </h1>
-        <div className="grid mt-5">
-          <div className="grid grid-cols-7 rounded-2xl p-3 w-full h-full bg-blue-500 gap-2 lg:gap-4 shadow-lg">
-            {DIAS.map((dia) => (
-              <label key={dia} className="cursor-pointer">
-                <input
-                  type="radio"
-                  name="dia"
-                  value={dia}
-                  checked={diaSelecionado === dia}
-                  onChange={handleSelecionarDia}
-                  className="hidden peer"
-                />
-                <div className={`peer-checked:bg-white h-10 w-10 lg:h-12 lg:w-12 lg:rounded-2xl lg:text-3x lg:text-4xl 2xl:h-15 2xl:w-15 2xl:rounded-3xl rounded-2xl border flex items-center justify-center text-2xl font-bold text-gray-800 hover:bg-white hover:text-blue-500 transition
-                  ${diaSelecionado === dia ? "bg-white text-blue-500" : ""}
-                `}>
-                  {dia}
-                </div>
-              </label>
-            ))}
-          </div>
+
+        <div className="mt-5 bg-blue-400 p-4 rounded-lg shadow-lg">
+          <DayPicker
+            mode="single"
+            selected={selectedDate}
+            onSelect={setSelectedDate}
+            fromDate={new Date()}
+            locale={ptBR}
+            modifiers={{
+              disabled: { before: new Date() },
+            }}
+            formatters={{
+              formatCaption: (date, options) => {
+                return new Intl.DateTimeFormat("pt-BR", {
+                  month: "long",
+                  year: "numeric",
+                })
+                  .format(date)
+                  .replace(/^\w/, (c) => c.toUpperCase());
+              },
+            }}
+          />
+
+          {selectedDate && (
+            <p className="text-center mt-2 text-gray-700">
+              Selecionado:{" "}
+              {selectedDate
+                .toLocaleDateString("pt-BR", {
+                  weekday: "long",
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })
+                .replace(/^\w/, (c) => c.toUpperCase())}
+            </p>
+          )}
         </div>
 
-        <div className="lg:mt-10">
+        <div className="lg:mt-10 w-full max-w-md">
           <h1 className="text-2xl font-bold mb-2 flex justify-center text-gray-800 mt-10 lg:mt-0">
             Horários Disponíveis
           </h1>
 
-          <div className="w-full bg-gray-300 justify-center items-center rounded-lg shadow-lg">
-            <ul className="grid grid-cols-5 gap-3 p-2 rounded-lg">
+          <div className="w-full bg-gray-100 p-4 justify-center items-center rounded-lg shadow-lg">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {HORARIOS.map((hora) => (
                 <label
                   key={hora}
-                  className={`text-xl rounded-2xl border bg-white h-12 w-15 2xl:h-17 2xl:w-20 2xl:text-2xl text-gray-800 font-bold cursor-pointer
-                    ${horarioSelecionado === hora ? " text-black border-blue-500 border-4": ""}
+                  className={`text-xl rounded-lg border-2 bg-white h-12 flex items-center justify-center text-gray-800 font-bold cursor-pointer transition-colors
+                    ${
+                      horarioSelecionado === hora
+                        ? "border-blue-500 text-blue-600 bg-blue-50"
+                        : "border-gray-200 hover:border-blue-300"
+                    }
+                    ${!selectedDate ? "opacity-50 cursor-not-allowed" : ""}
                   `}
                 >
                   <input
@@ -105,33 +127,34 @@ const ClienteAgendamento = () => {
                     value={hora}
                     checked={horarioSelecionado === hora}
                     onChange={handleSelecionarHorario}
-                    className="hidden peer"
-                    aria-label={`Selecionar horário ${hora}`}
-                    disabled={!diaSelecionado}
+                    className="hidden"
+                    disabled={!selectedDate}
                   />
-                  <span className="h-full w-full flex items-center justify-center rounded-2xl transition"
-                        onChange={handleSelecionarHorario}>
-                    {hora}
-                  </span>
+                  {hora}
                 </label>
               ))}
-            </ul>
-            <div />
+            </div>
           </div>
 
-          <div className="mt-6 mb-10">
+          <div className="mt-6 mb-10 w-full">
             <button
               className={`w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition
-                ${!(diaSelecionado && horarioSelecionado) ? "opacity-50 cursor-not-allowed" : ""}
+                ${
+                  !(selectedDate && horarioSelecionado)
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                }
               `}
               onClick={handleConfirmar}
-              disabled={!(diaSelecionado && horarioSelecionado)}
+              disabled={!(selectedDate && horarioSelecionado)}
             >
-              Confirmar
+              Confirmar Agendamento
             </button>
             {confirmado && (
-              <div className="mt-4 text-green-600 text-center font-bold">
-                Agendamento confirmado para dia {diaSelecionado} às {horarioSelecionado}!
+              <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-lg text-center font-bold">
+                Agendamento confirmado para{" "}
+                {selectedDate.toLocaleDateString("pt-BR")} às{" "}
+                {horarioSelecionado}!
               </div>
             )}
           </div>
