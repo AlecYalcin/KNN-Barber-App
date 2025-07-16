@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ButtonBack from '../../components/ButtonBack';
 import BottomNav from '../../components/BottomNav';
 import Sidebar from '../../components/SidebarClient';
+import Header from '../../components/Header';
 
 // Exemplo de dados de barbeiros
 const barbeiros = [
@@ -15,10 +16,7 @@ const ListBarbeiro = () => {
     <div className="min-h-screen bg-gray-100 py-10 flex">
       <ButtonBack/>
 
-      <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
-        <h1 className="text-3xl font-bold ml-2">Barbeiros</h1>
-        <button className="mr-4">Sair</button>
-      </header>
+      <Header title="Barbeiros"/>
 
       <Sidebar />
 
