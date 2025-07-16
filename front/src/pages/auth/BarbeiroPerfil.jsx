@@ -1,9 +1,10 @@
 import Header from "../../components/Header";
+import SidebarBarbeiro from "../../components/SidebarBarbeiro";
 
 const BarbeiroPerfil = () => {
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
+      <SidebarBarbeiro />
       <Header title="Perfil" />
       {/* Layout Desktop (md para cima) */}
       <div className="hidden md:block min-h-screen">

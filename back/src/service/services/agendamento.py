@@ -114,6 +114,24 @@ def consultar_agendamentos_por_barbeiro(
     with uow:
         agendamentos = uow.agendamentos.listar_por_barbeiro(barbeiro_cpf)
         return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
+
+def consultar_agendamentos_por_cliente(
+    uow: AbstractUnidadeDeTrabalho,
+    cliente_cpf: str,
+) -> list[dict]:
+    """
+    Consulta todos os agendamentos existentes do cliente.
+    
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de Trabalho abstrata
+        cliente_cpf(str): CPF do Cliente escolhido
+    Returns:
+        list[dict]: Lista de todos os agendamentos do cliente
+    """
+    
+    with uow:
+        agendamentos = uow.agendamentos.listar_por_cliente(cliente_cpf)
+        return [agendamento.to_dict() for agendamento in agendamentos] if agendamentos else []
     
 def consultar_agendamentos_por_horario(
     uow: AbstractUnidadeDeTrabalho,

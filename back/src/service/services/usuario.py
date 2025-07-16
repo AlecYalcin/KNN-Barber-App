@@ -202,3 +202,19 @@ def atualizar_usuario(
             "eh_barbeiro": usuario.eh_barbeiro,
         })
         return jwt_token.token
+
+def listar_barbeiros(
+    uow: AbstractUnidadeDeTrabalho,
+) -> list[dict]:
+    """
+    Serviço para listar todos os barbeiros cadastrados no sistema.
+
+    Args:
+        uow(AbstractUnidadeDeTrabalho): Unidade de trabalho abstrata
+    Returns:
+        list[dict]: Lista de barbeiros cadastrados
+    """
+    
+    with uow:
+        barbeiros = uow.usuarios.listar_barbeiros()
+        return [barbeiro.to_dict() for barbeiro in barbeiros] if barbeiros else []

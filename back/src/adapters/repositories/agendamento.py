@@ -27,6 +27,10 @@ class AbstractAgendamentoRepository():
     @abc.abstractmethod
     def listar_por_barbeiro(self, barbeiro_id: str) -> list[Agendamento]:
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def listar_por_cliente(self, cliente_cpf: str) -> list[Agendamento]:
+        raise NotImplementedError
 
 class AgendamentoRepository(AbstractAgendamentoRepository, AbstractSQLAlchemyRepository):
     def adicionar(self, agendamento: Agendamento):
@@ -53,4 +57,8 @@ class AgendamentoRepository(AbstractAgendamentoRepository, AbstractSQLAlchemyRep
     
     def listar_por_barbeiro(self, barbeiro_cpf: str) -> list[Agendamento]:
         agendamentos = self.session.query(Agendamento).filter(Agendamento.barbeiro_cpf == barbeiro_cpf).all()
+        return agendamentos
+    
+    def listar_por_cliente(self, cliente_cpf: str) -> list[Agendamento]:
+        agendamentos = self.session.query(Agendamento).filter(Agendamento.cliente_cpf == cliente_cpf).all()
         return agendamentos
