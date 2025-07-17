@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import Header from "../../components/Header";
-import SidebarBarbeiro from "../../components/SidebarBarbeiro";
+import Sidebar from "../../components/Sidebar";
 import { jwt_decoder } from "../../api";
 import { consultar_agendamentos_por_barbeiro } from "../../api/models/agendamentos";
 
@@ -70,7 +70,7 @@ const BarbeiroHome = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <SidebarBarbeiro />
+      <Sidebar />
       <Header title="Dashboard" />
       
       <main className="flex w-full md:items-center flex-col items-center lg:mt-10 p-6 lg:pl-69">

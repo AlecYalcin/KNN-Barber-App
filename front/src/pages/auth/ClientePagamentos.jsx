@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import BottomNav from "../../components/BottomNav";
-import Sidebar from "../../components/SidebarClient";
+import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { usePDF } from "react-to-pdf";
 import { jwt_decoder } from "../../api/index";

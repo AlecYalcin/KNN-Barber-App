@@ -1,15 +1,13 @@
-import { useState } from 'react';
-import ButtonBack from '../../components/ButtonBack';
-import BottomNav from '../../components/BottomNav';
-import Sidebar from '../../components/SidebarClient';
-
+import { useState } from "react";
+import ButtonBack from "../../components/ButtonBack";
+import BottomNav from "../../components/BottomNav";
+import Sidebar from "../../components/Sidebar";
 
 const AddBarbeiro = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -32,20 +30,24 @@ const AddBarbeiro = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
-      <ButtonBack/>
+      <ButtonBack />
 
       <header className="lg:flex justify-between hidden bg-blue-600 p-4 text-white fixed top-0 w-full z-50">
         <h1 className="text-3xl font-bold ml-2">Adicionar Barbeiro</h1>
         <button className="mr-4">Sair</button>
       </header>
 
-      <Sidebar/>
+      <Sidebar />
 
       <main className="w-full p-5 mt-10 lg:pl-69">
-        <h2 className="text-2xl font-bold mb-8 text-center text-gray-800">Adicionar Barbeiro</h2>
+        <h2 className="text-2xl font-bold mb-8 text-center text-gray-800">
+          Adicionar Barbeiro
+        </h2>
         <form onSubmit={handleSave} className="w-full">
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">Nome:</label>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Nome:
+            </label>
             <input
               type="text"
               name="nome"
@@ -57,7 +59,9 @@ const AddBarbeiro = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 font-semibold mb-2">Email:</label>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Email:
+            </label>
             <input
               type="email"
               name="email"
@@ -69,7 +73,9 @@ const AddBarbeiro = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 font-semibold mb-2">Telefone:</label>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Telefone:
+            </label>
             <input
               type="tel"
               name="telefone"
@@ -107,7 +113,7 @@ const AddBarbeiro = () => {
             </button>
           </div>
         </form>
-        <BottomNav/>
+        <BottomNav />
       </main>
     </div>
   );

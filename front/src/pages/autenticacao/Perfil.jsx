@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonBack from "../../components/ButtonBack";
 import BottomNav from "../../components/BottomNav";
 import PhotoPerfil from "../../components/PhotoPerfil";
-import Sidebar from "../../components/SidebarClient";
+import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 
 // API
@@ -115,18 +115,6 @@ const Perfil = () => {
               />
             </div>
           </form>
-
-          {/* Agendamentos */}
-          <div className="mt-6">
-            <h2 className="text-lg font-bold mb-3 text-gray-800">
-              Agendamentos
-            </h2>
-            <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 min-h-20">
-              <p className="text-sm text-gray-500">
-                Nenhum agendamento recente
-              </p>
-            </div>
-          </div>
 
           {/* Jornada */}
           {isBarbeiro && (

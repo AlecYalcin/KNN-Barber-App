@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
-import Sidebar from "../../components/SidebarClient";
+import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { jwt_decoder } from "../../api";
 import { consultar_agendamentos_por_cliente } from "../../api/models/agendamentos";
@@ -13,7 +13,7 @@ const ClienteAgendamentos = () => {
   const [filtroData, setFiltroData] = useState("");
   const [filtroStatus, setFiltroStatus] = useState("todos");
   const [agendamentoSelecionado, setAgendamentoSelecionado] = useState(null);
-  
+
   // Obter dados do usuário logado
   const usuario = jwt_decoder(localStorage.getItem("usuario_token"));
 
@@ -23,7 +23,7 @@ const ClienteAgendamentos = () => {
       try {
         setLoading(true);
         setError("");
-        
+
         const data = await consultar_agendamentos_por_cliente(usuario.cpf);
         setAgendamentos(data);
       } catch (error) {
@@ -33,15 +33,15 @@ const ClienteAgendamentos = () => {
         setLoading(false);
       }
     };
-    
+
     carregarAgendamentos();
   }, [usuario.cpf]);
 
   // Filtrar agendamentos
-  const agendamentosFiltrados = agendamentos.filter(agendamento => {
+  const agendamentosFiltrados = agendamentos.filter((agendamento) => {
     const dataAgendamento = new Date(agendamento.horario_inicio);
     const hoje = new Date();
-    
+
     // Filtro por data
     if (filtroData === "hoje") {
       return dataAgendamento.toDateString() === hoje.toDateString();
@@ -49,44 +49,48 @@ const ClienteAgendamentos = () => {
       const umaSemana = new Date(hoje.getTime() + 7 * 24 * 60 * 60 * 1000);
       return dataAgendamento >= hoje && dataAgendamento <= umaSemana;
     } else if (filtroData === "mes") {
-      const umMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, hoje.getDate());
+      const umMes = new Date(
+        hoje.getFullYear(),
+        hoje.getMonth() + 1,
+        hoje.getDate()
+      );
       return dataAgendamento >= hoje && dataAgendamento <= umMes;
     }
-    
+
     // Filtro por status (passado/futuro)
     if (filtroStatus === "passados") {
       return dataAgendamento < hoje;
     } else if (filtroStatus === "futuros") {
       return dataAgendamento >= hoje;
     }
-    
+
     return true;
   });
 
   // Formatar data e hora
   const formatarDataHora = (dataString) => {
     const data = new Date(dataString);
-    return data.toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return data.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   // Formatar apenas data
   const formatarData = (dataString) => {
     const data = new Date(dataString);
-    return data.toLocaleDateString('pt-BR');
+    return data.toLocaleDateString("pt-BR");
   };
 
   // Formatar apenas hora
   const formatarHora = (dataString) => {
     const data = new Date(dataString);
-    return data.toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit'
+    return data.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -122,7 +126,7 @@ const ClienteAgendamentos = () => {
     <div className="min-h-screen bg-gray-100">
       <Sidebar />
       <Header title="Meus Agendamentos" />
-      
+
       <main className="flex w-full md:items-center flex-col items-center lg:mt-10 p-6 lg:pl-69">
         {loading && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -155,7 +159,7 @@ const ClienteAgendamentos = () => {
               <option value="mes">Próximo mês</option>
             </select>
           </div>
-          
+
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Filtrar por status
@@ -175,25 +179,43 @@ const ClienteAgendamentos = () => {
         {/* Estatísticas */}
         <div className="w-full max-w-4xl mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-800">Total de Agendamentos</h3>
-            <p className="text-2xl font-bold text-blue-600">{agendamentosFiltrados.length}</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-800">Agendamentos Hoje</h3>
-            <p className="text-2xl font-bold text-green-600">
-              {agendamentosFiltrados.filter(a => ehHoje(a.horario_inicio)).length}
+            <h3 className="text-lg font-semibold text-gray-800">
+              Total de Agendamentos
+            </h3>
+            <p className="text-2xl font-bold text-blue-600">
+              {agendamentosFiltrados.length}
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-800">Próximos Agendamentos</h3>
+            <h3 className="text-lg font-semibold text-gray-800">
+              Agendamentos Hoje
+            </h3>
+            <p className="text-2xl font-bold text-green-600">
+              {
+                agendamentosFiltrados.filter((a) => ehHoje(a.horario_inicio))
+                  .length
+              }
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-800">
+              Próximos Agendamentos
+            </h3>
             <p className="text-2xl font-bold text-orange-600">
-              {agendamentosFiltrados.filter(a => !ehPassado(a.horario_inicio)).length}
+              {
+                agendamentosFiltrados.filter(
+                  (a) => !ehPassado(a.horario_inicio)
+                ).length
+              }
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-800">Valor Total</h3>
             <p className="text-2xl font-bold text-purple-600">
-              R$ {agendamentosFiltrados.reduce((total, a) => total + calcularValorTotal(a.servicos), 0).toFixed(2)}
+              R${" "}
+              {agendamentosFiltrados
+                .reduce((total, a) => total + calcularValorTotal(a.servicos), 0)
+                .toFixed(2)}
             </p>
           </div>
         </div>
@@ -224,7 +246,7 @@ const ClienteAgendamentos = () => {
               Novo Agendamento
             </Link>
           </div>
-          
+
           {agendamentosFiltrados.length === 0 ? (
             <div className="bg-white p-8 rounded-lg shadow text-center">
               <p className="text-gray-500 text-lg">
@@ -260,16 +282,19 @@ const ClienteAgendamentos = () => {
           ) : (
             <div className="space-y-4">
               {agendamentosFiltrados
-                .sort((a, b) => new Date(a.horario_inicio) - new Date(b.horario_inicio))
+                .sort(
+                  (a, b) =>
+                    new Date(a.horario_inicio) - new Date(b.horario_inicio)
+                )
                 .map((agendamento) => (
                   <div
                     key={agendamento.id}
                     className={`bg-white p-6 rounded-lg shadow border-l-4 cursor-pointer hover:shadow-lg transition-shadow ${
                       ehHoje(agendamento.horario_inicio)
-                        ? 'border-green-500'
+                        ? "border-green-500"
                         : ehPassado(agendamento.horario_inicio)
-                        ? 'border-gray-400'
-                        : 'border-blue-500'
+                        ? "border-gray-400"
+                        : "border-blue-500"
                     }`}
                     onClick={() => setAgendamentoSelecionado(agendamento)}
                   >
@@ -283,23 +308,30 @@ const ClienteAgendamentos = () => {
                               </span>
                             </div>
                           </div>
-                          
+
                           <div className="flex-1">
                             <h3 className="text-lg font-semibold text-gray-800">
                               {agendamento.barbeiro.nome}
                             </h3>
                             <p className="text-sm text-gray-600">
-                              {formatarDataHora(agendamento.horario_inicio)} - {formatarHora(agendamento.horario_fim)}
+                              {formatarDataHora(agendamento.horario_inicio)} -{" "}
+                              {formatarHora(agendamento.horario_fim)}
                             </p>
                             <p className="text-sm text-gray-500">
-                              Duração: {calcularDuracao(agendamento.horario_inicio, agendamento.horario_fim)}
+                              Duração:{" "}
+                              {calcularDuracao(
+                                agendamento.horario_inicio,
+                                agendamento.horario_fim
+                              )}
                             </p>
                           </div>
                         </div>
-                        
+
                         {/* Serviços */}
                         <div className="mb-3">
-                          <h4 className="text-sm font-medium text-gray-700 mb-2">Serviços:</h4>
+                          <h4 className="text-sm font-medium text-gray-700 mb-2">
+                            Serviços:
+                          </h4>
                           <div className="flex flex-wrap gap-2">
                             {agendamento.servicos.map((servico) => (
                               <span
@@ -312,38 +344,43 @@ const ClienteAgendamentos = () => {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="mt-4 lg:mt-0 lg:ml-4">
                         <div className="flex flex-col gap-2">
                           <span
                             className={`px-3 py-1 text-sm rounded-full text-center ${
                               ehHoje(agendamento.horario_inicio)
-                                ? 'bg-green-100 text-green-800'
+                                ? "bg-green-100 text-green-800"
                                 : ehPassado(agendamento.horario_inicio)
-                                ? 'bg-gray-100 text-gray-800'
-                                : 'bg-blue-100 text-blue-800'
+                                ? "bg-gray-100 text-gray-800"
+                                : "bg-blue-100 text-blue-800"
                             }`}
                           >
                             {ehHoje(agendamento.horario_inicio)
-                              ? 'Hoje'
+                              ? "Hoje"
                               : ehPassado(agendamento.horario_inicio)
-                              ? 'Realizado'
+                              ? "Realizado"
                               : formatarData(agendamento.horario_inicio)}
                           </span>
-                          
+
                           <div className="text-right">
                             <p className="text-lg font-bold text-gray-800">
-                              R$ {calcularValorTotal(agendamento.servicos).toFixed(2)}
+                              R${" "}
+                              {calcularValorTotal(agendamento.servicos).toFixed(
+                                2
+                              )}
                             </p>
                           </div>
-                          
+
                           {!ehPassado(agendamento.horario_inicio) && (
-                            <button 
+                            <button
                               className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 // Aqui você pode implementar a lógica de cancelamento
-                                alert("Funcionalidade de cancelamento será implementada em breve!");
+                                alert(
+                                  "Funcionalidade de cancelamento será implementada em breve!"
+                                );
                               }}
                             >
                               Cancelar
@@ -413,25 +450,37 @@ const ClienteAgendamentos = () => {
 
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Data e Hora</h3>
+                  <h3 className="text-sm font-medium text-gray-500">
+                    Data e Hora
+                  </h3>
                   <p className="text-gray-800">
                     {formatarDataHora(agendamentoSelecionado.horario_inicio)}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Barbeiro</h3>
-                  <p className="text-gray-800">{agendamentoSelecionado.barbeiro.nome}</p>
-                  <p className="text-sm text-gray-600">{agendamentoSelecionado.barbeiro.telefone}</p>
+                  <h3 className="text-sm font-medium text-gray-500">
+                    Barbeiro
+                  </h3>
+                  <p className="text-gray-800">
+                    {agendamentoSelecionado.barbeiro.nome}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {agendamentoSelecionado.barbeiro.telefone}
+                  </p>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Serviços</h3>
+                  <h3 className="text-sm font-medium text-gray-500">
+                    Serviços
+                  </h3>
                   <ul className="space-y-2">
                     {agendamentoSelecionado.servicos.map((servico) => (
                       <li key={servico.id} className="flex justify-between">
                         <span className="text-gray-800">{servico.nome}</span>
-                        <span className="text-gray-600">R$ {servico.preco.toFixed(2)}</span>
+                        <span className="text-gray-600">
+                          R$ {servico.preco.toFixed(2)}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -439,18 +488,25 @@ const ClienteAgendamentos = () => {
 
                 <div className="border-t pt-4">
                   <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-semibold text-gray-800">Total</h3>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      Total
+                    </h3>
                     <span className="text-xl font-bold text-gray-800">
-                      R$ {calcularValorTotal(agendamentoSelecionado.servicos).toFixed(2)}
+                      R${" "}
+                      {calcularValorTotal(
+                        agendamentoSelecionado.servicos
+                      ).toFixed(2)}
                     </span>
                   </div>
                 </div>
 
                 {!ehPassado(agendamentoSelecionado.horario_inicio) && (
-                  <button 
+                  <button
                     className="w-full mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                     onClick={() => {
-                      alert("Funcionalidade de cancelamento será implementada em breve!");
+                      alert(
+                        "Funcionalidade de cancelamento será implementada em breve!"
+                      );
                       setAgendamentoSelecionado(null);
                     }}
                   >
@@ -462,10 +518,10 @@ const ClienteAgendamentos = () => {
           </div>
         </div>
       )}
-      
+
       <BottomNav />
     </div>
   );
 };
 
-export default ClienteAgendamentos; 
+export default ClienteAgendamentos;

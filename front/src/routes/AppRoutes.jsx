@@ -95,7 +95,7 @@ export default function AppRoutes() {
         <Route path="/cliente/agendamentos" element={<ClienteAgendamentos />} />
         <Route path="/barbeiro/home" element={<BarbeiroHome />} />
         <Route
-          path="/barbeiro/agendamentos"
+          path="barbeiro/agendamentos"
           element={<BarbeiroAgendamentos />}
         />
         <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />

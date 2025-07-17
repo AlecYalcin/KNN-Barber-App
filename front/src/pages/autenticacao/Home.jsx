@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import Header from "../../components/Header";
 import ServicosHorarios from "../../components/ScrollHome";
-import Sidebar from "../../components/SidebarClient";
+import Sidebar from "../../components/Sidebar";
 
 // API
 import { jwt_decoder } from "../../api/index";

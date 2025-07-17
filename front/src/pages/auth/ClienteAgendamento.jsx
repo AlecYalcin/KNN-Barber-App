@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import BottomNav from "../../components/BottomNav";
-import Sidebar from "../../components/SidebarClient";
+import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";

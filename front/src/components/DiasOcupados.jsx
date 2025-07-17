@@ -144,7 +144,7 @@ const DiasOcupados = () => {
 
       {/* Modal */}
       {modalAberto && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
+        <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-xs bg-opacity-30">
           <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
             <h2 className="text-lg font-semibold mb-4">
               {formData.id ? "Editar Dia Ocupado" : "Adicionar Dia Ocupado"}

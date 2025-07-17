@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BottomNav from "../../components/BottomNav";
-import Sidebar from "../../components/SidebarClient";
+import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 
 const services = [
@@ -29,7 +29,6 @@ export default function ClienteServicos() {
 
   const selectedServices = services.filter((s) => selected.includes(s.id));
   const total = selectedServices.reduce((sum, s) => sum + s.value, 0);
-
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex">
