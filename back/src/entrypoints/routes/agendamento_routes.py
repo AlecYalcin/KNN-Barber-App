@@ -6,8 +6,8 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from src.service.services.agendamento import (
     consultar_agendamento, consultar_agendamentos_por_barbeiro,
-    consultar_agendamentos_por_horario, criar_agendamento, listar_agendamentos,
-    remover_agendamento)
+    consultar_agendamentos_por_cliente, consultar_agendamentos_por_horario, 
+    criar_agendamento, listar_agendamentos, remover_agendamento)
 from src.service.unit_of_work import UnidadeDeTrabalho
 
 
@@ -63,6 +63,21 @@ def consultar_agendamentos_por_barbeiro_route(
    """
 
     agendamentos = consultar_agendamentos_por_barbeiro(uow=uow, barbeiro_cpf=barbeiro_cpf)
+    return JSONResponse(
+        status_code=200,
+        content=agendamentos
+    )
+
+@router.get("/cliente/{cliente_cpf}")
+def consultar_agendamentos_por_cliente_route(
+    cliente_cpf: str,
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+):
+    """
+    Consulta todos os agendamentos de um cliente específico.
+   """
+
+    agendamentos = consultar_agendamentos_por_cliente(uow=uow, cliente_cpf=cliente_cpf)
     return JSONResponse(
         status_code=200,
         content=agendamentos

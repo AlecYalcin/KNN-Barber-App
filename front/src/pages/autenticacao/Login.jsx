@@ -111,10 +111,8 @@ const Login = () => {
       </div>
 
       {/* Imagem da tela de Login */}
-      <div className="hidden md:flex md:w-1/2 bg-blue-600 items-center justify-center p-8 text-white">
-        <div className="text-center max-w-md">
-          <h1 className="text-4xl font-bold mb-6">Alguma Imagem</h1>
-        </div>
+      <div className="hidden md:flex md:w-1/2 ">
+        <img className="" alt="imagem-login" src="public/login.png" />
       </div>
     </div>
   );

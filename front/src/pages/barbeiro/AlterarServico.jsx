@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ButtonBack from "../../components/ButtonBack";
 import BottomNav from "../../components/BottomNav";
-import Sidebar from "../../components/SidebarClient";
+import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 
 const AlterarServico = () => {

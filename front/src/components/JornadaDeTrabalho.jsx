@@ -129,7 +129,7 @@ export default function JornadaDeTrabalhoMobile() {
 
       {/* Modal */}
       {modalAberto && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
+        <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-xs bg-opacity-40">
           <div className="bg-white rounded-xl p-6 w-[90%] max-w-md shadow-lg relative">
             <h2 className="text-lg font-bold mb-4">
               Editar jornada de {diaSelecionado}

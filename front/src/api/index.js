@@ -5,6 +5,9 @@ export const BASE_URL = "http://localhost:8000";
 import * as usuario from "./models/usuarios";
 import * as horario_ocupado from "./models/horarios_ocupados";
 import * as jornada from "./models/jornadas";
+import * as agendamento from "./models/agendamentos";
+import * as servico from "./models/servicos";
+import * as barbeiro from "./models/barbeiros";
 
 // Extraindo informação de Tokens JWT
 import { jwtDecode } from "jwt-decode";
@@ -15,4 +18,4 @@ export const jwt_decoder = (token) => {
 };
 
 // Exportando API
-export { usuario, horario_ocupado, jornada };
+export { usuario, horario_ocupado, jornada, agendamento, servico, barbeiro };

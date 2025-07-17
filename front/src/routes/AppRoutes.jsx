@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Perfil from "../pages/autenticacao/Perfil";
-import Home from "../pages/autenticacao/Home";
-import ClienteServicos from "../pages/auth/ClienteServicos";
-import ClienteAgendamento from "../pages/auth/ClienteAgendamento";
-import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
-import AlterarServico from "../pages/auth/AlterarServico";
-import AddBarbeiro from "../pages/auth/AddBarbeiro";
-import ListBarbeiro from "../pages/auth/ListBarbeiro";
 import Cadastro from "../pages/autenticacao/Cadastro";
+import Perfil from "../pages/autenticacao/Perfil";
 import Login from "../pages/autenticacao/Login";
+import Home from "../pages/autenticacao/Home";
+import BarbeiroAgendamentos from "../pages/agendamento/BarbeiroAgendamentos";
+import ClienteAgendamentos from "../pages/agendamento/ClienteAgendamentos";
+import ClienteAgendamento from "../pages/agendamento/ClienteAgendamento";
+import BarbeiroServicos from "../pages/barbeiro/BarbeiroServicos";
+import BarbeiroHome from "../pages/barbeiro/BarbeiroHome";
 
 // API
 import { jwt_decoder, usuario } from "../api";
-import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
 
 export default function AppRoutes() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -78,20 +76,15 @@ export default function AppRoutes() {
 
         {/* Serviços */}
         <Route path="/servicos/cadastrar" element={<BarbeiroServicos />} />
-        <Route path="/servicos/alterar/:id" element={<AlterarServico />} />
-        <Route path="/servicos/listar" element={<ClienteServicos />} />
-
-        {/* Jornada de Trabalho */}
-
-        {/* Horário Indisponível */}
 
         {/* Agendamento */}
         <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />
-        <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />
-        <Route path="/barbeiro/listar" element={<ListBarbeiro />} />
-        <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />
-
-        {/* Avaliação */}
+        <Route path="/cliente/agendamentos" element={<ClienteAgendamentos />} />
+        <Route path="/barbeiro/home" element={<BarbeiroHome />} />
+        <Route
+          path="barbeiro/agendamentos"
+          element={<BarbeiroAgendamentos />}
+        />
       </Routes>
     </Router>
   );

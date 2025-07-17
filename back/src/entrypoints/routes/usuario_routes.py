@@ -8,6 +8,7 @@ from src.service.services.usuario import (
     consultar_usuario,
     atualizar_usuario,
     remover_usuario,
+    listar_barbeiros,
 )
 from .autenticacao_router import obter_usuario_atual
 
@@ -65,6 +66,24 @@ def recuperando_usuario(
     return JSONResponse(
         status_code=200,
         content=usuario
+    )
+
+@router.get("/barbeiros/listar", response_model=list[dict])
+def listando_barbeiros(
+    uow: UnidadeDeTrabalho = Depends(get_uow),
+):
+    """
+    Lista todos os barbeiros cadastrados no sistema.
+    
+    Args:
+        uow(UnidadeDeTrabalho): Unidade de Trabalho abstrata
+    Returns:
+        JSONResponse: Lista de barbeiros ou mensagem de erro
+    """
+    barbeiros = listar_barbeiros(uow=uow)
+    return JSONResponse(
+        status_code=200,
+        content=barbeiros
     )
 
 @router.patch("/{cpf}")
