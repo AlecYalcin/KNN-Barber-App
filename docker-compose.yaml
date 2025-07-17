@@ -13,6 +13,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./seed.sql:/app/seed.sql
   api:
     build:
       context: ./back
@@ -27,7 +28,7 @@ services:
       - ./back:/app
     command: uvicorn src.entrypoints.fastapi:app --host 0.0.0.0 --port 8000 --reload
   frontend:
-    build: 
+    build:
       context: ./front
     container_name: knn_front
     depends_on:
@@ -35,8 +36,8 @@ services:
     ports:
       - "5173:5173"
     volumes:
-    - ./front:/app
-    - /app/node_modules
+      - ./front:/app
+      - /app/node_modules
     command: npm run dev --host
 
 volumes:

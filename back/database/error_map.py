@@ -97,4 +97,16 @@ ERROR_MAP = {
         "status_code": 400,
         "message":"O dia da semana da jornada está inválido."
     },
+    "PagamentoNaoEncontrado": {
+        "status_code": 404,
+        "message": "Pagamento não encontrado.",
+    },
+    "ValorInvalido": {
+        "status_code": 400,
+        "message": "O valor do pagamento precisa ser maior que zero.",
+    },
+    "AgendamentoNaoEncontrado": {
+        "status_code": 404,
+        "message": "Agendamento não encontrado.",
+    },
 }

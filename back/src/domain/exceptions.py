@@ -32,6 +32,9 @@ class HorarioOcupado(DomainError):
 class HorarioInsuficiente(DomainError):
     pass
 
+class AgendamentoNaoEncontrado(DomainError):
+    pass
+
 # Usuario
 
 class CPFInvalido(DomainError):
@@ -85,4 +88,17 @@ class HorarioIndisponivelInvalido(DomainError):
 # Barbeiro
 
 class BarbeiroNaoEncontrado(DomainError):
+    pass
+
+# Pagamento
+
+class PagamentoNaoEncontrado(DomainError):
+    pass
+
+class ValorInvalido(DomainError):
+    pass
+
+# Agendamento
+
+class AgendamentoNaoEncontrado(DomainError):
     pass

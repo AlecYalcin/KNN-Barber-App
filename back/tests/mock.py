@@ -2,6 +2,9 @@ import pytest
 from datetime import datetime, date, time, timedelta
 from src.domain.models import *
 from sqlalchemy import text
+from uuid import uuid4
+import json
+
 
 @pytest.fixture
 def usuario_base():
@@ -273,3 +276,335 @@ def mock_criar_horarios_indisponiveis(session, mock_criar_barbeiro):
         }
     )
     session.commit()
+
+@pytest.fixture
+def mock_criar_agendamento(
+    session,
+    mock_criar_servicos,
+    mock_criar_barbeiro,
+    mock_criar_usuario,
+    mock_criar_jornada_de_trabalho,
+):
+    # Cria serviços e obtém os IDs
+    ids_servicos = {
+        "id0": "servico-001",
+        "id1": "servico-002",
+        "id2": "servico-003",
+    }
+    mock_criar_servicos(ids=ids_servicos)
+
+    # Cria agendamentos
+    session.execute(
+        text(
+            """
+            INSERT INTO agendamento (id, horario_inicio, horario_fim, cliente_cpf, barbeiro_cpf) VALUES
+            ('agendamento-001', '2025-06-10 10:00:00', '2025-06-10 11:00:00', '05705608020', '25811756054'),
+            ('agendamento-002', '2025-06-11 14:00:00', '2025-06-11 15:00:00', '56198304035', '36311464004'),
+            ('agendamento-003', '2025-06-12 09:30:00', '2025-06-12 10:30:00', '80990188000', '09357654097')
+            """
+        )
+    )
+
+    # Relaciona serviços aos agendamentos na tabela intermediária
+    session.execute(
+        text(
+            """
+            INSERT INTO servicos_do_agendamento (agendamento, servico) VALUES
+            ('agendamento-001', :servico1),
+            ('agendamento-001', :servico2),
+            ('agendamento-002', :servico3)
+            """
+        ),
+        {
+            "servico1": ids_servicos["id0"],
+            "servico2": ids_servicos["id1"],
+            "servico3": ids_servicos["id2"],
+        }
+    )
+
+    session.commit()
+    return {
+        "id_agendamento": "agendamento-001",
+        "servicos": [ids_servicos["id0"], ids_servicos["id1"]],
+    }
+
+
+# Mocks para Pagamento
+@pytest.fixture
+def mock_criar_pagamento(session):
+    """Cria um pagamento de teste"""
+    from src.domain.models import Pagamento, Agendamento, Usuario, Servico, Barbeiro
+    from src.domain.value_objects import MetodoPagamento
+    from datetime import datetime, timedelta
+    from sqlalchemy import text
+    
+    # Criar usuários via SQL
+    session.execute(
+        text("""
+            INSERT INTO usuario (cpf, nome, email, senha, telefone, eh_barbeiro) VALUES
+            ('12345678901', 'Cliente Teste', 'cliente@test.com', 'senha123', '11999999999', FALSE),
+            ('98765432100', 'Barbeiro Teste', 'barbeiro@test.com', 'senha123', '11888888888', TRUE)
+        """)
+    )
+    
+    # Criar serviços via SQL
+    servico1_id = str(uuid4())
+    servico2_id = str(uuid4())
+    session.execute(
+        text("""
+            INSERT INTO servico (id, nome, descricao, preco, duracao) VALUES
+            (:id1, 'Corte', 'Corte de cabelo', 30.0, 30),
+            (:id2, 'Barba', 'Fazer a barba', 20.0, 20)
+        """),
+        {"id1": servico1_id, "id2": servico2_id}
+    )
+    
+    # Criar agendamento via SQL
+    agendamento_id = str(uuid4())
+    horario_inicio = datetime.now() + timedelta(days=1)
+    horario_fim = horario_inicio + timedelta(minutes=50)
+    
+    session.execute(
+        text("""
+            INSERT INTO agendamento (id, horario_inicio, horario_fim, barbeiro_cpf, cliente_cpf) VALUES
+            (:id, :horario_inicio, :horario_fim, '98765432100', '12345678901')
+        """),
+        {
+            "id": agendamento_id,
+            "horario_inicio": horario_inicio,
+            "horario_fim": horario_fim
+        }
+    )
+    
+    # Criar relação agendamento-serviços
+    session.execute(
+        text("""
+            INSERT INTO servicos_do_agendamento (agendamento, servico) VALUES
+            (:agendamento, :servico1),
+            (:agendamento, :servico2)
+        """),
+        {
+            "agendamento": agendamento_id,
+            "servico1": servico1_id,
+            "servico2": servico2_id
+        }
+    )
+    
+    # Criar pagamento via SQL
+    pagamento_id = str(uuid4())
+    session.execute(
+        text("""
+            INSERT INTO pagamento (id, valor, data, metodo, agendamento_id) VALUES
+            (:id, :valor, :data, :metodo, :agendamento_id)
+        """),
+        {
+            "id": pagamento_id,
+            "valor": 50.0,
+            "data": datetime.now(),
+            "metodo": "PIX",
+            "agendamento_id": agendamento_id
+        }
+    )
+    
+    session.commit()
+    
+    # Retornar objeto Pagamento para os testes
+    pagamento = Pagamento(
+        valor=50.0,
+        data=datetime.now(),
+        metodo=MetodoPagamento.PIX,
+        agendamento=Agendamento(
+            id=agendamento_id,
+            horario_inicio=horario_inicio,
+            horario_fim=horario_fim,
+            barbeiro=Usuario(cpf="98765432100", nome="Barbeiro Teste", email="barbeiro@test.com", senha="senha123", telefone="11888888888", eh_barbeiro=True),
+            cliente=Usuario(cpf="12345678901", nome="Cliente Teste", email="cliente@test.com", senha="senha123", telefone="11999999999", eh_barbeiro=False),
+            servicos=[]
+        )
+    )
+    pagamento.id = pagamento_id
+    pagamento.agendamento_id = agendamento_id
+    
+    return pagamento
+
+@pytest.fixture
+def mock_criar_usuarios_e_agendamento(session):
+    """Cria usuários e agendamento para testes de pagamento"""
+    from src.domain.models import Agendamento, Usuario, Servico, Barbeiro
+    from datetime import datetime, timedelta
+    from sqlalchemy import text
+    
+    # Criar usuários via SQL
+    session.execute(
+        text("""
+            INSERT INTO usuario (cpf, nome, email, senha, telefone, eh_barbeiro) VALUES
+            ('12345678901', 'Cliente Teste', 'cliente@test.com', 'senha123', '11999999999', FALSE),
+            ('98765432100', 'Barbeiro Teste', 'barbeiro@test.com', 'senha123', '11888888888', TRUE)
+        """)
+    )
+    
+    # Criar serviços via SQL
+    servico1_id = str(uuid4())
+    servico2_id = str(uuid4())
+    session.execute(
+        text("""
+            INSERT INTO servico (id, nome, descricao, preco, duracao) VALUES
+            (:id1, 'Corte', 'Corte de cabelo', 30.0, 30),
+            (:id2, 'Barba', 'Fazer a barba', 20.0, 20)
+        """),
+        {"id1": servico1_id, "id2": servico2_id}
+    )
+    
+    # Criar agendamento via SQL
+    agendamento_id = str(uuid4())
+    horario_inicio = datetime.now() + timedelta(days=1)
+    horario_fim = horario_inicio + timedelta(minutes=50)
+    
+    session.execute(
+        text("""
+            INSERT INTO agendamento (id, horario_inicio, horario_fim, barbeiro_cpf, cliente_cpf) VALUES
+            (:id, :horario_inicio, :horario_fim, '98765432100', '12345678901')
+        """),
+        {
+            "id": agendamento_id,
+            "horario_inicio": horario_inicio,
+            "horario_fim": horario_fim
+        }
+    )
+    
+    # Criar relação agendamento-serviços
+    session.execute(
+        text("""
+            INSERT INTO servicos_do_agendamento (agendamento, servico) VALUES
+            (:agendamento, :servico1),
+            (:agendamento, :servico2)
+        """),
+        {
+            "agendamento": agendamento_id,
+            "servico1": servico1_id,
+            "servico2": servico2_id
+        }
+    )
+    
+    session.commit()
+    
+    # Retornar objetos para os testes
+    cliente = Usuario(cpf="12345678901", nome="Cliente Teste", email="cliente@test.com", senha="senha123", telefone="11999999999", eh_barbeiro=False)
+    barbeiro_usuario = Usuario(cpf="98765432100", nome="Barbeiro Teste", email="barbeiro@test.com", senha="senha123", telefone="11888888888", eh_barbeiro=True)
+    barbeiro = Barbeiro(usuario=barbeiro_usuario)
+    agendamento = Agendamento(
+        id=agendamento_id,
+        horario_inicio=horario_inicio,
+        horario_fim=horario_fim,
+        barbeiro=barbeiro_usuario,
+        cliente=cliente,
+        servicos=[]
+    )
+    
+    return cliente, barbeiro, agendamento
+
+@pytest.fixture
+def mock_criar_pagamentos_cliente(session):
+    """Cria múltiplos pagamentos para um cliente"""
+    from src.domain.models import Pagamento, Agendamento, Usuario, Servico, Barbeiro
+    from src.domain.value_objects import MetodoPagamento
+    from datetime import datetime, timedelta
+    from sqlalchemy import text
+    
+    # Criar usuários via SQL
+    session.execute(
+        text("""
+            INSERT INTO usuario (cpf, nome, email, senha, telefone, eh_barbeiro) VALUES
+            ('12345678901', 'Cliente Teste', 'cliente@test.com', 'senha123', '11999999999', FALSE),
+            ('98765432100', 'Barbeiro Teste', 'barbeiro@test.com', 'senha123', '11888888888', TRUE)
+        """)
+    )
+    
+    # Criar serviços via SQL
+    servico1_id = str(uuid4())
+    servico2_id = str(uuid4())
+    session.execute(
+        text("""
+            INSERT INTO servico (id, nome, descricao, preco, duracao) VALUES
+            (:id1, 'Corte', 'Corte de cabelo', 30.0, 30),
+            (:id2, 'Barba', 'Fazer a barba', 20.0, 20)
+        """),
+        {"id1": servico1_id, "id2": servico2_id}
+    )
+    
+    # Criar múltiplos agendamentos e pagamentos
+    agendamentos = []
+    pagamentos = []
+    
+    for i in range(3):
+        agendamento_id = str(uuid4())
+        horario_inicio = datetime.now() + timedelta(days=i+1)
+        horario_fim = horario_inicio + timedelta(minutes=50)
+        
+        # Criar agendamento
+        session.execute(
+            text("""
+                INSERT INTO agendamento (id, horario_inicio, horario_fim, barbeiro_cpf, cliente_cpf) VALUES
+                (:id, :horario_inicio, :horario_fim, '98765432100', '12345678901')
+            """),
+            {
+                "id": agendamento_id,
+                "horario_inicio": horario_inicio.isoformat(sep=' '),
+                "horario_fim": horario_fim.isoformat(sep=' ')
+            }
+        )
+        
+        # Criar relação agendamento-serviços
+        session.execute(
+            text("""
+                INSERT INTO servicos_do_agendamento (agendamento, servico) VALUES
+                (:agendamento, :servico1),
+                (:agendamento, :servico2)
+            """),
+            {
+                "agendamento": agendamento_id,
+                "servico1": servico1_id,
+                "servico2": servico2_id
+            }
+        )
+        
+        # Criar pagamento
+        pagamento_id = str(uuid4())
+        session.execute(
+            text("""
+                INSERT INTO pagamento (id, valor, data, metodo, agendamento_id) VALUES
+                (:id, :valor, :data, :metodo, :agendamento_id)
+            """),
+            {
+                "id": pagamento_id,
+                "valor": 50.0 + (i * 10),
+                "data": datetime.now(),
+                "metodo": "PIX" if i % 2 == 0 else "CARTAO",
+                "agendamento_id": agendamento_id
+            }
+        )
+        
+        # Criar objetos para retorno
+        agendamento = Agendamento(
+            id=agendamento_id,
+            horario_inicio=horario_inicio,
+            horario_fim=horario_fim,
+            barbeiro=Usuario(cpf="98765432100", nome="Barbeiro Teste", email="barbeiro@test.com", senha="senha123", telefone="11888888888", eh_barbeiro=True),
+            cliente=Usuario(cpf="12345678901", nome="Cliente Teste", email="cliente@test.com", senha="senha123", telefone="11999999999", eh_barbeiro=False),
+            servicos=[]
+        )
+        agendamentos.append(agendamento)
+        
+        pagamento = Pagamento(
+            valor=50.0 + (i * 10),
+            data=datetime.now(),
+            metodo=MetodoPagamento.PIX if i % 2 == 0 else MetodoPagamento.CARTAO,
+            agendamento=agendamento
+        )
+        pagamento.id = pagamento_id
+        pagamentos.append(pagamento)
+    
+    session.commit()
+    
+    return "12345678901", pagamentos
+
