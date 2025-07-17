@@ -262,11 +262,11 @@ class Barbeiro():
                 return True
         return False
     
-    def verificar_se_horario_esta_disponivel(self, horarios: tuple[datetime]) -> bool:
+    def verificar_se_horario_esta_disponivel(self, horarios: tuple[datetime]) -> tuple[bool, str]:
         for h_indisponivel in self.horarios_indisponiveis:
             if not h_indisponivel.verificar_se_horario_esta_livre(horarios):
-                return False
-        return True
+                return False, h_indisponivel.justificativa
+        return True, ""
     
     def __eq__(self, value: Usuario) -> bool:
         if isinstance(value, Barbeiro) and value.usuario.cpf == self.usuario.cpf:
@@ -305,8 +305,9 @@ def criar_agendamento(cliente: Usuario, barbeiro: Barbeiro, servicos: list[Servi
         raise HorarioForaDaJornada("O horário escolhido está fora da jornada do barbeiro.")
 
     # Verifica se está dentro de algum horário indisponível
-    if not barbeiro.verificar_se_horario_esta_disponivel(horarios):
-        raise HorarioIndisponivelException("O horário escolhido está indisponível de acordo com a disponibilidade do barbeiro.")
+    disponivel, justificativa = barbeiro.verificar_se_horario_esta_disponivel(horarios) 
+    if not disponivel:
+        raise HorarioIndisponivelException(f"O horário escolhido está indisponível, justificativa: {justificativa}")
 
     return Agendamento(
         id=str(uuid4()),
