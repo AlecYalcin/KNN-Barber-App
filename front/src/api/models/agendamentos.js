@@ -22,44 +22,47 @@ export const criar_agendamento = async (
       horario_fim,
     }),
   });
-  
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.mensagem || `Erro ${response.status}: ${response.statusText}`);
-  }
-  
   const data = await response.json();
   return data;
 };
 
 // Função para consultar agendamentos por barbeiro
 export const consultar_agendamentos_por_barbeiro = async (barbeiro_cpf) => {
-  const response = await fetch(`${BASE_URL}/agendamento/barbeiro/${barbeiro_cpf}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("usuario_token")}`,
-    },
-  });
+  const response = await fetch(
+    `${BASE_URL}/agendamento/barbeiro/${barbeiro_cpf}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("usuario_token")}`,
+      },
+    }
+  );
   const data = await response.json();
   return data;
 };
 
 // Função para consultar agendamentos por cliente
 export const consultar_agendamentos_por_cliente = async (cliente_cpf) => {
-  const response = await fetch(`${BASE_URL}/agendamento/cliente/${cliente_cpf}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("usuario_token")}`,
-    },
-  });
+  const response = await fetch(
+    `${BASE_URL}/agendamento/cliente/${cliente_cpf}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("usuario_token")}`,
+      },
+    }
+  );
   const data = await response.json();
   return data;
 };
 
 // Função para consultar agendamentos por horário
-export const consultar_agendamentos_por_horario = async (horario_inicio, horario_fim) => {
+export const consultar_agendamentos_por_horario = async (
+  horario_inicio,
+  horario_fim
+) => {
   const response = await fetch(
     `${BASE_URL}/agendamento/horario?horario_inicio=${horario_inicio}&horario_fim=${horario_fim}`,
     {
@@ -111,4 +114,4 @@ export const remover_agendamento = async (id) => {
   });
   const data = await response.json();
   return data;
-}; 
+};
