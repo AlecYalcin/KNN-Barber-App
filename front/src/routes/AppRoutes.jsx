@@ -14,7 +14,6 @@ import ClientePagamentos from "../pages/auth/ClientePagamentos";
 
 // API
 import { jwt_decoder, usuario } from "../api";
-import BarbeiroPerfil from "../pages/auth/BarbeiroPerfil";
 import BarbeiroAgendamentos from "../pages/auth/BarbeiroAgendamentos";
 import BarbeiroHome from "../pages/auth/BarbeiroHome";
 import ClienteAgendamentos from "../pages/auth/ClienteAgendamentos";
@@ -95,10 +94,12 @@ export default function AppRoutes() {
         <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />
         <Route path="/cliente/agendamentos" element={<ClienteAgendamentos />} />
         <Route path="/barbeiro/home" element={<BarbeiroHome />} />
-        <Route path="/barbeiro/agendamentos" element={<BarbeiroAgendamentos />} />
+        <Route
+          path="/barbeiro/agendamentos"
+          element={<BarbeiroAgendamentos />}
+        />
         <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />
         <Route path="/barbeiro/listar" element={<ListBarbeiro />} />
-        <Route path="/barbeiro/perfil" element={<BarbeiroPerfil />} />
 
         {/* Avaliação */}
       </Routes>

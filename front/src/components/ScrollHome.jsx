@@ -1,8 +1,26 @@
 // SCROLL HOME
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// API
+import { servico } from "../api/index";
 
 function ServicosHorarios() {
-  const [currentView] = useState("servicos");
+  const [servicos, setServicos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServicos = async () => {
+      const data = await servico.listar_servicos();
+      console.log(data);
+      setServicos(data);
+    };
+    fetchServicos();
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <h1>Carregando informações...</h1>;
+  }
 
   return (
     <div className="relative w-full lg:pl-69 lg:mt-30">
@@ -13,36 +31,7 @@ function ServicosHorarios() {
           Serviços Disponíveis
         </h2>
         <section className="w-full flex flex-col gap-4 md:p-4">
-          {[
-            {
-              nome: "Corte Tradicional",
-              descricao:
-                "Corte clássico com tesoura e máquina, acompanhando o formato do rosto",
-              valor: "R$ 50,00",
-              tempo: "45 min",
-            },
-            {
-              nome: "Barba",
-              descricao:
-                "Aparação e modelagem completa da barba com toalha quente e finalização",
-              valor: "R$ 35,00",
-              tempo: "30 min",
-            },
-            {
-              nome: "Penteado",
-              descricao:
-                "Estilo personalizado com produtos profissionais para ocasiões especiais",
-              valor: "R$ 65,00",
-              tempo: "60 min",
-            },
-            {
-              nome: "Bigode",
-              descricao:
-                "Aparação e modelagem do bigode com acabamento preciso",
-              valor: "R$ 25,00",
-              tempo: "20 min",
-            },
-          ].map((servico) => (
+          {servicos.map((servico) => (
             <article
               key={servico.nome}
               className="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition-shadow"
