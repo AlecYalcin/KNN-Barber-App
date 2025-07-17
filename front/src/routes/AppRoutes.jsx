@@ -81,8 +81,8 @@ export default function AppRoutes() {
 
         {/* Serviços */}
         <Route path="/servicos/cadastrar" element={<BarbeiroServicos />} />
-        <Route path="/servicos/alterar/:id" element={<AlterarServico />} />
-        <Route path="/servicos/listar" element={<ClienteServicos />} />
+        {/* <Route path="/servicos/alterar/:id" element={<AlterarServico />} /> */}
+        {/* <Route path="/servicos/listar" element={<ClienteServicos />} /> */}
 
         {/* Pagamento */}
         <Route path="/pagamentos" element={<ClientePagamentos />} />

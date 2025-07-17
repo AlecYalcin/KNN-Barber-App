@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BottomNav from "../../components/BottomNav";
 import ButtonBack from "../../components/ButtonBack";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
-const BarbeiroServicos = () => {
-  // Estado para controlar o modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
+// API
+import { servico } from "../../api/index";
 
-  // Estado para o formulário
+const BarbeiroServicos = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [servicos, setServicos] = useState([]);
   const [formData, setFormData] = useState({
     nome: "",
     descricao: "",
@@ -16,30 +17,14 @@ const BarbeiroServicos = () => {
     duracao: "",
   });
 
-  // Lista de serviços inicial
-  const [servicos, setServicos] = useState([
-    {
-      id: 1,
-      nome: "Corte de Cabelo",
-      descricao: "Corte profissional com técnicas modernas",
-      preco: 50.0,
-      duracao: 30,
-    },
-    {
-      id: 2,
-      nome: "Barba Completa",
-      descricao: "Aparo e modelagem de barba com toalha quente",
-      preco: 35.0,
-      duracao: 25,
-    },
-    {
-      id: 3,
-      nome: "Pigmentação",
-      descricao: "Técnica para disfarçar falhas na barba",
-      preco: 70.0,
-      duracao: 45,
-    },
-  ]);
+  const fetchServicos = async () => {
+    const data = await servico.listar_servicos();
+    setServicos(data);
+  };
+
+  useEffect(() => {
+    fetchServicos();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,20 +34,21 @@ const BarbeiroServicos = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Criar novo serviço
-    const novoServico = {
-      id: servicos.length + 1,
-      nome: formData.nome,
-      descricao: formData.descricao,
-      preco: parseFloat(formData.preco),
-      duracao: parseInt(formData.duracao),
-    };
-
     // Adicionar à lista de serviços
-    setServicos([...servicos, novoServico]);
+    const data = await servico.criar_servico(
+      formData.nome,
+      formData.descricao,
+      formData.preco,
+      formData.duracao
+    );
+
+    alert(data.mensagem);
+    if (data.error) {
+      return;
+    }
 
     // Fechar modal e resetar formulário
     setIsModalOpen(false);
@@ -72,6 +58,7 @@ const BarbeiroServicos = () => {
       preco: "",
       duracao: "",
     });
+    fetchServicos();
   };
 
   return (
