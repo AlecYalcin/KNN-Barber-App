@@ -78,17 +78,6 @@ const Sidebar = () => {
               {" "}
               Agendamentos
             </NavLink>
-            <NavLink
-              to="/pagamentos"
-              className={({ isActive }) =>
-                `w-full block text-left px-4 py-2 rounded-lg font-medium ${
-                  isActive ? "bg-gray-200" : "hover:bg-gray-100"
-                }`
-              }
-            >
-              {" "}
-              Pagamentos
-            </NavLink>
           </div>
         )}
 

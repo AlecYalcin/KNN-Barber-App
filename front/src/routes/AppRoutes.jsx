@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Perfil from "../pages/autenticacao/Perfil";
 import Home from "../pages/autenticacao/Home";
-import ClienteServicos from "../pages/auth/ClienteServicos";
 import ClienteAgendamento from "../pages/auth/ClienteAgendamento";
 import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
-import AlterarServico from "../pages/auth/AlterarServico";
 import AddBarbeiro from "../pages/auth/AddBarbeiro";
 import ListBarbeiro from "../pages/auth/ListBarbeiro";
 import Cadastro from "../pages/autenticacao/Cadastro";
 import Login from "../pages/autenticacao/Login";
-import ClientePagamentos from "../pages/auth/ClientePagamentos";
 
 // API
 import { jwt_decoder, usuario } from "../api";
@@ -81,14 +78,6 @@ export default function AppRoutes() {
 
         {/* Serviços */}
         <Route path="/servicos/cadastrar" element={<BarbeiroServicos />} />
-        {/* <Route path="/servicos/alterar/:id" element={<AlterarServico />} /> */}
-        {/* <Route path="/servicos/listar" element={<ClienteServicos />} /> */}
-
-        {/* Pagamento */}
-        <Route path="/pagamentos" element={<ClientePagamentos />} />
-        {/* Jornada de Trabalho */}
-
-        {/* Horário Indisponível */}
 
         {/* Agendamento */}
         <Route path="/cliente/agendamento" element={<ClienteAgendamento />} />
