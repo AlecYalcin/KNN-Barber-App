@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Perfil from "../pages/autenticacao/Perfil";
-import Home from "../pages/autenticacao/Home";
-import ClienteAgendamento from "../pages/auth/ClienteAgendamento";
-import BarbeiroServicos from "../pages/auth/BarbeiroServicos";
-import AddBarbeiro from "../pages/auth/AddBarbeiro";
-import ListBarbeiro from "../pages/auth/ListBarbeiro";
 import Cadastro from "../pages/autenticacao/Cadastro";
+import Perfil from "../pages/autenticacao/Perfil";
 import Login from "../pages/autenticacao/Login";
+import Home from "../pages/autenticacao/Home";
+import BarbeiroAgendamentos from "../pages/agendamento/BarbeiroAgendamentos";
+import ClienteAgendamentos from "../pages/agendamento/ClienteAgendamentos";
+import ClienteAgendamento from "../pages/agendamento/ClienteAgendamento";
+import BarbeiroServicos from "../pages/barbeiro/BarbeiroServicos";
+import BarbeiroHome from "../pages/barbeiro/BarbeiroHome";
 
 // API
 import { jwt_decoder, usuario } from "../api";
-import BarbeiroAgendamentos from "../pages/auth/BarbeiroAgendamentos";
-import BarbeiroHome from "../pages/auth/BarbeiroHome";
-import ClienteAgendamentos from "../pages/auth/ClienteAgendamentos";
 
 export default function AppRoutes() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -87,10 +85,6 @@ export default function AppRoutes() {
           path="barbeiro/agendamentos"
           element={<BarbeiroAgendamentos />}
         />
-        <Route path="/barbeiro/adicionar" element={<AddBarbeiro />} />
-        <Route path="/barbeiro/listar" element={<ListBarbeiro />} />
-
-        {/* Avaliação */}
       </Routes>
     </Router>
   );
